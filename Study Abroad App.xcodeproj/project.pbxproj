@@ -7,17 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9120D7121F7A95180073CDAC /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7111F7A95180073CDAC /* AllListsViewController.swift */; };
+		9120D7141F7A98690073CDAC /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7131F7A98690073CDAC /* DataModel.swift */; };
+		9120D7161F7A9F890073CDAC /* PackingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7151F7A9F890073CDAC /* PackingListViewController.swift */; };
+		9120D7181F7AA3EE0073CDAC /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */; };
+		9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */; };
+		9120D71C1F7AB68A0073CDAC /* PackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */; };
+		9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71D1F7AB83A0073CDAC /* PackingList.swift */; };
 		91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6EC1B1F794C99000A7527 /* AppDelegate.swift */; };
-		91F6EC1E1F794C99000A7527 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6EC1D1F794C99000A7527 /* ViewController.swift */; };
 		91F6EC211F794C99000A7527 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC1F1F794C99000A7527 /* Main.storyboard */; };
 		91F6EC231F794C99000A7527 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC221F794C99000A7527 /* Assets.xcassets */; };
 		91F6EC261F794C99000A7527 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC241F794C99000A7527 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9120D7111F7A95180073CDAC /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
+		9120D7131F7A98690073CDAC /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		9120D7151F7A9F890073CDAC /* PackingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListViewController.swift; sourceTree = "<group>"; };
+		9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
+		9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
+		9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListItem.swift; sourceTree = "<group>"; };
+		9120D71D1F7AB83A0073CDAC /* PackingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingList.swift; sourceTree = "<group>"; };
 		91F6EC181F794C99000A7527 /* Study Abroad App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Study Abroad App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6EC1B1F794C99000A7527 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		91F6EC1D1F794C99000A7527 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		91F6EC201F794C99000A7527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		91F6EC221F794C99000A7527 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91F6EC251F794C99000A7527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,9 +66,15 @@
 		91F6EC1A1F794C99000A7527 /* Study Abroad App */ = {
 			isa = PBXGroup;
 			children = (
-				91F6EC1B1F794C99000A7527 /* AppDelegate.swift */,
-				91F6EC1D1F794C99000A7527 /* ViewController.swift */,
 				91F6EC1F1F794C99000A7527 /* Main.storyboard */,
+				9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */,
+				9120D71D1F7AB83A0073CDAC /* PackingList.swift */,
+				91F6EC1B1F794C99000A7527 /* AppDelegate.swift */,
+				9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */,
+				9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */,
+				9120D7151F7A9F890073CDAC /* PackingListViewController.swift */,
+				9120D7111F7A95180073CDAC /* AllListsViewController.swift */,
+				9120D7131F7A98690073CDAC /* DataModel.swift */,
 				91F6EC221F794C99000A7527 /* Assets.xcassets */,
 				91F6EC241F794C99000A7527 /* LaunchScreen.storyboard */,
 				91F6EC271F794C99000A7527 /* Info.plist */,
@@ -136,8 +154,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91F6EC1E1F794C99000A7527 /* ViewController.swift in Sources */,
+				9120D71C1F7AB68A0073CDAC /* PackingListItem.swift in Sources */,
+				9120D7161F7A9F890073CDAC /* PackingListViewController.swift in Sources */,
+				9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */,
+				9120D7181F7AA3EE0073CDAC /* ItemDetailViewController.swift in Sources */,
+				9120D7141F7A98690073CDAC /* DataModel.swift in Sources */,
+				9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */,
 				91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */,
+				9120D7121F7A95180073CDAC /* AllListsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +299,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C3G6YV6E3N;
 				INFOPLIST_FILE = "Study Abroad App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "DanHerrick.Study-Abroad-App";
@@ -289,6 +314,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C3G6YV6E3N;
 				INFOPLIST_FILE = "Study Abroad App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "DanHerrick.Study-Abroad-App";
