@@ -14,7 +14,7 @@ protocol ListDetailViewControllerDelegate: class {
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: PackingList)
 }
 
-class ListDetailViewController: UITableViewController {
+class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     
@@ -32,15 +32,12 @@ class ListDetailViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //textField.becomeFirstResponder()
+        textField.becomeFirstResponder()
     }
     
     @IBAction func cancel() {
         delegate?.listDetailViewControllerDidCancel(self)
     }
-//    @IBAction func cancel() {
-  //      delegate?.listDetailViewControllerDidCancel(self)
-   // }
     
     @IBAction func done() {
         if let packingList = packingListToEdit {

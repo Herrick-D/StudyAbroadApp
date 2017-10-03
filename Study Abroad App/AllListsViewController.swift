@@ -8,9 +8,10 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, UINavigationControllerDelegate, ListDetailViewControllerDelegate {
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     var dataModel: DataModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -48,7 +49,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
         let cell = makeCell(for: tableView)
         let packingList = dataModel.lists[indexPath.row]
         cell.textLabel!.text = packingList.name
-        cell.accessoryType = .disclosureIndicator
+        cell.accessoryType = .detailDisclosureButton
         cell.detailTextLabel!.text = "\(packingList.countUncheckedItems()) Remaining"
         let count = packingList.countUncheckedItems()
         if packingList.items.count == 0 {

@@ -16,14 +16,11 @@ class PackingListViewController: UITableViewController, ItemDetailViewController
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: PackingListItem) {
-        
         let newRowIndex = packingList.items.count
         packingList.items.append(item)
-        
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
-        
         dismiss(animated: true, completion: nil)
     }
     

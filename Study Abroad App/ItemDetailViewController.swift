@@ -20,14 +20,12 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var myStepper: UIStepper!
+    
     weak var delegate: ItemDetailViewControllerDelegate?
     
     var itemToEdit: PackingListItem?
     
     @IBAction func myStepperValueChanged(_ sender: UIStepper) {
-        //@IBOutlet weak var quantityLabel: UILabel!
-        //@IBOutlet weak var textField: UITextField!
-        //@IBOutlet weak var myStepper: UIStepper!
         quantityLabel.text = String(Int(sender.value))
     }
     

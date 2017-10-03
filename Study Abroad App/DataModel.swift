@@ -46,7 +46,6 @@ class DataModel {
     
     func registerDefaults() {
         let dictionary: [String: Any] = [ "PackingListIndex": -1, "FirstTime": true]
-        
         UserDefaults.standard.register(defaults: dictionary)
     }
     
@@ -56,6 +55,7 @@ class DataModel {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "PackingListIndex")
+            UserDefaults.standard.synchronize()
         }
     }
     
@@ -74,7 +74,7 @@ class DataModel {
     }
     
     func sortPackingLists() {
-        lists.sort(by: {packingList1, packingList2 in
+        lists.sort(by: { packingList1, packingList2 in
             return packingList1.name.localizedStandardCompare(packingList2.name) == .orderedAscending })
     }
 }
