@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>279607540875-e89afksdc5d5jlve3la1b2c1m4ukk50f.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.279607540875-e89afksdc5d5jlve3la1b2c1m4ukk50f</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBmVMcp4HPFmDZ-0nKpl66QM0CqKTWGrYo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>279607540875</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>DanHerrick.Study-Abroad-App</string>
+	<key>PROJECT_ID</key>
+	<string>studyabroad-42803</string>
+	<key>STORAGE_BUCKET</key>
+	<string>studyabroad-42803.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:279607540875:ios:e7f4230bda2aa229</string>
+	<key>DATABASE_URL</key>
+	<string>https://studyabroad-42803.firebaseio.com</string>
+</dict>
+</plist>

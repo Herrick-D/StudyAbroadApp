@@ -14,10 +14,16 @@
 		9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */; };
 		9120D71C1F7AB68A0073CDAC /* PackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */; };
 		9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71D1F7AB83A0073CDAC /* PackingList.swift */; };
+		91A7C7861F8925E2009889F8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7851F8925E2009889F8 /* User.swift */; };
+		91A7C7881F892757009889F8 /* DatabasePackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7871F892757009889F8 /* DatabasePackingListItem.swift */; };
+		91A7C78A1F89292D009889F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7891F89292D009889F8 /* LoginViewController.swift */; };
+		91A7C78C1F893EA2009889F8 /* FeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */; };
+		91A7C78F1F8945B6009889F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */; };
 		91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6EC1B1F794C99000A7527 /* AppDelegate.swift */; };
 		91F6EC211F794C99000A7527 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC1F1F794C99000A7527 /* Main.storyboard */; };
 		91F6EC231F794C99000A7527 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC221F794C99000A7527 /* Assets.xcassets */; };
 		91F6EC261F794C99000A7527 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC241F794C99000A7527 /* LaunchScreen.storyboard */; };
+		A65935579068B3150B5F2D43 /* libPods-Study Abroad App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D25FC985F9DCC2807FD06A3C /* libPods-Study Abroad App.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,12 +34,20 @@
 		9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
 		9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListItem.swift; sourceTree = "<group>"; };
 		9120D71D1F7AB83A0073CDAC /* PackingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingList.swift; sourceTree = "<group>"; };
+		91A7C7851F8925E2009889F8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		91A7C7871F892757009889F8 /* DatabasePackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePackingListItem.swift; sourceTree = "<group>"; };
+		91A7C7891F89292D009889F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesViewController.swift; sourceTree = "<group>"; };
+		91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		91F6EC181F794C99000A7527 /* Study Abroad App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Study Abroad App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6EC1B1F794C99000A7527 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91F6EC201F794C99000A7527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		91F6EC221F794C99000A7527 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91F6EC251F794C99000A7527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91F6EC271F794C99000A7527 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9431C16F1D6A145C21BB20B3 /* Pods-Study Abroad App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Study Abroad App.release.xcconfig"; path = "Pods/Target Support Files/Pods-Study Abroad App/Pods-Study Abroad App.release.xcconfig"; sourceTree = "<group>"; };
+		BC82370F0BAA7A1131A7EDCC /* Pods-Study Abroad App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Study Abroad App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Study Abroad App/Pods-Study Abroad App.debug.xcconfig"; sourceTree = "<group>"; };
+		D25FC985F9DCC2807FD06A3C /* libPods-Study Abroad App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Study Abroad App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,17 +55,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A65935579068B3150B5F2D43 /* libPods-Study Abroad App.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F9FC3A6102637F5737BBD36 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BC82370F0BAA7A1131A7EDCC /* Pods-Study Abroad App.debug.xcconfig */,
+				9431C16F1D6A145C21BB20B3 /* Pods-Study Abroad App.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		91F6EC0F1F794C99000A7527 = {
 			isa = PBXGroup;
 			children = (
+				91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */,
 				91F6EC1A1F794C99000A7527 /* Study Abroad App */,
 				91F6EC191F794C99000A7527 /* Products */,
+				5F9FC3A6102637F5737BBD36 /* Pods */,
+				ECA0CCB3B4EC4CF55AF3E674 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,9 +94,13 @@
 			isa = PBXGroup;
 			children = (
 				91F6EC1F1F794C99000A7527 /* Main.storyboard */,
+				91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */,
 				9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */,
+				91A7C7871F892757009889F8 /* DatabasePackingListItem.swift */,
+				91A7C7891F89292D009889F8 /* LoginViewController.swift */,
 				9120D71D1F7AB83A0073CDAC /* PackingList.swift */,
 				91F6EC1B1F794C99000A7527 /* AppDelegate.swift */,
+				91A7C7851F8925E2009889F8 /* User.swift */,
 				9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */,
 				9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */,
 				9120D7151F7A9F890073CDAC /* PackingListViewController.swift */,
@@ -82,6 +113,14 @@
 			path = "Study Abroad App";
 			sourceTree = "<group>";
 		};
+		ECA0CCB3B4EC4CF55AF3E674 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D25FC985F9DCC2807FD06A3C /* libPods-Study Abroad App.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -89,9 +128,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91F6EC2A1F794C99000A7527 /* Build configuration list for PBXNativeTarget "Study Abroad App" */;
 			buildPhases = (
+				5E9F061EA86B73FDC7BEEE6B /* [CP] Check Pods Manifest.lock */,
 				91F6EC141F794C99000A7527 /* Sources */,
 				91F6EC151F794C99000A7527 /* Frameworks */,
 				91F6EC161F794C99000A7527 /* Resources */,
+				4F820124DDF82F4B667F2187 /* [CP] Embed Pods Frameworks */,
+				42C04102022726BC1421A717 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -142,12 +184,64 @@
 			buildActionMask = 2147483647;
 			files = (
 				91F6EC261F794C99000A7527 /* LaunchScreen.storyboard in Resources */,
+				91A7C78F1F8945B6009889F8 /* GoogleService-Info.plist in Resources */,
 				91F6EC231F794C99000A7527 /* Assets.xcassets in Resources */,
 				91F6EC211F794C99000A7527 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		42C04102022726BC1421A717 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Study Abroad App/Pods-Study Abroad App-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4F820124DDF82F4B667F2187 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Study Abroad App/Pods-Study Abroad App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E9F061EA86B73FDC7BEEE6B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Study Abroad App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		91F6EC141F794C99000A7527 /* Sources */ = {
@@ -159,9 +253,13 @@
 				9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */,
 				9120D7181F7AA3EE0073CDAC /* ItemDetailViewController.swift in Sources */,
 				9120D7141F7A98690073CDAC /* DataModel.swift in Sources */,
+				91A7C7881F892757009889F8 /* DatabasePackingListItem.swift in Sources */,
+				91A7C7861F8925E2009889F8 /* User.swift in Sources */,
 				9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */,
 				91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */,
+				91A7C78C1F893EA2009889F8 /* FeaturesViewController.swift in Sources */,
 				9120D7121F7A95180073CDAC /* AllListsViewController.swift in Sources */,
+				91A7C78A1F89292D009889F8 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +394,7 @@
 		};
 		91F6EC2B1F794C99000A7527 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC82370F0BAA7A1131A7EDCC /* Pods-Study Abroad App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -311,6 +410,7 @@
 		};
 		91F6EC2C1F794C99000A7527 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9431C16F1D6A145C21BB20B3 /* Pods-Study Abroad App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

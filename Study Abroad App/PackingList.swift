@@ -10,7 +10,7 @@ import UIKit
 
 class PackingList: NSObject, NSCoding {
     var name = ""
-    var items = [PackingListItem]()
+    var items: [PackingListItem] = []
     
     init(name: String) {
         self.name = name

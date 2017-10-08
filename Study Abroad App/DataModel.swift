@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 class DataModel {
     var lists = [PackingList]()
@@ -38,14 +39,14 @@ class DataModel {
         let path = dataFilePath()
         if let data = try? Data(contentsOf: path) {
             let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
-            lists = unarchiver.decodeObject(forKey: "PackingLists") as! [PackingList]
+            lists = (unarchiver.decodeObject(forKey: "PackingLists") as! [PackingList])
             unarchiver.finishDecoding()
             sortPackingLists()
         }
     }
     
     func registerDefaults() {
-        let dictionary: [String: Any] = [ "PackingListIndex": -1, "FirstTime": true]
+        let dictionary: [String: Any] = [ "PackingListIndex": -1, "FirstTime": true, "PackingListItemID": 0 ]
         UserDefaults.standard.register(defaults: dictionary)
     }
     
@@ -76,5 +77,13 @@ class DataModel {
     func sortPackingLists() {
         lists.sort(by: { packingList1, packingList2 in
             return packingList1.name.localizedStandardCompare(packingList2.name) == .orderedAscending })
+    }
+    
+    class func nextPackingListItemID() -> Int {
+        let userDefaults = UserDefaults.standard
+        let itemID = userDefaults.integer(forKey: "PackingListItemID")
+        userDefaults.set(itemID + 1, forKey: "PackingListItemID")
+        userDefaults.synchronize()
+        return itemID
     }
 }
