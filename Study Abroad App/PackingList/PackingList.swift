@@ -10,10 +10,18 @@ import UIKit
 
 class PackingList: NSObject, NSCoding {
     var name = ""
+    var region = ""
+    var length = ""
+    var seasons = ""
+    var sex = ""
     var items: [PackingListItem] = []
     
-    init(name: String) {
+    init(name: String, region: String, length: String, seasons: String, sex: String) {
         self.name = name
+        self.region = region
+        self.length = length
+        self.seasons = seasons
+        self.sex = sex
         super.init()
     }
     

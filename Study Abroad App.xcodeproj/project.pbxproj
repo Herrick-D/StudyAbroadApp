@@ -14,8 +14,11 @@
 		9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */; };
 		9120D71C1F7AB68A0073CDAC /* PackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */; };
 		9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71D1F7AB83A0073CDAC /* PackingList.swift */; };
+		918CB0EB1F8BF8E300EC73AA /* SearchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */; };
+		918CB0F11F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0F01F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift */; };
+		918CB0F31F8C193000EC73AA /* DatabasePackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */; };
 		91A7C7861F8925E2009889F8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7851F8925E2009889F8 /* User.swift */; };
-		91A7C7881F892757009889F8 /* DatabasePackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7871F892757009889F8 /* DatabasePackingListItem.swift */; };
+		91A7C7881F892757009889F8 /* DatabasePackingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7871F892757009889F8 /* DatabasePackingList.swift */; };
 		91A7C78A1F89292D009889F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7891F89292D009889F8 /* LoginViewController.swift */; };
 		91A7C78C1F893EA2009889F8 /* FeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */; };
 		91A7C78F1F8945B6009889F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */; };
@@ -34,8 +37,12 @@
 		9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
 		9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListItem.swift; sourceTree = "<group>"; };
 		9120D71D1F7AB83A0073CDAC /* PackingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingList.swift; sourceTree = "<group>"; };
+		918CB0E71F8BCD3700EC73AA /* Study Abroad App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Study Abroad App.entitlements"; sourceTree = "<group>"; };
+		918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageViewController.swift; sourceTree = "<group>"; };
+		918CB0F01F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCollectionViewController.swift; sourceTree = "<group>"; };
+		918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePackingListItem.swift; sourceTree = "<group>"; };
 		91A7C7851F8925E2009889F8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		91A7C7871F892757009889F8 /* DatabasePackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePackingListItem.swift; sourceTree = "<group>"; };
+		91A7C7871F892757009889F8 /* DatabasePackingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePackingList.swift; sourceTree = "<group>"; };
 		91A7C7891F89292D009889F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesViewController.swift; sourceTree = "<group>"; };
 		91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -71,6 +78,32 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		918CB0E81F8BCEBF00EC73AA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				91A7C7871F892757009889F8 /* DatabasePackingList.swift */,
+				918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */,
+				91A7C7851F8925E2009889F8 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		918CB0E91F8BCEE700EC73AA /* PackingList */ = {
+			isa = PBXGroup;
+			children = (
+				918CB0F01F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift */,
+				918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */,
+				9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */,
+				9120D71D1F7AB83A0073CDAC /* PackingList.swift */,
+				9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */,
+				9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */,
+				9120D7151F7A9F890073CDAC /* PackingListViewController.swift */,
+				9120D7111F7A95180073CDAC /* AllListsViewController.swift */,
+				9120D7131F7A98690073CDAC /* DataModel.swift */,
+			);
+			path = PackingList;
+			sourceTree = "<group>";
+		};
 		91F6EC0F1F794C99000A7527 = {
 			isa = PBXGroup;
 			children = (
@@ -93,19 +126,13 @@
 		91F6EC1A1F794C99000A7527 /* Study Abroad App */ = {
 			isa = PBXGroup;
 			children = (
+				918CB0E71F8BCD3700EC73AA /* Study Abroad App.entitlements */,
 				91F6EC1F1F794C99000A7527 /* Main.storyboard */,
-				91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */,
-				9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */,
-				91A7C7871F892757009889F8 /* DatabasePackingListItem.swift */,
+				918CB0E91F8BCEE700EC73AA /* PackingList */,
 				91A7C7891F89292D009889F8 /* LoginViewController.swift */,
-				9120D71D1F7AB83A0073CDAC /* PackingList.swift */,
+				91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */,
 				91F6EC1B1F794C99000A7527 /* AppDelegate.swift */,
-				91A7C7851F8925E2009889F8 /* User.swift */,
-				9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */,
-				9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */,
-				9120D7151F7A9F890073CDAC /* PackingListViewController.swift */,
-				9120D7111F7A95180073CDAC /* AllListsViewController.swift */,
-				9120D7131F7A98690073CDAC /* DataModel.swift */,
+				918CB0E81F8BCEBF00EC73AA /* Models */,
 				91F6EC221F794C99000A7527 /* Assets.xcassets */,
 				91F6EC241F794C99000A7527 /* LaunchScreen.storyboard */,
 				91F6EC271F794C99000A7527 /* Info.plist */,
@@ -157,6 +184,11 @@
 					91F6EC171F794C99000A7527 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -248,16 +280,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				918CB0F31F8C193000EC73AA /* DatabasePackingListItem.swift in Sources */,
 				9120D71C1F7AB68A0073CDAC /* PackingListItem.swift in Sources */,
 				9120D7161F7A9F890073CDAC /* PackingListViewController.swift in Sources */,
 				9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */,
 				9120D7181F7AA3EE0073CDAC /* ItemDetailViewController.swift in Sources */,
 				9120D7141F7A98690073CDAC /* DataModel.swift in Sources */,
-				91A7C7881F892757009889F8 /* DatabasePackingListItem.swift in Sources */,
+				91A7C7881F892757009889F8 /* DatabasePackingList.swift in Sources */,
 				91A7C7861F8925E2009889F8 /* User.swift in Sources */,
 				9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */,
+				918CB0EB1F8BF8E300EC73AA /* SearchPageViewController.swift in Sources */,
 				91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */,
 				91A7C78C1F893EA2009889F8 /* FeaturesViewController.swift in Sources */,
+				918CB0F11F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift in Sources */,
 				9120D7121F7A95180073CDAC /* AllListsViewController.swift in Sources */,
 				91A7C78A1F89292D009889F8 /* LoginViewController.swift in Sources */,
 			);
@@ -397,6 +432,7 @@
 			baseConfigurationReference = BC82370F0BAA7A1131A7EDCC /* Pods-Study Abroad App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Study Abroad App/Study Abroad App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C3G6YV6E3N;
 				INFOPLIST_FILE = "Study Abroad App/Info.plist";
@@ -413,6 +449,7 @@
 			baseConfigurationReference = 9431C16F1D6A145C21BB20B3 /* Pods-Study Abroad App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Study Abroad App/Study Abroad App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C3G6YV6E3N;
 				INFOPLIST_FILE = "Study Abroad App/Info.plist";

@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 class DataModel {
-    var lists = [PackingList]()
+    var lists: [PackingList] = []
     
     init() {
         loadPackingLists()
@@ -65,7 +65,11 @@ class DataModel {
         let firstTime = userDefaults.bool(forKey: "FirstTime")
         
         if firstTime {
-            let packingList = PackingList(name: "List")
+            let packingList = PackingList(name: "List",
+                                          region: "Region",
+                                          length: "Length",
+                                          seasons: "Seasons",
+                                          sex: "Sex")
             lists.append(packingList)
             
             indexOfSelectedPackingList = 0

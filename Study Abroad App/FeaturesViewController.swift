@@ -25,6 +25,12 @@ class FeaturesViewController: UIViewController {
     @IBAction func packingListTapped(_ sender: Any) {
         performSegue(withIdentifier: "PackingListOptions", sender: self)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "PackingListOptions") {
+            
+        }
+    }
     /*
     // MARK: - Navigation
 

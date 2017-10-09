@@ -12,14 +12,18 @@ import Firebase
 struct User {
     let uid: String
     let email: String
+    let fName: String
+    //let password: String
     
     init(authData: User) {
         uid = authData.uid
         email = authData.email
+        fName = authData.fName
     }
     
-    init(uid: String, email: String) {
+    init(uid: String, email: String, fName: String) {
         self.uid = uid
         self.email = email
+        self.fName = fName
     }
 }

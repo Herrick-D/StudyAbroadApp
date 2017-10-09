@@ -1,36 +1,28 @@
 //
-//  ListDetailViewController.swift
+//  SearchPageViewController.swift
 //  Study Abroad App
 //
-//  Created by Dan Herrick on 9/26/17.
+//  Created by Dan Herrick on 10/9/17.
 //  Copyright © 2017 Dan Herrick. All rights reserved.
 //
 
 import UIKit
 
-protocol ListDetailViewControllerDelegate: class {
-    func listDetailViewControllerDidCancel(_ controller: ListDetailViewController)
-    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: PackingList)
-    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: PackingList)
-}
+//protocol SearchResultsCollectionViewControllerDelegate: class {
+//    func searchResultsCollectionViewController(_ controller: SearchResultsCollectionViewController, didFinishSelecting packingList: PackingList)
+//}
 
-class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var regionPickerText: UITextField!
     @IBOutlet weak var lengthPickerText: UITextField!
     @IBOutlet weak var seasonsPickerText: UITextField!
     @IBOutlet weak var sexPickerText: UITextField!
     
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var doneBarButton: UIBarButtonItem!
-   
     @IBOutlet weak var regionPicker: UIPickerView!
     @IBOutlet weak var lengthPicker: UIPickerView!
     @IBOutlet weak var seasonsPicker: UIPickerView!
     @IBOutlet weak var sexPicker: UIPickerView!
-    
-    weak var delegate: ListDetailViewControllerDelegate?
-    var packingListToEdit: PackingList?
     
     var regionPickerData = ["Northern Europe", "Greenland & Iceland", "Southern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Russia", "West Asia", "East Asia", "South Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "North Africa", "West Africa", "East Africa", "Central Africa", "South Africa", "North America", "Central America", "South America"]
     
@@ -41,59 +33,19 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
     var sexPickerData = ["Female", "Male", "Other"]
     
     let sections = ["Packing List Name", "Region", "Length of Trip", "Seasons", "Sex"]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let packingList = packingListToEdit {
-            title = "Edit Packing List"
-            textField.text = packingList.name
-            doneBarButton.isEnabled = true
-        }
+
+        // Do any additional setup after loading the view.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        textField.becomeFirstResponder()
-    }
-    
-    @IBAction func cancel() {
-        delegate?.listDetailViewControllerDidCancel(self)
-    }
-    
-    @IBAction func done() {
-        if let packingList = packingListToEdit {
-            packingList.name = textField.text!
-            delegate?.listDetailViewController(self, didFinishEditing: packingList)
-        } else {
-            let packingList = PackingList(name: textField.text!)
-            delegate?.listDetailViewController(self, didFinishAdding: packingList)
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
-    
-    
-    
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == 1 {
-            return indexPath
-        } else {
-            return nil
-        }
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let oldText = textField.text! as NSString
-        let newText = oldText.replacingCharacters(in: range, with: string) as NSString
-        doneBarButton.isEnabled = (newText.length > 0)
-        return true
-    }
+    //@IBAction func search()
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -167,4 +119,15 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
         }
     }
     
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
