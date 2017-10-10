@@ -7,46 +7,69 @@
 //
 
 import UIKit
+import Firebase
 
 protocol ListDetailViewControllerDelegate: class {
     func listDetailViewControllerDidCancel(_ controller: ListDetailViewController)
-    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: PackingList)
-    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: PackingList)
+//    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: DatabasePackingList)
+//    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: DatabasePackingList)
 }
 
 class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    let ref = Database.database().reference(withPath: "packingList")
+    //let usersRef = Database.database().reference(withPath: "online")
+    var user: User!
+    
     @IBOutlet weak var regionPickerText: UITextField!
+    var regionPickerData = ["Northern Europe", "Greenland & Iceland", "Southern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Russia", "West Asia", "East Asia", "South Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "North Africa", "West Africa", "East Africa", "Central Africa", "South Africa", "North America", "Central America", "South America"]
+    var regionPicker = UIPickerView()
+    
     @IBOutlet weak var lengthPickerText: UITextField!
+    var lengthPickerData = ["1-3 weeks", "1-3 months", "4-6 months", "7-12 months", "over 1 year"]
+    var lengthPicker = UIPickerView()
+    
     @IBOutlet weak var seasonsPickerText: UITextField!
+    var seasonsPickerData = ["Autumn", "Winter", "Spring", "Summer", "Autumn + Winter", "Winter + Spring", "Spring + Summer", "Summer + Autumn", "Autumn + Winter + Spring", "Winter + Spring + Summer", "Spring + Summer + Autumn", "Summer + Autumn + Winter", "Autumn + Winter + Spring + Summer" ]
+    var seasonsPicker = UIPickerView()
+    
     @IBOutlet weak var sexPickerText: UITextField!
+    var sexPickerData = ["Female", "Male", "Other"]
+    var sexPicker = UIPickerView()
+
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
    
-    @IBOutlet weak var regionPicker: UIPickerView!
-    @IBOutlet weak var lengthPicker: UIPickerView!
-    @IBOutlet weak var seasonsPicker: UIPickerView!
-    @IBOutlet weak var sexPicker: UIPickerView!
     
     weak var delegate: ListDetailViewControllerDelegate?
-    var packingListToEdit: PackingList?
+    //var packingListToEdit: PackingList?
+    var packingListToEdit: DatabasePackingList?
     
-    var regionPickerData = ["Northern Europe", "Greenland & Iceland", "Southern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Russia", "West Asia", "East Asia", "South Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "North Africa", "West Africa", "East Africa", "Central Africa", "South Africa", "North America", "Central America", "South America"]
     
-    var lengthPickerData = ["1-3 weeks", "1-3 months", "4-6 months", "7-12 months", "over 1 year"]
-    
-    var seasonsPickerData = ["Autumn", "Winter", "Spring", "Summer", "Autumn + Winter", "Winter + Spring", "Spring + Summer", "Summer + Autumn", "Autumn + Winter + Spring", "Winter + Spring + Summer", "Spring + Summer + Autumn", "Summer + Autumn + Winter", "Autumn + Winter + Spring + Summer" ]
-    
-    var sexPickerData = ["Female", "Male", "Other"]
-    
-    let sections = ["Packing List Name", "Region", "Length of Trip", "Seasons", "Sex"]
+    //let sections = ["Packing List Name", "Region", "Length of Trip", "Seasons", "Sex"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        regionPicker.delegate = self
+        regionPicker.dataSource = self
+        regionPickerText.inputView = regionPicker
+        
+        lengthPicker.delegate = self
+        lengthPicker.dataSource = self
+        lengthPickerText.inputView = lengthPicker
+        
+        seasonsPicker.delegate = self
+        seasonsPicker.dataSource = self
+        seasonsPickerText.inputView = seasonsPicker
+        
+        sexPicker.delegate = self
+        sexPicker.dataSource = self
+        sexPickerText.inputView = sexPicker
+        
         if let packingList = packingListToEdit {
             title = "Edit Packing List"
-            textField.text = packingList.name
+            textField.text = packingList.listName
             doneBarButton.isEnabled = true
         }
     }
@@ -61,35 +84,47 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
     }
     
     @IBAction func done() {
-        if let packingList = packingListToEdit {
-            packingList.name = textField.text!
-            packingList.region = regionPickerText.text!
-            packingList.length = lengthPickerText.text!
-            packingList.seasons = seasonsPickerText.text!
-            packingList.sex = sexPickerText.text!
-            delegate?.listDetailViewController(self, didFinishEditing: packingList)
-        } else {
-            let packingList = PackingList(name: textField.text!,
-                                          region: regionPickerText.text!,
-                                          length: lengthPickerText.text!,
-                                          seasons: seasonsPickerText.text!,
-                                          sex: sexPickerText.text!)
-            delegate?.listDetailViewController(self, didFinishAdding: packingList)
+        if textField.text != "" && regionPickerText.text != "" && lengthPickerText.text != "" && seasonsPickerText.text != "" && sexPickerText.text != "" {
+            ref.child("Packing Lists").childByAutoId().setValue(["listName":textField.text, "region":regionPickerText.text, "length":lengthPickerText.text, "seasons":seasonsPickerText.text, "sex":sexPickerText.text])
         }
+        
+        
+        
+//        if let packingList = packingListToEdit(listName: textField.text!,
+//                                               region: regionPickerText.text!,
+//                                               length: lengthPickerText.text!,
+//                                               seasons: seasonsPickerText.text!,
+//                                               sex: sexPickerText.text!) {
+//            let packingListRef = self.ref.child(
+//
+////            packingList.listName = textField.text!
+////            packingList.region = regionPickerText.text!
+////            packingList.length = lengthPickerText.text!
+////            packingList.seasons = seasonsPickerText.text!
+////            packingList.sex = sexPickerText.text!
+////            delegate?.listDetailViewController(self, didFinishEditing: packingList)
+//        } else {
+//            let packingList = packingListToEdit(listName: textField.text!,
+//                                          region: regionPickerText.text!,
+//                                          length: lengthPickerText.text!,
+//                                          seasons: seasonsPickerText.text!,
+//                                          sex: sexPickerText.text!)
+//            delegate?.listDetailViewController(self, didFinishAdding: packingList)
+//        }
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return sections[section]
+//    }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        return sections.count
+//    }
     
     
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == 1 {
+        if indexPath.section <= 8 {
             return indexPath
         } else {
             return nil
@@ -116,7 +151,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
             countrows = self.seasonsPickerData.count
         }
         else if pickerView == sexPicker {
-            countrows = self.seasonsPickerData.count
+            countrows = self.sexPickerData.count
         }
         return countrows
     }

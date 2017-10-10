@@ -12,8 +12,8 @@ import Firebase
 
 protocol ItemDetailViewControllerDelegate: class {
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController)
-    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: PackingListItem)
-    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: PackingListItem)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: DatabasePackingListItem)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: DatabasePackingListItem)
 }
 
 class ItemDetailViewController: UITableViewController, UITextFieldDelegate {

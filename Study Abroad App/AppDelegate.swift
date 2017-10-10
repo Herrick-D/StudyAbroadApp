@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     var window: UIWindow?
-    let dataModel = DataModel()
+    //let dataModel = DataModel()
     
     override init() {
         FirebaseApp.configure()
@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]? = [:]) -> Bool {
         UIApplication.shared.statusBarStyle = .lightContent
+        Database.database().isPersistenceEnabled = true
         return true
     }
 
@@ -34,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
    func applicationDidEnterBackground(_ application: UIApplication) {
-        saveData()
+        //saveData()
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -46,12 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        saveData()
+        //saveData()
     }
     
-    func saveData() {
-        dataModel.savePackingLists()
-    }
+//    func saveData() {
+//        dataModel.savePackingLists()
+//    }
 }
 
 

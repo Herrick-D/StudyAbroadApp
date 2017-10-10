@@ -10,7 +10,6 @@
 		9120D7121F7A95180073CDAC /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7111F7A95180073CDAC /* AllListsViewController.swift */; };
 		9120D7141F7A98690073CDAC /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7131F7A98690073CDAC /* DataModel.swift */; };
 		9120D7161F7A9F890073CDAC /* PackingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7151F7A9F890073CDAC /* PackingListViewController.swift */; };
-		9120D7181F7AA3EE0073CDAC /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */; };
 		9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */; };
 		9120D71C1F7AB68A0073CDAC /* PackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */; };
 		9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71D1F7AB83A0073CDAC /* PackingList.swift */; };
@@ -33,7 +32,6 @@
 		9120D7111F7A95180073CDAC /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
 		9120D7131F7A98690073CDAC /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		9120D7151F7A9F890073CDAC /* PackingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListViewController.swift; sourceTree = "<group>"; };
-		9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
 		9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListItem.swift; sourceTree = "<group>"; };
 		9120D71D1F7AB83A0073CDAC /* PackingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingList.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 				9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */,
 				9120D71D1F7AB83A0073CDAC /* PackingList.swift */,
 				9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */,
-				9120D7171F7AA3EE0073CDAC /* ItemDetailViewController.swift */,
 				9120D7151F7A9F890073CDAC /* PackingListViewController.swift */,
 				9120D7111F7A95180073CDAC /* AllListsViewController.swift */,
 				9120D7131F7A98690073CDAC /* DataModel.swift */,
@@ -284,7 +281,6 @@
 				9120D71C1F7AB68A0073CDAC /* PackingListItem.swift in Sources */,
 				9120D7161F7A9F890073CDAC /* PackingListViewController.swift in Sources */,
 				9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */,
-				9120D7181F7AA3EE0073CDAC /* ItemDetailViewController.swift in Sources */,
 				9120D7141F7A98690073CDAC /* DataModel.swift in Sources */,
 				91A7C7881F892757009889F8 /* DatabasePackingList.swift in Sources */,
 				91A7C7861F8925E2009889F8 /* User.swift in Sources */,

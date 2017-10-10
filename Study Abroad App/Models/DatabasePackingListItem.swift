@@ -11,16 +11,18 @@ import Firebase
 
 struct DatabasePackingListItem {
     let key: String
+    //let listName: String
     let itemName: String
-    let addedByUser: String
+    //let addedByUser: String
     let quantity: String
-    let checked: Bool
+    var checked: Bool
     let ref: DatabaseReference?
     
-    init(itemName: String, addedByUser: String, quantity: String, checked: Bool, key: String = "") {
+    init(itemName: String, quantity: String, checked: Bool, key: String = "") {
         self.key = key
+        //self.listName = listName
         self.itemName = itemName
-        self.addedByUser = addedByUser
+        //self.addedByUser = addedByUser
         self.quantity = quantity
         self.checked = checked
         self.ref = nil
@@ -29,8 +31,9 @@ struct DatabasePackingListItem {
     init(snapshot: DataSnapshot) {
         key = snapshot.key
         let snapshotValue = snapshot.value as! [String: AnyObject]
+        //listName = snapshotValue["listName"] as! String
         itemName = snapshotValue["itemName"] as! String
-        addedByUser = snapshotValue["addedByUser"] as! String
+        //addedByUser = snapshotValue["addedByUser"] as! String
         quantity = snapshotValue["quantity"] as! String
         checked = snapshotValue["checked"] as! Bool
         ref = snapshot.ref
@@ -38,11 +41,16 @@ struct DatabasePackingListItem {
     
     func toAnyObject() -> Any {
         return [
+            //"listName": listName,
             "itemName": itemName,
-            "addedByUser": addedByUser,
+            //"addedByUser": addedByUser,
             "quantity": quantity,
             "checked": checked,
         ]
+    }
+    
+    mutating func toggleChecked() {
+        checked = !checked
     }
     
 }

@@ -7,25 +7,41 @@
 //
 
 import UIKit
+import Firebase
 
 class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
-    var dataModel: DataModel!
+    var lists: [DatabasePackingList] = []
+    let ref = Database.database().reference(withPath: "packingList-items")
+    var user: User!
+    
+    //var dataModel: DataModel!
+    
+    //var packingList: DatabasePackingList!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref.queryOrdered(byChild: "listName").observe(.value, with: { snapshot in
+            var newLists: [DatabasePackingList] = []
+            for list in snapshot.children {
+                let packingList = DatabasePackingList(snapshot: list as! DataSnapshot)
+                newLists.append(packingList)
+            }
+            self.lists = newLists
+            self.tableView.reloadData()
+        })
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.delegate = self
-        let index = dataModel.indexOfSelectedPackingList
-        if (index >= 0 && index < dataModel.lists.count) {
-            let packingList = dataModel.lists[index]
-            performSegue(withIdentifier: "ShowPackingList", sender: packingList)
-        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        navigationController?.delegate = self
+//        let index = dataModel.indexOfSelectedPackingList
+//        if (index >= 0 && index < dataModel.lists.count) {
+//            let packingList = dataModel.lists[index]
+//            performSegue(withIdentifier: "ShowPackingList", sender: packingList)
+//        }
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -37,23 +53,29 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dataModel.indexOfSelectedPackingList = indexPath.row
-        let packingList = dataModel.lists[indexPath.row]
-        performSegue(withIdentifier: "ShowPackingList", sender: packingList)
+        
+        let packingList = lists[indexPath.row]
+            performSegue(withIdentifier: "ShowPackingList", sender: packingList)
+        
+//        dataModel.indexOfSelectedPackingList = indexPath.row
+//        let packingList = dataModel.lists[indexPath.row]
+//        performSegue(withIdentifier: "ShowPackingList", sender: packingList)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataModel.lists.count
+        return lists.count
+        //return dataModel.lists.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = makeCell(for: tableView)
-        let packingList = dataModel.lists[indexPath.row]
-        cell.textLabel!.text = packingList.name
+        let packingList = lists[indexPath.row]
+        //let packingList = dataModel.lists[indexPath.row]
+        cell.textLabel!.text = packingList.listName
         cell.accessoryType = .detailDisclosureButton
         cell.detailTextLabel!.text = "\(packingList.countUncheckedItems()) Remaining"
         let count = packingList.countUncheckedItems()
-        if packingList.items.count == 0 {
+        if lists.count == 0 {
             cell.detailTextLabel!.text = "(No Items)"
         } else if count == 0 {
             cell.detailTextLabel!.text = "All Done!"
@@ -75,7 +97,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowPackingList" {
             let controller = segue.destination as! PackingListViewController
-            controller.packingList = sender as! PackingList
+            controller.items = [sender as! DatabasePackingListItem]
         } else if segue.identifier == "AddPackingList" {
             let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! ListDetailViewController
@@ -88,21 +110,22 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         dismiss(animated: true, completion: nil)
     }
     
-    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: PackingList) {
-        dataModel.lists.append(packingList)
-        dataModel.sortPackingLists()
-        tableView.reloadData()
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: PackingList){
-        dataModel.sortPackingLists()
-        tableView.reloadData()
-        dismiss(animated: true, completion: nil)
-    }
+//    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: DatabasePackingList) {
+//
+////        dataModel.lists.append(packingList)
+////        dataModel.sortPackingLists()
+//        tableView.reloadData()
+//        dismiss(animated: true, completion: nil)
+//    }
+//
+//    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: DatabasePackingList){
+//        dataModel.sortPackingLists()
+//        tableView.reloadData()
+//        dismiss(animated: true, completion: nil)
+//    }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        dataModel.lists.remove(at: indexPath.row)
+        lists.remove(at: indexPath.row)
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
     }
@@ -111,15 +134,15 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let navigationController = storyboard!.instantiateViewController(withIdentifier: "ListDetailNavigationController") as! UINavigationController
         let controller = navigationController.topViewController as! ListDetailViewController
         controller.delegate = self
-        let packingList = dataModel.lists[indexPath.row]
+        let packingList = lists[indexPath.row]
         controller.packingListToEdit = packingList
         present(navigationController, animated: true, completion: nil)
     }
     
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        //was the back button tapped?
-        if viewController === self {
-            dataModel.indexOfSelectedPackingList = -1
-        }
-    }
+//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+//        //was the back button tapped?
+//        if viewController === self {
+//            dataModel.indexOfSelectedPackingList = -1
+//        }
+//    }
 }

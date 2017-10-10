@@ -15,28 +15,54 @@ import UIKit
 class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var regionPickerText: UITextField!
-    @IBOutlet weak var lengthPickerText: UITextField!
-    @IBOutlet weak var seasonsPickerText: UITextField!
-    @IBOutlet weak var sexPickerText: UITextField!
-    
-    @IBOutlet weak var regionPicker: UIPickerView!
-    @IBOutlet weak var lengthPicker: UIPickerView!
-    @IBOutlet weak var seasonsPicker: UIPickerView!
-    @IBOutlet weak var sexPicker: UIPickerView!
-    
     var regionPickerData = ["Northern Europe", "Greenland & Iceland", "Southern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Russia", "West Asia", "East Asia", "South Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "North Africa", "West Africa", "East Africa", "Central Africa", "South Africa", "North America", "Central America", "South America"]
+    var regionPicker = UIPickerView()
     
+    @IBOutlet weak var lengthPickerText: UITextField!
     var lengthPickerData = ["1-3 weeks", "1-3 months", "4-6 months", "7-12 months", "over 1 year"]
+    var lengthPicker = UIPickerView()
     
+    @IBOutlet weak var seasonsPickerText: UITextField!
     var seasonsPickerData = ["Autumn", "Winter", "Spring", "Summer", "Autumn + Winter", "Winter + Spring", "Spring + Summer", "Summer + Autumn", "Autumn + Winter + Spring", "Winter + Spring + Summer", "Spring + Summer + Autumn", "Summer + Autumn + Winter", "Autumn + Winter + Spring + Summer" ]
+    var seasonsPicker = UIPickerView()
     
+    @IBOutlet weak var sexPickerText: UITextField!
     var sexPickerData = ["Female", "Male", "Other"]
+    var sexPicker = UIPickerView()
+    
+//    @IBOutlet weak var regionPicker: UIPickerView!
+//    @IBOutlet weak var lengthPicker: UIPickerView!
+//    @IBOutlet weak var seasonsPicker: UIPickerView!
+//    @IBOutlet weak var sexPicker: UIPickerView!
+    
+//    var regionPickerData = ["Northern Europe", "Greenland & Iceland", "Southern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Russia", "West Asia", "East Asia", "South Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "North Africa", "West Africa", "East Africa", "Central Africa", "South Africa", "North America", "Central America", "South America"]
+    
+//    var lengthPickerData = ["1-3 weeks", "1-3 months", "4-6 months", "7-12 months", "over 1 year"]
+    
+//    var seasonsPickerData = ["Autumn", "Winter", "Spring", "Summer", "Autumn + Winter", "Winter + Spring", "Spring + Summer", "Summer + Autumn", "Autumn + Winter + Spring", "Winter + Spring + Summer", "Spring + Summer + Autumn", "Summer + Autumn + Winter", "Autumn + Winter + Spring + Summer" ]
+    
+//    var sexPickerData = ["Female", "Male", "Other"]
     
     let sections = ["Packing List Name", "Region", "Length of Trip", "Seasons", "Sex"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        regionPicker.delegate = self
+        regionPicker.dataSource = self
+        regionPickerText.inputView = regionPicker
 
+        lengthPicker.delegate = self
+        lengthPicker.dataSource = self
+        lengthPickerText.inputView = lengthPicker
+        
+        seasonsPicker.delegate = self
+        seasonsPicker.dataSource = self
+        seasonsPickerText.inputView = seasonsPicker
+        
+        sexPicker.delegate = self
+        sexPicker.dataSource = self
+        sexPickerText.inputView = sexPicker
+        
         // Do any additional setup after loading the view.
     }
 
@@ -60,7 +86,7 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
             countrows = self.seasonsPickerData.count
         }
         else if pickerView == sexPicker {
-            countrows = self.seasonsPickerData.count
+            countrows = self.sexPickerData.count
         }
         return countrows
     }
