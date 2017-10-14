@@ -16,12 +16,15 @@ class LoginViewController: UIViewController {
     let loginToFeatures = "FeaturesViewController"
     
     
+    
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let passwordSecure = passwordTextField
+        passwordSecure?.isSecureTextEntry = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
