@@ -13,6 +13,7 @@ struct User {
     let uid: String
     let email: String
     let fName: String
+    let packingLists: [DatabasePackingList] = []
     //let password: String
     
     init(authData: User) {

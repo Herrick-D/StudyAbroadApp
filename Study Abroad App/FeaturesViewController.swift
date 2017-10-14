@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import Firebase
 
 class FeaturesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        if Auth.auth().currentUser?.uid == nil {
+            logout()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,19 +28,21 @@ class FeaturesViewController: UIViewController {
         performSegue(withIdentifier: "PackingListOptions", sender: self)
     }
     
+    @IBAction func logoutButtonTapped(_ sender: Any) {
+            logout()
+    }
+    
+    func logout() {
+        try! Auth.auth().signOut()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginViewController = storyboard.instantiateViewController(withIdentifier: "Login")
+        present(loginViewController, animated: false, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "PackingListOptions") {
             
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

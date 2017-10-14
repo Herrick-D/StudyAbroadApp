@@ -23,6 +23,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //statusImageView?.image = UIImage(named: "close-up-globe.jpeg")
         let passwordSecure = passwordTextField
         passwordSecure?.isSecureTextEntry = true
     }
@@ -36,12 +37,10 @@ class LoginViewController: UIViewController {
     // Actions:
     @IBAction func loginTapped(_ sender: Any) {
         login()
-        self.presentFeaturesScreen()
     }
     
     @IBAction func createAccountTapped(_ sender: Any) {
         signUp()
-        self.presentFeaturesScreen()
     }
     
     // Functions:
@@ -54,13 +53,17 @@ class LoginViewController: UIViewController {
             print("Password must not be empty")
             return
         }
-        Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
-            if error != nil {
-                print("Authorization error")
-                return
-            }
-            self.dismiss(animated: false, completion: nil)
-        })
+        if (password != nil && email != nil) {
+            Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
+                if error != nil {
+                    print("Authorization error")
+                    return
+                }
+                //self.dismiss(animated: false, completion: nil)
+                self.presentFeaturesScreen()
+            })
+        }
+        
     }
     
     func signUp() {
@@ -76,23 +79,26 @@ class LoginViewController: UIViewController {
             print("Password required")
             return
         }
-        Auth.auth().createUser(withEmail: email, password: password) { user, error in
-            if error != nil {
-                print("Authentication Errror")
-                return
-            }
-            guard let uid = user?.uid else {
-                return
-            }
-            let userReference = self.databasRef.child("users").child(uid)
-            let values = ["username": username, "email": email]
-            userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
+        if (username != nil && password != nil && email != nil) {
+            Auth.auth().createUser(withEmail: email, password: password) { user, error in
                 if error != nil {
-                    print("User info error")
+                    print("Authentication Errror")
                     return
                 }
-                self.dismiss(animated: false, completion: nil)
-            })
+                guard let uid = user?.uid else {
+                    return
+                }
+                let userReference = self.databasRef.child("users").child(uid)
+                let values = ["username": username, "email": email]
+                userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                    if error != nil {
+                        print("User info error")
+                        return
+                    }
+                    //self.dismiss(animated: false, completion: nil)
+                    self.presentFeaturesScreen()
+                })
+            }
         }
     }
     

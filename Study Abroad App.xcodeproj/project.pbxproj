@@ -21,6 +21,9 @@
 		91A7C78A1F89292D009889F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7891F89292D009889F8 /* LoginViewController.swift */; };
 		91A7C78C1F893EA2009889F8 /* FeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */; };
 		91A7C78F1F8945B6009889F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */; };
+		91B5BD071F92A2F90072D985 /* map-on-table.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 91B5BD041F92979E0072D985 /* map-on-table.jpeg */; };
+		91B5BD081F92A2F90072D985 /* close-up-globe.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 91B5BD051F9297AE0072D985 /* close-up-globe.jpeg */; };
+		91B5BD091F92A2F90072D985 /* things-on-sidewalk.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 91B5BD061F9297B50072D985 /* things-on-sidewalk.jpeg */; };
 		91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6EC1B1F794C99000A7527 /* AppDelegate.swift */; };
 		91F6EC211F794C99000A7527 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC1F1F794C99000A7527 /* Main.storyboard */; };
 		91F6EC231F794C99000A7527 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC221F794C99000A7527 /* Assets.xcassets */; };
@@ -44,6 +47,9 @@
 		91A7C7891F89292D009889F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesViewController.swift; sourceTree = "<group>"; };
 		91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		91B5BD041F92979E0072D985 /* map-on-table.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "map-on-table.jpeg"; sourceTree = "<group>"; };
+		91B5BD051F9297AE0072D985 /* close-up-globe.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "close-up-globe.jpeg"; sourceTree = "<group>"; };
+		91B5BD061F9297B50072D985 /* things-on-sidewalk.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "things-on-sidewalk.jpeg"; sourceTree = "<group>"; };
 		91F6EC181F794C99000A7527 /* Study Abroad App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Study Abroad App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6EC1B1F794C99000A7527 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91F6EC201F794C99000A7527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -101,6 +107,16 @@
 			path = PackingList;
 			sourceTree = "<group>";
 		};
+		91B5BD031F92978D0072D985 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				91B5BD041F92979E0072D985 /* map-on-table.jpeg */,
+				91B5BD051F9297AE0072D985 /* close-up-globe.jpeg */,
+				91B5BD061F9297B50072D985 /* things-on-sidewalk.jpeg */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		91F6EC0F1F794C99000A7527 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				918CB0E71F8BCD3700EC73AA /* Study Abroad App.entitlements */,
+				91B5BD031F92978D0072D985 /* Images */,
 				91F6EC1F1F794C99000A7527 /* Main.storyboard */,
 				918CB0E91F8BCEE700EC73AA /* PackingList */,
 				91A7C7891F89292D009889F8 /* LoginViewController.swift */,
@@ -212,10 +229,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91B5BD091F92A2F90072D985 /* things-on-sidewalk.jpeg in Resources */,
 				91F6EC261F794C99000A7527 /* LaunchScreen.storyboard in Resources */,
 				91A7C78F1F8945B6009889F8 /* GoogleService-Info.plist in Resources */,
+				91B5BD071F92A2F90072D985 /* map-on-table.jpeg in Resources */,
 				91F6EC231F794C99000A7527 /* Assets.xcassets in Resources */,
 				91F6EC211F794C99000A7527 /* Main.storyboard in Resources */,
+				91B5BD081F92A2F90072D985 /* close-up-globe.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
