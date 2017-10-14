@@ -13,7 +13,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     var lists: [DatabasePackingList] = []
     let ref = Database.database().reference(withPath: "packingList-items")
-    var user: User!
+    let userRef = Database.database().reference(withPath: "Users")
     
     //var dataModel: DataModel!
     

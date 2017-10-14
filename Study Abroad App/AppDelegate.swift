@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]? = [:]) -> Bool {
+        //FirebaseApp.configure()
         UIApplication.shared.statusBarStyle = .lightContent
         Database.database().isPersistenceEnabled = true
         return true

@@ -11,19 +11,16 @@ import Firebase
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
+    // Variables:
+    let databasRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
+    let loginToFeatures = "FeaturesViewController"
+    
+    
+    @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    let loginToFeatures = "FeaturesViewController"
-    
     override func viewDidLoad() {
-        let listener = Auth.auth().addStateDidChangeListener {
-            auth, user in
-            if user != nil {
-                self.presentFeaturesScreen()
-            }
-        }
-        Auth.auth().removeStateDidChangeListener(listener)
         super.viewDidLoad()
     }
     
@@ -32,62 +29,68 @@ class LoginViewController: UIViewController {
             self.presentFeaturesScreen()
         }
     }
+    
+    // Actions:
     @IBAction func loginTapped(_ sender: Any) {
-        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!)
+        login()
         self.presentFeaturesScreen()
-//                , completion: {user, error in
-//                if let firebaseError = error {
-//                    print(firebaseError.localizedDescription)
-//                    return
-//                }
-//                self.presentFeaturesScreen()
-//                print("success")
-//            })
-        
     }
     
     @IBAction func createAccountTapped(_ sender: Any) {
-        let alert = UIAlertController(title: "Create Account",
-                                      message: "All Fields Required",
-                                      preferredStyle: .alert)
-        let saveAction = UIAlertAction(title: "Sign Up",
-                                       style: .default) { action in
-            let fName = alert.textFields![0]
-            let email = alert.textFields![1]
-            let password = alert.textFields![2]
-            Auth.auth().createUser(withEmail: email.text!, password: password.text!) { user, error in
-                if let firebaseError = error {
-                    if let errorCode = AuthErrorCode(rawValue: error!._code) {
-                        switch errorCode {
-                        case .weakPassword:
-                            print("Please provide a strong password")
-                        default:
-                            print("There is an error")
-                        }
-                    }
-                    print(firebaseError.localizedDescription)
+        signUp()
+        self.presentFeaturesScreen()
+    }
+    
+    // Functions:
+    func login() {
+        guard let email = emailTextField.text else {
+            print("Email must not be empty")
+            return
+        }
+        guard let password = passwordTextField.text else {
+            print("Password must not be empty")
+            return
+        }
+        Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
+            if error != nil {
+                print("Authorization error")
+                return
+            }
+            self.dismiss(animated: false, completion: nil)
+        })
+    }
+    
+    func signUp() {
+        guard let username = usernameTextField.text else {
+            print("Username required")
+            return
+        }
+        guard let email = emailTextField.text else {
+            print("Email required")
+            return
+        }
+        guard let password = passwordTextField.text else {
+            print("Password required")
+            return
+        }
+        Auth.auth().createUser(withEmail: email, password: password) { user, error in
+            if error != nil {
+                print("Authentication Errror")
+                return
+            }
+            guard let uid = user?.uid else {
+                return
+            }
+            let userReference = self.databasRef.child("users").child(uid)
+            let values = ["username": username, "email": email]
+            userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                if error != nil {
+                    print("User info error")
                     return
                 }
-                self.presentFeaturesScreen()
-                print("success")
-            }
+                self.dismiss(animated: false, completion: nil)
+            })
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .default)
-        alert.addTextField { textFName in
-            textFName.placeholder = "Enter your first name"
-        }
-        alert.addTextField { textEmail in
-            textEmail.placeholder = "Enter your email"
-        }
-        alert.addTextField { textPassword in
-            textPassword.isSecureTextEntry = true
-            textPassword.placeholder = "Enter your password, at least 6 characters"
-        }
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
     }
     
     func presentFeaturesScreen() {
@@ -98,7 +101,6 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {
             passwordTextField.becomeFirstResponder()
