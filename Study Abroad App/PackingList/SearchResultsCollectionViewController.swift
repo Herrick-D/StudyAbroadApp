@@ -13,9 +13,15 @@ private let reuseIdentifier = "Cell"
 
 class SearchResultsCollectionViewController: UICollectionViewController {
 
+    var backBarButtonItem: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        backBarButtonItem = UIBarButtonItem(title: "Back",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(backButtonDidTouch))
+        navigationItem.leftBarButtonItem = backBarButtonItem
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -23,6 +29,22 @@ class SearchResultsCollectionViewController: UICollectionViewController {
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        backBarButtonItem = UIBarButtonItem(title: "Back",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(backButtonDidTouch))
+        navigationItem.leftBarButtonItem = backBarButtonItem
+    }
+    
+    @objc func backButtonDidTouch() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let searchPage = storyboard.instantiateViewController(withIdentifier: "SearchPageViewController") as! SearchPageViewController //UINavigationController
+        self.navigationController?.pushViewController(searchPage, animated: true)
+        //present(allLists, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {

@@ -13,7 +13,7 @@ class PackingListViewController: UITableViewController { //}, ItemDetailViewCont
     //Properties:
     var items: [DatabasePackingListItem] = []
     let ref = Database.database().reference(withPath: "packingList-items")
-    let usersRef = Database.database().reference(withPath: "online")
+    let usersRef = Database.database().reference(withPath: "Users")
     var user: User!
     
     
@@ -68,9 +68,23 @@ class PackingListViewController: UITableViewController { //}, ItemDetailViewCont
 //            currentUserRef.onDisconnectRemoveValue()
 //        }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let backgroundImage = UIImage(named: "for-packing.jpeg")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+        //tableView.tableFooterView = UIView(frame: CGRect)
+        imageView.contentMode = .scaleAspectFill
+        tableView.backgroundColor = .lightGray
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

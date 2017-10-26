@@ -12,44 +12,80 @@ import Firebase
 class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     var lists: [DatabasePackingList] = []
-    let ref = Database.database().reference(withPath: "packingList-items")
-    let userRef = Database.database().reference(withPath: "Users")
+    let databaseListRef = Database.database().reference(withPath: "Packing List")
+    let usersRef = Database.database().reference(withPath: "Users")
+    var user: User!
+    var backBarButtonItem: UIBarButtonItem!
     
     //var dataModel: DataModel!
     
     //var packingList: DatabasePackingList!
     
+    weak var delegate: ListDetailViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref.queryOrdered(byChild: "listName").observe(.value, with: { snapshot in
-            var newLists: [DatabasePackingList] = []
-            for list in snapshot.children {
-                let packingList = DatabasePackingList(snapshot: list as! DataSnapshot)
-                newLists.append(packingList)
+        let backgroundImage = UIImage(named: "for-packing.jpeg")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+        //tableView.tableFooterView = UIView(frame: CGRect)
+        imageView.contentMode = .scaleAspectFill
+        tableView.backgroundColor = .lightGray
+        
+        backBarButtonItem = UIBarButtonItem(title: "Back",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(backButtonDidTouch))
+        navigationItem.leftBarButtonItem = backBarButtonItem
+        
+        databaseListRef.queryOrdered(byChild: "Packing List").observe(.value, with: { snapshot in
+            var newItems: [DatabasePackingList] = []
+            
+            for item in snapshot.children {
+                let packingList = DatabasePackingList(snapshot: item as! DataSnapshot)
+                newItems.append(packingList)
             }
-            self.lists = newLists
+            
+            self.lists = newItems
             self.tableView.reloadData()
         })
     }
+
+    @objc func backButtonDidTouch() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let features = storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController //UINavigationController
+        self.present(features, animated: true, completion: nil)
+    }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        navigationController?.delegate = self
-//        let index = dataModel.indexOfSelectedPackingList
-//        if (index >= 0 && index < dataModel.lists.count) {
-//            let packingList = dataModel.lists[index]
-//            performSegue(withIdentifier: "ShowPackingList", sender: packingList)
-//        }
-//    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        backBarButtonItem = UIBarButtonItem(title: "Back",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(backButtonDidTouch))
+        navigationItem.leftBarButtonItem = backBarButtonItem
+        
+        databaseListRef.queryOrdered(byChild: "Packing List").observe(.value, with: { snapshot in
+            var newItems: [DatabasePackingList] = []
+            
+            for item in snapshot.children {
+                let packingList = DatabasePackingList(snapshot: item as! DataSnapshot)
+                newItems.append(packingList)
+            }
+            
+            self.lists = newItems
+            self.tableView.reloadData()
+        })
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -71,9 +107,9 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let cell = makeCell(for: tableView)
         let packingList = lists[indexPath.row]
         //let packingList = dataModel.lists[indexPath.row]
-        cell.textLabel!.text = packingList.listName
+        cell.textLabel?.text = packingList.listName
         cell.accessoryType = .detailDisclosureButton
-        cell.detailTextLabel!.text = "\(packingList.countUncheckedItems()) Remaining"
+        cell.detailTextLabel?.text = "\(packingList.countUncheckedItems()) Remaining"
         let count = packingList.countUncheckedItems()
         if lists.count == 0 {
             cell.detailTextLabel!.text = "(No Items)"
@@ -110,13 +146,13 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         dismiss(animated: true, completion: nil)
     }
     
-//    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: DatabasePackingList) {
-//
-////        dataModel.lists.append(packingList)
-////        dataModel.sortPackingLists()
-//        tableView.reloadData()
-//        dismiss(animated: true, completion: nil)
-//    }
+    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: DatabasePackingList) {
+        
+//        dataModel.lists.append(packingList)
+//        dataModel.sortPackingLists()
+        tableView.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
 //
 //    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: DatabasePackingList){
 //        dataModel.sortPackingLists()
@@ -145,4 +181,5 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
 //            dataModel.indexOfSelectedPackingList = -1
 //        }
 //    }
+    
 }

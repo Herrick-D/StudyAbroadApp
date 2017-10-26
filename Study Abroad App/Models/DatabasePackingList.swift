@@ -18,8 +18,9 @@ struct DatabasePackingList {
     let seasons: String
     let sex: String
     let ref: DatabaseReference?
-    let items: [DatabasePackingListItem] = []
+    var items: [DatabasePackingListItem] = []
     
+    //addedByUser: String,
     init(listName: String, addedByUser: String, region: String, length: String, seasons: String, sex: String, key: String = "") {
         self.key = key
         self.listName = listName
@@ -46,7 +47,7 @@ struct DatabasePackingList {
     func toAnyObject() -> Any {
         return [
             "listName": listName,
-            "addedByUser": addedByUser,
+            //"addedByUser": addedByUser,
             "region": region,
             "length": length,
             "seasons": seasons,

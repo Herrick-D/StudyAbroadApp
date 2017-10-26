@@ -88,7 +88,7 @@ class LoginViewController: UIViewController {
                 guard let uid = user?.uid else {
                     return
                 }
-                let userReference = self.databasRef.child("users").child(uid)
+                let userReference = self.databasRef.child("Users").child(uid)
                 let values = ["username": username, "email": email]
                 userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
                     if error != nil {
