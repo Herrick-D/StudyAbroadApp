@@ -11,12 +11,15 @@ import Firebase
 
 class PackingListViewController: UITableViewController { //}, ItemDetailViewControllerDelegate {
     //Properties:
+    
+    var databaseRef: DatabaseReference?
+    //let databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
     var items: [DatabasePackingListItem] = []
     let ref = Database.database().reference(withPath: "packingList-items")
     let usersRef = Database.database().reference(withPath: "Users")
     var user: User!
     
-    
+   
     
     
     

@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class LoginViewController: UIViewController {
     // Variables:
-    let databasRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
+    let databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
     let loginToFeatures = "FeaturesViewController"
     
     
@@ -88,7 +88,7 @@ class LoginViewController: UIViewController {
                 guard let uid = user?.uid else {
                     return
                 }
-                let userReference = self.databasRef.child("Users").child(uid)
+                let userReference = self.databaseRef.child("Users").child(uid)
                 let values = ["username": username, "email": email]
                 userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
                     if error != nil {

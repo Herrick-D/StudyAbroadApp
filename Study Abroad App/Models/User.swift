@@ -12,18 +12,18 @@ import Firebase
 struct User {
     let uid: String
     let email: String
-    let fName: String
-    //let packingLists: [DatabasePackingList] = []
+    let username: String
+    
     
     init(authData: User) {
         uid = authData.uid
         email = authData.email
-        fName = authData.fName
+        username = authData.username
     }
     
-    init(uid: String, email: String, fName: String) {
+    init(uid: String, email: String, username: String) {
         self.uid = uid
         self.email = email
-        self.fName = fName
+        self.username = username
     }
 }

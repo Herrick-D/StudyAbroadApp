@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Firebase
 //protocol SearchResultsCollectionViewControllerDelegate: class {
 //    func searchResultsCollectionViewController(_ controller: SearchResultsCollectionViewController, didFinishSelecting packingList: PackingList)
 //}

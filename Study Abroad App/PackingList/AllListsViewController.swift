@@ -9,177 +9,159 @@
 import UIKit
 import Firebase
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
-    
+class AllListsViewController: UITableViewController, UINavigationControllerDelegate {
+    //Properties
     var lists: [DatabasePackingList] = []
-    let databaseListRef = Database.database().reference(withPath: "Packing List")
+    var databaseRef: DatabaseReference!
+    let ref = Database.database().reference(withPath: "Packing Lists")
     let usersRef = Database.database().reference(withPath: "Users")
     var user: User!
     var backBarButtonItem: UIBarButtonItem!
     
-    //var dataModel: DataModel!
     
-    //var packingList: DatabasePackingList!
-    
-    weak var delegate: ListDetailViewController?
-    
+    //UIViewController Lifecycle
     override func viewDidLoad() {
+        databaseRef = Database.database().reference().child("Users")
         super.viewDidLoad()
+        backgroundImage()
+        makeBackButton()
+        displayLists()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        databaseRef = Database.database().reference().child("Users")
+        super.viewWillAppear(animated)
+        backgroundImage()
+        makeBackButton()
+        //displayLists()
+    }
+    
+    //UITableView Delegate Methods
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return lists.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            
+            //cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        //let packingList = lists[indexPath.row]
+        let packingList: DatabasePackingList
+        packingList = lists[indexPath.row]
+        cell.textLabel?.text = packingList.listName
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let packingList = lists[indexPath.row]
+            //packingList.self?.removeValue()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        let packingList = lists[indexPath.row]
+        
+    }
+    
+    //Functions
+    func backgroundImage() {
         let backgroundImage = UIImage(named: "for-packing.jpeg")
         let imageView = UIImageView(image: backgroundImage)
         self.tableView.backgroundView = imageView
-        //tableView.tableFooterView = UIView(frame: CGRect)
         imageView.contentMode = .scaleAspectFill
         tableView.backgroundColor = .lightGray
-        
+    }
+    
+    func makeBackButton() {
         backBarButtonItem = UIBarButtonItem(title: "Back",
                                             style: .plain,
                                             target: self,
                                             action: #selector(backButtonDidTouch))
         navigationItem.leftBarButtonItem = backBarButtonItem
-        
-        databaseListRef.queryOrdered(byChild: "Packing List").observe(.value, with: { snapshot in
-            var newItems: [DatabasePackingList] = []
-            
-            for item in snapshot.children {
-                let packingList = DatabasePackingList(snapshot: item as! DataSnapshot)
-                newItems.append(packingList)
-            }
-            
-            self.lists = newItems
-            self.tableView.reloadData()
-        })
     }
-
+    
     @objc func backButtonDidTouch() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let features = storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController //UINavigationController
         self.present(features, animated: true, completion: nil)
     }
     
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        backBarButtonItem = UIBarButtonItem(title: "Back",
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(backButtonDidTouch))
-        navigationItem.leftBarButtonItem = backBarButtonItem
-        
-        databaseListRef.queryOrdered(byChild: "Packing List").observe(.value, with: { snapshot in
-            var newItems: [DatabasePackingList] = []
-            
-            for item in snapshot.children {
-                let packingList = DatabasePackingList(snapshot: item as! DataSnapshot)
-                newItems.append(packingList)
-            }
-            
-            self.lists = newItems
-            self.tableView.reloadData()
-        })
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let packingList = lists[indexPath.row]
-            performSegue(withIdentifier: "ShowPackingList", sender: packingList)
-        
-//        dataModel.indexOfSelectedPackingList = indexPath.row
-//        let packingList = dataModel.lists[indexPath.row]
-//        performSegue(withIdentifier: "ShowPackingList", sender: packingList)
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
-        //return dataModel.lists.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = makeCell(for: tableView)
-        let packingList = lists[indexPath.row]
-        //let packingList = dataModel.lists[indexPath.row]
-        cell.textLabel?.text = packingList.listName
-        cell.accessoryType = .detailDisclosureButton
-        cell.detailTextLabel?.text = "\(packingList.countUncheckedItems()) Remaining"
-        let count = packingList.countUncheckedItems()
-        if lists.count == 0 {
-            cell.detailTextLabel!.text = "(No Items)"
-        } else if count == 0 {
-            cell.detailTextLabel!.text = "All Done!"
-        } else {
-            cell.detailTextLabel!.text = "\(count) Remaining"
-        }
-        return cell
-    }
-    
-    func makeCell(for tableView: UITableView) -> UITableViewCell {
-        let cellIdentifier = "Cell"
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
-            return cell
-        } else {
-            return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
-        }
+    func presentPackingListViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let packingList = storyboard.instantiateViewController(withIdentifier: "PackingListViewController") as! PackingListViewController
+        self.present(packingList, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(allLists, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowPackingList" {
-            let controller = segue.destination as! PackingListViewController
-            controller.items = [sender as! DatabasePackingListItem]
-        } else if segue.identifier == "AddPackingList" {
+        if segue.identifier == "AddPackingList" {
             let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.topViewController as! ListDetailViewController
-            controller.delegate = self
-            controller.packingListToEdit = nil
+            let listDetailVC = navigationController.topViewController as! ListDetailViewController
+            listDetailVC.packingListToEdit = nil
+            listDetailVC.databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
+            listDetailVC.user = user
         }
     }
     
-    func listDetailViewControllerDidCancel(_ controller: ListDetailViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: DatabasePackingList) {
-        
-//        dataModel.lists.append(packingList)
-//        dataModel.sortPackingLists()
-        tableView.reloadData()
-        dismiss(animated: true, completion: nil)
-    }
+    func displayLists() {
+        if Auth.auth().currentUser != nil {
+            let currUser = Auth.auth().currentUser
+            if let currUser = currUser {
+                let uid = currUser.uid
+                //let listRef = databaseRef.child("Users").child(uid).child("PackingList")
+                
+                databaseRef.child(uid).child("PackingList").observe(.value, with: { (snapshot) in
+                    var newLists: [DatabasePackingList] = []
+                    for child in snapshot.children {
+                        let snap = child as! DataSnapshot
+                        if let dictionary = snap.value as? [String: AnyObject] {
+                            let list = DatabasePackingList()
+                            //list.setValuesForKeys(dictionary)
+                            
+                            list.listName = dictionary["listName"] as! String
+                            print(list.listName)
+                            newLists.append(list)
+                            //self.lists.append(list)
 //
-//    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: DatabasePackingList){
-//        dataModel.sortPackingLists()
-//        tableView.reloadData()
-//        dismiss(animated: true, completion: nil)
-//    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        lists.remove(at: indexPath.row)
-        let indexPaths = [indexPath]
-        tableView.deleteRows(at: indexPaths, with: .automatic)
+                        }
+                        self.lists = newLists
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            //self.tableView.reloadData()
+                        //}
+                    }
+                    
+                    
+                    
+                    
+                    //                    if snapshot.childrenCount > 0 {
+//                        self.lists.removeAll()
+//                        for list in snapshot.children.allObjects as! [DataSnapshot] {
+//                            //let snap = list as! DataSnapshot
+//                            let listObject = list.value as? [String: AnyObject]
+//                            let listName = listObject?["listName"]
+//                            let region = listObject?["region"]
+//                            let length = listObject?["length"]
+//                            let seasons = listObject?["seasons"]
+//                            let sex = listObject?["sex"]
+//                            let shared = listObject?["shared"]
+//
+//                            //let listData = DatabasePackingList(listName: (listName as! String?)!, region: (region as! String?)!, length: (length as! String?)!, seasons: (seasons as! String?)!, sex: (sex as! String?)!, shared: ((shared as! Bool?) != nil))
+//                            self.lists.append(listData)
+//                        }
+//
+                    
+//                    }
+                    
+                })
+            }
+        }
     }
-    
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let navigationController = storyboard!.instantiateViewController(withIdentifier: "ListDetailNavigationController") as! UINavigationController
-        let controller = navigationController.topViewController as! ListDetailViewController
-        controller.delegate = self
-        let packingList = lists[indexPath.row]
-        controller.packingListToEdit = packingList
-        present(navigationController, animated: true, completion: nil)
-    }
-    
-//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-//        //was the back button tapped?
-//        if viewController === self {
-//            dataModel.indexOfSelectedPackingList = -1
-//        }
-//    }
-    
 }
+
+

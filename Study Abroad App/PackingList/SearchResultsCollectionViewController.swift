@@ -13,6 +13,8 @@ private let reuseIdentifier = "Cell"
 
 class SearchResultsCollectionViewController: UICollectionViewController {
 
+    let databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
+    
     var backBarButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
