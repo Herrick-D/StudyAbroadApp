@@ -43,11 +43,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            
-            //cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        //let packingList = lists[indexPath.row]
         let packingList: DatabasePackingList
         packingList = lists[indexPath.row]
         cell.textLabel?.text = packingList.listName
@@ -57,14 +53,35 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let packingList = lists[indexPath.row]
-            //packingList.self?.removeValue()
+            packingList.ref.removeValue()
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let navigationController = storyboard!.instantiateViewController(withIdentifier: "ListDetailNavigationController") as! UINavigationController
+        
+        let controller = navigationController.topViewController as! ListDetailViewController
+        controller.packingListToEdit = lists[indexPath.row]
+        controller.databaseRef = lists[indexPath.row].ref
+        present(navigationController, animated: true, completion: nil)
+        //let listKey = lists[indexPath.row].key
+        
+        //print(itemKey)
+        //let ref = databaseRef!.child("items")
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         let packingList = lists[indexPath.row]
-        
+        print(packingList.key)
+        performSegue(withIdentifier: "ShowPackingList", sender: packingList)
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
+        cell.textLabel?.textColor = UIColor.black
+        cell.contentView.layer.borderColor = UIColor.gray.cgColor
+        cell.contentView.layer.borderWidth = 0.5
     }
     
     //Functions
@@ -94,7 +111,6 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let packingList = storyboard.instantiateViewController(withIdentifier: "PackingListViewController") as! PackingListViewController
         self.present(packingList, animated: true, completion: nil)
-        //self.navigationController?.pushViewController(allLists, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -105,6 +121,13 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
             listDetailVC.databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
             listDetailVC.user = user
         }
+        else if segue.identifier == "ShowPackingList" {
+            if let indexpath = tableView.indexPathForSelectedRow {
+                let controller = segue.destination as! PackingListViewController
+                controller.databaseRef = lists[indexpath.row].ref
+                print(controller.databaseRef!)
+            }
+        }
     }
     
     func displayLists() {
@@ -112,56 +135,19 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
             let currUser = Auth.auth().currentUser
             if let currUser = currUser {
                 let uid = currUser.uid
-                //let listRef = databaseRef.child("Users").child(uid).child("PackingList")
-                
                 databaseRef.child(uid).child("PackingList").observe(.value, with: { (snapshot) in
-                    var newLists: [DatabasePackingList] = []
-                    for child in snapshot.children {
-                        let snap = child as! DataSnapshot
-                        if let dictionary = snap.value as? [String: AnyObject] {
-                            let list = DatabasePackingList()
-                            //list.setValuesForKeys(dictionary)
-                            
-                            list.listName = dictionary["listName"] as! String
-                            print(list.listName)
-                            newLists.append(list)
-                            //self.lists.append(list)
-//
-                        }
-                        self.lists = newLists
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                            //self.tableView.reloadData()
-                        //}
+                    var newLists = [DatabasePackingList]()
+                    for packingList in snapshot.children {
+                        let packList = DatabasePackingList(snapshot: packingList as! DataSnapshot)
+                        newLists.append(packList)
                     }
-                    
-                    
-                    
-                    
-                    //                    if snapshot.childrenCount > 0 {
-//                        self.lists.removeAll()
-//                        for list in snapshot.children.allObjects as! [DataSnapshot] {
-//                            //let snap = list as! DataSnapshot
-//                            let listObject = list.value as? [String: AnyObject]
-//                            let listName = listObject?["listName"]
-//                            let region = listObject?["region"]
-//                            let length = listObject?["length"]
-//                            let seasons = listObject?["seasons"]
-//                            let sex = listObject?["sex"]
-//                            let shared = listObject?["shared"]
-//
-//                            //let listData = DatabasePackingList(listName: (listName as! String?)!, region: (region as! String?)!, length: (length as! String?)!, seasons: (seasons as! String?)!, sex: (sex as! String?)!, shared: ((shared as! Bool?) != nil))
-//                            self.lists.append(listData)
-//                        }
-//
-                    
-//                    }
-                    
+                    self.lists = newLists
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 })
             }
         }
     }
 }
-
 

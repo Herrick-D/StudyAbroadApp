@@ -9,47 +9,39 @@
 import Foundation
 import Firebase
 
-struct DatabasePackingListItem {
-    let key: String
-    //let listName: String
-    let itemName: String
-    //let addedByUser: String
-    let quantity: String
-    var checked: Bool
-    let ref: DatabaseReference?
+//Rework this one to look like DatabasePackingList
+
+class DatabasePackingListItem {
+    var key: String!
+    var itemName: String!
+    var quantity: String!
+    var checked: Bool!
+    var ref: DatabaseReference!
     
     init(itemName: String, quantity: String, checked: Bool, key: String = "") {
         self.key = key
-        //self.listName = listName
         self.itemName = itemName
-        //self.addedByUser = addedByUser
         self.quantity = quantity
         self.checked = checked
-        self.ref = nil
+        self.ref = Database.database().reference()
     }
     
     init(snapshot: DataSnapshot) {
-        key = snapshot.key
-        let snapshotValue = snapshot.value as! [String: AnyObject]
-        //listName = snapshotValue["listName"] as! String
-        itemName = snapshotValue["itemName"] as! String
-        //addedByUser = snapshotValue["addedByUser"] as! String
-        quantity = snapshotValue["quantity"] as! String
-        checked = snapshotValue["checked"] as! Bool
-        ref = snapshot.ref
+        self.itemName = (snapshot.value as! NSDictionary)["itemName"] as! String
+        self.quantity = (snapshot.value as! NSDictionary)["quantity"] as! String
+        self.checked = (snapshot.value as! [String: AnyObject])["checked"] as! Bool
+        self.key = snapshot.key
+        self.ref = snapshot.ref
+        
     }
     
     func toAnyObject() -> Any {
-        return [
-            //"listName": listName,
-            "itemName": itemName,
-            //"addedByUser": addedByUser,
-            "quantity": quantity,
-            "checked": checked,
-        ]
+        return ["itemName": itemName,
+                "quantity": quantity,
+                "checked": checked]
     }
     
-    mutating func toggleChecked() {
+    func toggleChecked() {
         checked = !checked
     }
     

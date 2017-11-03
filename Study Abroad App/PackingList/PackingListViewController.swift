@@ -9,115 +9,76 @@
 import UIKit
 import Firebase
 
-class PackingListViewController: UITableViewController { //}, ItemDetailViewControllerDelegate {
+class PackingListViewController: UITableViewController {
     //Properties:
     
     var databaseRef: DatabaseReference?
-    //let databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
     var items: [DatabasePackingListItem] = []
-    let ref = Database.database().reference(withPath: "packingList-items")
-    let usersRef = Database.database().reference(withPath: "Users")
     var user: User!
+    var packingList: DatabasePackingList!
     
-   
-    
-    
-    
-    
-    //var packingList: PackingList!
-    
-//    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: DatabasePackingListItem) {
-//        let newRowIndex = packingList.items.count
-//        packingList.items.append(item)
-//        let indexPath = IndexPath(row: newRowIndex, section: 0)
-//        let indexPaths = [indexPath]
-//        tableView.insertRows(at: indexPaths, with: .automatic)
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: DatabasePackingListItem) {
-//        if let index = items. {
-//        //if let index = packingList.items.index(of: item) {
-//            let indexPath = IndexPath(row: index, section: 0)
-//            if let cell = tableView.cellForRow(at: indexPath) {
-//                configureText(for: cell, with: item)
-//                configureQuantity(for: cell, with: item)
-//            }
-//        }
-//        dismiss(animated: true, completion: nil)
-//    }
+    //View Controller lifecyle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsMultipleSelectionDuringEditing = false
-        ref.queryOrdered(byChild: "itemName").observe(.value, with: { snapshot in
-            var newItems: [DatabasePackingListItem] = []
-            for item in snapshot.children {
-                let packingListItem = DatabasePackingListItem(snapshot: item as! DataSnapshot)
-                newItems.append(packingListItem)
-            }
-            self.items = newItems
-            self.tableView.reloadData()
-        })
-//        Auth.auth().addStateDidChangeListener { auth, user in
-//            guard let user = user else { return }
-//            self.user = User(authData: user)
-//            let currentUserRef = self.usersRef.child(self.user.uid)
-//            currentUserRef.setValue(self.user.email)
-//            currentUserRef.onDisconnectRemoveValue()
-//        }
+        loadListItems()
+        print(databaseRef!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let backgroundImage = UIImage(named: "for-packing.jpeg")
-        let imageView = UIImageView(image: backgroundImage)
-        self.tableView.backgroundView = imageView
-        //tableView.tableFooterView = UIView(frame: CGRect)
-        imageView.contentMode = .scaleAspectFill
-        tableView.backgroundColor = .lightGray
+        backgroundImage()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    
+    //UITableView Methods
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
+        cell.textLabel?.textColor = UIColor.black
+        cell.contentView.layer.borderColor = UIColor.gray.cgColor
+        cell.contentView.layer.borderWidth = 0.5
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
-        //return packingList.items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PackingListItem", for: indexPath)
         let packingListItem = items[indexPath.row]
-        
-        //let item = packingList.items[indexPath.row]
         configureText(for: cell, with: packingListItem)
-        configureCheckmark(for: cell, with: packingListItem)
         configureQuantity(for: cell, with: packingListItem)
+        toggleCellCheckbox(cell, isCompleted: packingListItem.checked)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let itemKey = items[indexPath.row].key
+        print(itemKey)
+        let ref = databaseRef!.child("items")
         let alert = UIAlertController(title: "Packing List Item",
                                       message: "Edit Item",
                                       preferredStyle: .alert)
         
         let saveAction = UIAlertAction(title: "Save",
                                        style: .default) { action in
-            let item = alert.textFields![0]
-            let quantity = alert.textFields![1]
-            let packingListItem = DatabasePackingListItem(itemName: item.text!, quantity: quantity.text!, checked: false)
-            let packingListItemRef = self.ref.child((item.text?.lowercased())!)
-            packingListItemRef.setValue(packingListItem.toAnyObject())
+                                        let item = alert.textFields![0]
+                                        let quantity = alert.textFields![1]
+                                        let packingListItem = ["itemName": item.text!,
+                                                               "quantity": quantity.text!,
+                                                               "checked": false,
+                                                               "key": itemKey,
+                                                               "ref": "\(ref)"] as [String : Any]
+                                        
+                                        let packingListItemRef = ref.child(itemKey!)
+                                        packingListItemRef.setValue(packingListItem)
+                                        
         }
         let cancelAction = UIAlertAction(title: "Cancel",
                                          style: .default)
@@ -135,12 +96,13 @@ class PackingListViewController: UITableViewController { //}, ItemDetailViewCont
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath){
             var packingListItem = items[indexPath.row]
-            //let item = packingList.items[indexPath.row]
-            packingListItem.toggleChecked()
-            configureCheckmark(for: cell, with: packingListItem)
+            let toggleChecked = !packingListItem.checked
+            toggleCellCheckbox(cell, isCompleted: toggleChecked)
+            packingListItem.ref.updateChildValues(["checked": toggleChecked])
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -151,20 +113,25 @@ class PackingListViewController: UITableViewController { //}, ItemDetailViewCont
             let packingListItem = items[indexPath.row]
             packingListItem.ref?.removeValue()
         }
-//        items.remove(at: indexPath.row)
-//        //packingList.items.remove(at: indexPath.row)
-//        let indexPaths = [indexPath]
-//        tableView.deleteRows(at: indexPaths, with: .automatic)
     }
     
-    func configureCheckmark(for cell: UITableViewCell, with item: DatabasePackingListItem) {
+    //Functions
+    
+    func backgroundImage() {
+        let backgroundImage = UIImage(named: "for-packing.jpeg")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+        imageView.contentMode = .scaleAspectFill
+        tableView.backgroundColor = .lightGray
+    }
+    
+    func toggleCellCheckbox(_ cell: UITableViewCell, isCompleted: Bool) {
         let label = cell.viewWithTag(1001) as! UILabel
-        if item.checked {
-            label.text = "✓"
-        } else {
+        if !isCompleted {
             label.text = ""
+        } else {
+            label.text = "✓"
         }
-        label.textColor = view.tintColor
     }
     
     func configureText(for cell: UITableViewCell, with item: DatabasePackingListItem){
@@ -178,45 +145,58 @@ class PackingListViewController: UITableViewController { //}, ItemDetailViewCont
     }
     
     @IBAction func addButtonDidTouch(_ sender: AnyObject) {
-        let alert = UIAlertController(title: "Packing List Item",
-                                      message: "Add an Item",
-                                      preferredStyle: .alert)
+        if Auth.auth().currentUser != nil {
+            let currUser = Auth.auth().currentUser
+            if let currUser = currUser {
+                let uid = currUser.uid
+                
+                let ref = databaseRef!.child("items")
+                let key = ref.childByAutoId().key
+                
+                let alert = UIAlertController(title: "Packing List Item",
+                                              message: "Add an Item",
+                                              preferredStyle: .alert)
         
-        let saveAction = UIAlertAction(title: "Save",
-                                       style: .default) { action in
-            let item = alert.textFields![0]
-            let quantity = alert.textFields![1]
-            let packingListItem = DatabasePackingListItem(itemName: item.text!, quantity: quantity.text!, checked: false)
-            let packingListItemRef = self.ref.child((item.text?.lowercased())!)
-            packingListItemRef.setValue(packingListItem.toAnyObject())
-        }
-        let cancelAction = UIAlertAction(title: "Cancel",
+                let saveAction = UIAlertAction(title: "Save",
+                                               style: .default) { action in
+                                                let item = alert.textFields![0]
+                                                let quantity = alert.textFields![1]
+                                                let packingListItem = ["itemName": item.text!,
+                                                                       "quantity": quantity.text!,
+                                                                       "checked": false,
+                                                                       "key": "\(key)",
+                                                                       "ref": "\(ref)"] as [String : Any]
+                                                
+                                                let packingListItemRef = ref.child(key)
+                                                packingListItemRef.setValue(packingListItem)
+                                        
+                }
+            let cancelAction = UIAlertAction(title: "Cancel",
                                          style: .default)
-        alert.addTextField { textItem in
-            textItem.placeholder = "Item"
+            alert.addTextField { textItem in
+                textItem.placeholder = "Item"
+            }
+            alert.addTextField { textQuantity in
+                textQuantity.placeholder = "Quantity"
+            }
+            alert.addAction(saveAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+            }
         }
-        alert.addTextField { textQuantity in
-            textQuantity.placeholder = "Quantity"
-        }
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
     }
     
-    
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "AddItem" {
-//            let navigationController = segue.destination as! UINavigationController
-//            let controller = navigationController.topViewController as! ItemDetailViewController
-//            controller.delegate = self
-//        } else if segue.identifier == "EditItem" {
-//            let navigationController = segue.destination as! UINavigationController
-//            let controller = navigationController.topViewController as! ItemDetailViewController
-//            controller.delegate = self
-//            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-//                controller.itemToEdit = packingList.items[indexPath.row]
-//            }
-//        }
-//    }
+    func loadListItems() {
+        if let databaseRef = databaseRef {
+            databaseRef.child("items").queryOrdered(byChild: "itemName").observe(.value, with: { snapshot in
+                var newItems: [DatabasePackingListItem] = []
+                for item in snapshot.children {
+                    let packingListItem = DatabasePackingListItem(snapshot: item as! DataSnapshot)
+                    newItems.append(packingListItem)
+                }
+                self.items = newItems
+                self.tableView.reloadData()
+            })
+        }
+    }
 }

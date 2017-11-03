@@ -9,14 +9,16 @@
 import Foundation
 import Firebase
 
-class DatabasePackingList: NSObject {
+class DatabasePackingList{//}: NSObject {
     
-    var length: String?
-    var listName: String?
-    var region: String?
-    var seasons: String?
-    var sex: String?
-    var shared: String?
+    var length: String!
+    var listName: String!
+    var region: String!
+    var seasons: String!
+    var sex: String!
+    var shared: Bool!
+    var ref: DatabaseReference!
+    var key: String!
     
     
 //    //let key: String
@@ -31,30 +33,35 @@ class DatabasePackingList: NSObject {
 //    var items: [DatabasePackingListItem] = []
 //
 //    //addedByUser: String,
-//    init(listName: String, region: String, length: String, seasons: String, sex: String, shared: Bool) {//}, key: String = "") {
-//        //self.key = key
-//        self.listName = listName
-//        //self.addedByUser = addedByUser
-//        self.region = region
-//        self.length = length
-//        self.seasons = seasons
-//        self.sex = sex
-//        self.shared = shared
-//        self.ref = nil
+    init(listName: String, region: String, length: String, seasons: String, sex: String, shared: Bool, key: String = "") {
+        self.key = key
+        self.listName = listName
+        //self.addedByUser = addedByUser
+        self.region = region
+        self.length = length
+        self.seasons = seasons
+        self.sex = sex
+        self.shared = shared
+        self.ref = Database.database().reference()
+    }
+    
+//    convenience init() {
+//        self.init(listName: "list", region: "region", length: "length", seasons: "seasons", sex: "sex", shared: "shared")
 //    }
-//
-//    init(snapshot: DataSnapshot) {
-//        //key = snapshot.key
-//        let snapshotValue = snapshot.value as! [String: AnyObject]
-//        listName = snapshotValue["listName"] as! String
-//        region = snapshotValue["region"] as! String
-//        length = snapshotValue["length"] as! String
-//        seasons = snapshotValue["seasons"] as! String
-//        sex = snapshotValue["sex"] as! String
-//        //addedByUser = snapshotValue["addedByUser"] as! String
-//        shared = snapshotValue["shared"] as! Bool
-//        ref = snapshot.ref
-//    }
+
+    init(snapshot: DataSnapshot) {
+        
+        //let snapshotValue = snapshot.value as! NSDictionary
+        self.listName = (snapshot.value as! NSDictionary)["listName"] as! String
+        self.region = (snapshot.value as! NSDictionary)["region"] as! String
+        self.length = (snapshot.value as! NSDictionary)["length"] as! String
+        self.seasons = (snapshot.value as! NSDictionary)["seasons"] as! String
+        self.sex = (snapshot.value as! NSDictionary)["sex"] as! String
+        //addedByUser = snapshotValue["addedByUser"] as! String
+        self.shared = (snapshot.value as! [String: AnyObject])["shared"] as! Bool
+        self.key = snapshot.key
+        self.ref = snapshot.ref
+    }
 //
     func toAnyObject() -> Any {
         return [
@@ -67,6 +74,17 @@ class DatabasePackingList: NSObject {
             "shared": shared
         ]
     }
+    
+//    func removeValue() {
+//FIRDatabase.database().reference().child(Users).child(FIRAuth.auth()!.currentUser!.uid).child("instagramLink").removeValueWithCompletionBlock({ (error, refer) in
+//    if error != nil {
+//    print(error)
+//    } else {
+//    print(refer)
+//    print("Child Removed Correctly")
+//    }
+//        })
+//    }
     
 //    func countUncheckedItems() -> Int {
 //        var count = 0

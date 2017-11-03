@@ -9,21 +9,18 @@
 import UIKit
 import Firebase
 
-protocol ListDetailViewControllerDelegate: class {
-    func listDetailViewControllerDidCancel(_ controller: ListDetailViewController)
-//    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding packingList: DatabasePackingList)
-//    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing packingList: DatabasePackingList)
-}
-
 class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    //Properties
+    
     var databaseRef: DatabaseReference!
-    let ref = Database.database().reference(withPath: "Packing List")
-    let usersRef = Database.database().reference(withPath: "Users")
     var user: User!
+    var packingListToEdit: DatabasePackingList?
+    
+    //Initialize UIPickerView
     
     @IBOutlet weak var regionPickerText: UITextField!
-    var regionPickerData = ["Make Selection", "Northern Europe", "Greenland & Iceland", "Southern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Russia", "West Asia", "East Asia", "South Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "North Africa", "West Africa", "East Africa", "Central Africa", "South Africa", "North America", "Central America", "South America"]
+    var regionPickerData = ["Make Selection", "Northern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Southern Europe", "Greenland & Iceland", "Russia", "Northern Asia", "Eastern Asia", "Western Asia", "Southern Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "Northern Africa", "Eastern Africa", "Western Africa", "Central Africa", "Southern Africa", "North America", "Central America", "South America"]
     var regionPicker = UIPickerView()
     
     @IBOutlet weak var lengthPickerText: UITextField!
@@ -39,133 +36,40 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
     var sexPicker = UIPickerView()
 
     
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var listTextField: UITextField!
     var backBarButtonItem: UIBarButtonItem!
     var doneBarButtonItem: UIBarButtonItem!
     
-    weak var delegate: ListDetailViewControllerDelegate?
-    //var packingListToEdit: PackingList?
-    var packingListToEdit: DatabasePackingList?
+    //View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backBarButtonItem = UIBarButtonItem(title: "Back",
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(backButtonDidTouch))
-        navigationItem.leftBarButtonItem = backBarButtonItem
-        
-        doneBarButtonItem = UIBarButtonItem(title: "Done",
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(doneButtonDidTouch))
-        navigationItem.rightBarButtonItem = doneBarButtonItem
-        
-        let backgroundImage = UIImage(named: "for-packing.jpeg")
-        let imageView = UIImageView(image: backgroundImage)
-        self.tableView.backgroundView = imageView
-        imageView.contentMode = .scaleAspectFill
-        tableView.backgroundColor = .lightGray
-        
-        regionPicker.delegate = self
-        regionPicker.dataSource = self
-        regionPickerText.inputView = regionPicker
-        
-        lengthPicker.delegate = self
-        lengthPicker.dataSource = self
-        lengthPickerText.inputView = lengthPicker
-        
-        seasonsPicker.delegate = self
-        seasonsPicker.dataSource = self
-        seasonsPickerText.inputView = seasonsPicker
-        
-        sexPicker.delegate = self
-        sexPicker.dataSource = self
-        sexPickerText.inputView = sexPicker
+        backgroundImage()
+        makeBackBarButton()
+        makeDoneBarButton()
+        initPickers()
         
         if let packingList = packingListToEdit {
             title = "Edit Packing List"
-            textField.text = packingList.listName
+            listTextField.text = packingList.listName
             regionPickerText.text = packingList.region
             lengthPickerText.text = packingList.length
             seasonsPickerText.text = packingList.seasons
             sexPickerText.text = packingList.sex
+            self.databaseRef = packingList.ref
             doneBarButtonItem.isEnabled = true
         }
     }
     
-    @objc func backButtonDidTouch() {
-        self.dismiss(animated: true, completion: nil)
-    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        textField.becomeFirstResponder()
-        
-        backBarButtonItem = UIBarButtonItem(title: "Back",
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(backButtonDidTouch))
-        navigationItem.leftBarButtonItem = backBarButtonItem
-    }
-    
-    @objc func doneButtonDidTouch() {
-        if Auth.auth().currentUser != nil {
-            let currUser = Auth.auth().currentUser
-            if let currUser = currUser {
-                let uid = currUser.uid
-                let timeStamp = Date()
-                
-                let listRef = databaseRef.root.child("Users").child(uid).child("PackingList")
-                let key = listRef.childByAutoId().key
-                
-                if packingListToEdit != nil {
-                
-                    if textField.text != "" && regionPickerText.text != "" && lengthPickerText.text != "" && seasonsPickerText.text != "" && sexPickerText.text != "" {
-                        let values = ["listName": textField.text!,
-                                       "region": regionPickerText.text!,
-                                       "length": lengthPickerText.text!,
-                                       "seasons": seasonsPickerText.text!,
-                                       "sex": sexPickerText.text!]//,
-                                       //"addedByUser": userName]
-                        let userReference = self.databaseRef?.root.child("Users").child(uid).child("PackingList")
-                        userReference?.updateChildValues(values)
-                        listRef.child(key)
-                        let packingListReference = self.databaseRef?.root.child("PackingList")
-                        packingListReference?.updateChildValues(values)
-
-                    }
-                }
-                else {
-                    if textField.text != "" && regionPickerText.text != "" && lengthPickerText.text != "" && seasonsPickerText.text != "" && sexPickerText.text != "" {
-                        
-//                        let params = DatabasePackingList(listName: textField.text!,
-//                                                         region: regionPickerText.text!,
-//                                                         length: lengthPickerText.text!,
-//                                                         seasons: seasonsPickerText.text!,
-//                                                         sex: sexPickerText.text!,
-//                                                         shared: false)
-                        
-                        let values = ["listName": textField.text!,
-                                      "region": regionPickerText.text!,
-                                      "length": lengthPickerText.text!,
-                                      "seasons": seasonsPickerText.text!,
-                                      "sex": sexPickerText.text!,
-                                      "shared": false] as [String : Any]//,
-                                      //"addedByUser": userName]
-                        let userReference = self.databaseRef?.root.child("Users").child(uid).child("PackingList").childByAutoId()
-                        //userReference?.setValue(values)
-                        
-                        listRef.child(key).setValue(values)//params.toAnyObject())
-                        
-                        let packingListReference = self.databaseRef?.root.child("PackingList").child("\(textField.text!)").childByAutoId()
-                        //packingListReference?.setValue(values)
-                    }
-                }
-            }
-            
-        }
-        presentAllListsScreen()
+        listTextField.becomeFirstResponder()
+        backgroundImage()
+        makeBackBarButton()
+        makeDoneBarButton()
+        initPickers()
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -176,12 +80,18 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
         }
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let oldText = textField.text! as NSString
+        let oldText = listTextField.text! as NSString
         let newText = oldText.replacingCharacters(in: range, with: string) as NSString
         doneBarButtonItem.isEnabled = (newText.length > 0)
         return true
     }
+    
+    //UIPickerView Methods
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -254,6 +164,94 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
         else if (textField == self.sexPickerText) {
             self.sexPicker.isHidden = false
         }
+    }
+    
+    //Functions
+    
+    func makeBackBarButton() {
+        backBarButtonItem = UIBarButtonItem(title: "Back",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(backButtonDidTouch))
+        navigationItem.leftBarButtonItem = backBarButtonItem
+    }
+    
+    func makeDoneBarButton() {
+        doneBarButtonItem = UIBarButtonItem(title: "Done",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(doneButtonDidTouch))
+        navigationItem.rightBarButtonItem = doneBarButtonItem
+
+    }
+    
+    func backgroundImage() {
+        let backgroundImage = UIImage(named: "for-packing.jpeg")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+        imageView.contentMode = .scaleAspectFill
+        tableView.backgroundColor = .lightGray
+    }
+    
+    @objc func backButtonDidTouch() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func doneButtonDidTouch() {
+        if Auth.auth().currentUser != nil {
+            let currUser = Auth.auth().currentUser
+            if let currUser = currUser {
+                let uid = currUser.uid
+                if packingListToEdit != nil {
+                    let updateKey = packingListToEdit?.key
+                    if listTextField.text != "" && regionPickerText.text != "" && lengthPickerText.text != "" && seasonsPickerText.text != "" && sexPickerText.text != "" {
+                        let userReference = packingListToEdit?.ref
+                        let values = ["listName": listTextField.text!,
+                                      "region": regionPickerText.text!,
+                                      "length": lengthPickerText.text!,
+                                      "seasons": seasonsPickerText.text!,
+                                      "sex": sexPickerText.text!,
+                                      "shared": false] as [String : Any]
+                        userReference?.updateChildValues(values)
+                    }
+                }
+                else {
+                    let listRef = databaseRef.root.child("Users").child(uid).child("PackingList").childByAutoId()
+                    let key = listRef.key
+                    if listTextField.text != "" && regionPickerText.text != "" && lengthPickerText.text != "" && seasonsPickerText.text != "" && sexPickerText.text != "" {
+                        let packingListReference = listRef.ref
+                        let values = ["listName": listTextField.text!,
+                                      "region": regionPickerText.text!,
+                                      "length": lengthPickerText.text!,
+                                      "seasons": seasonsPickerText.text!,
+                                      "sex": sexPickerText.text!,
+                                      "shared": false,
+                                      "key": "\(key)",
+                            "ref": "\(packingListReference)"] as [String : Any]
+                        listRef.setValue(values)
+                    }
+                }
+                presentAllListsScreen()
+            }
+        }
+    }
+    
+    func initPickers() {
+        regionPicker.delegate = self
+        regionPicker.dataSource = self
+        regionPickerText.inputView = regionPicker
+        
+        lengthPicker.delegate = self
+        lengthPicker.dataSource = self
+        lengthPickerText.inputView = lengthPicker
+        
+        seasonsPicker.delegate = self
+        seasonsPicker.dataSource = self
+        seasonsPickerText.inputView = seasonsPicker
+        
+        sexPicker.delegate = self
+        sexPicker.dataSource = self
+        sexPickerText.inputView = sexPicker
     }
     
     func presentAllListsScreen() {

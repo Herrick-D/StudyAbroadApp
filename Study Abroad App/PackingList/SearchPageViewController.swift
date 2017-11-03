@@ -15,7 +15,7 @@ import Firebase
 class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var regionPickerText: UITextField!
-    var regionPickerData = ["Make Selection", "Northern Europe", "Greenland & Iceland", "Southern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Russia", "West Asia", "East Asia", "South Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "North Africa", "West Africa", "East Africa", "Central Africa", "South Africa", "North America", "Central America", "South America"]
+    var regionPickerData = ["Make Selection", "Northern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Southern Europe", "Greenland & Iceland", "Russia", "Northern Asia", "Eastern Asia", "Western Asia", "Southern Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "Northern Africa", "Eastern Africa", "Western Africa", "Central Africa", "Southern Africa", "North America", "Central America", "South America"]
     var regionPicker = UIPickerView()
     
     @IBOutlet weak var lengthPickerText: UITextField!
