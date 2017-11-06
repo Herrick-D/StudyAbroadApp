@@ -11,6 +11,7 @@ import Firebase
 
 class AllListsViewController: UITableViewController, UINavigationControllerDelegate {
     //Properties
+    
     var lists: [DatabasePackingList] = []
     var databaseRef: DatabaseReference!
     let ref = Database.database().reference(withPath: "Packing Lists")
@@ -20,6 +21,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     
     
     //UIViewController Lifecycle
+    
     override func viewDidLoad() {
         databaseRef = Database.database().reference().child("Users")
         super.viewDidLoad()
@@ -33,7 +35,6 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
         super.viewWillAppear(animated)
         backgroundImage()
         makeBackButton()
-        //displayLists()
     }
     
     //UITableView Delegate Methods
@@ -64,16 +65,11 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
         controller.packingListToEdit = lists[indexPath.row]
         controller.databaseRef = lists[indexPath.row].ref
         present(navigationController, animated: true, completion: nil)
-        //let listKey = lists[indexPath.row].key
-        
-        //print(itemKey)
-        //let ref = databaseRef!.child("items")
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         let packingList = lists[indexPath.row]
-        //print(packingList.key)
         performSegue(withIdentifier: "ShowPackingList", sender: packingList)
     }
     
@@ -85,6 +81,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     }
     
     //Functions
+    
     func backgroundImage() {
         let backgroundImage = UIImage(named: "for-packing.jpeg")
         let imageView = UIImageView(image: backgroundImage)
@@ -125,7 +122,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
             if let indexpath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! PackingListViewController
                 controller.databaseRef = lists[indexpath.row].ref
-                //print(controller.databaseRef!)
+                controller.packingList = lists[indexpath.row]
             }
         }
     }

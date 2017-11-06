@@ -9,8 +9,6 @@
 import Foundation
 import Firebase
 
-//Rework this one to look like DatabasePackingList
-
 class DatabasePackingListItem {
     var key: String!
     var itemName: String!

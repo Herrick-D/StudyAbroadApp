@@ -24,13 +24,17 @@ class PackingListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsMultipleSelectionDuringEditing = false
+        if let packingList = packingList {
+            title = packingList.listName
+        }
         loadListItems()
-        print(databaseRef!)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         backgroundImage()
+        
     }
 
     override func didReceiveMemoryWarning() {

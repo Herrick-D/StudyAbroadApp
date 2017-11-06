@@ -11,19 +11,20 @@ import Firebase
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
-    // Variables:
+    
+    // Variables
+    
     let databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
     let loginToFeatures = "FeaturesViewController"
-    
-    
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    // View Controller Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //statusImageView?.image = UIImage(named: "close-up-globe.jpeg")
         let passwordSecure = passwordTextField
         passwordSecure?.isSecureTextEntry = true
     }
@@ -34,7 +35,8 @@ class LoginViewController: UIViewController {
         }
     }
     
-    // Actions:
+    // Actions
+    
     @IBAction func loginTapped(_ sender: Any) {
         login()
     }
@@ -43,7 +45,8 @@ class LoginViewController: UIViewController {
         signUp()
     }
     
-    // Functions:
+    // Functions
+    
     func login() {
         guard let email = emailTextField.text else {
             print("Email must not be empty")
@@ -59,7 +62,6 @@ class LoginViewController: UIViewController {
                     print("Authorization error")
                     return
                 }
-                //self.dismiss(animated: false, completion: nil)
                 self.presentFeaturesScreen()
             })
         }

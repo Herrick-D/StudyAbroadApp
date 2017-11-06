@@ -11,6 +11,8 @@ import Firebase
 
 class FeaturesViewController: UIViewController {
 
+    //View Controller Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if Auth.auth().currentUser?.uid == nil {
@@ -20,9 +22,7 @@ class FeaturesViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
     
     @IBAction func packingListTapped(_ sender: Any) {
         performSegue(withIdentifier: "PackingListOptions", sender: self)
