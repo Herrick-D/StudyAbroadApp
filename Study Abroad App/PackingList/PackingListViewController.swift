@@ -66,7 +66,6 @@ class PackingListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let itemKey = items[indexPath.row].key
-        print(itemKey)
         let ref = databaseRef!.child("items")
         let alert = UIAlertController(title: "Packing List Item",
                                       message: "Edit Item",
