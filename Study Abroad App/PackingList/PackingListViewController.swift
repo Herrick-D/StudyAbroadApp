@@ -12,10 +12,12 @@ import Firebase
 class PackingListViewController: UITableViewController {
     //Properties:
     
+    var rootRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
     var databaseRef: DatabaseReference?
     var items: [DatabasePackingListItem] = []
     var user: User!
     var packingList: DatabasePackingList!
+    
     
     //View Controller lifecyle
     
@@ -184,6 +186,48 @@ class PackingListViewController: UITableViewController {
             present(alert, animated: true, completion: nil)
             }
         }
+    }
+    
+    @IBAction func shareList(_ sender: UIBarButtonItem) {
+        let newlistRef = rootRef.child("SharedPackingLists")
+        let key = newlistRef.childByAutoId().key
+        let listRef = databaseRef
+        let listkey = listRef?.key
+        
+        listRef?.observe(.value, with: {(snapshot) in
+            let value = snapshot.value as! [String: Any]
+            let shared = value["shared"] as! Bool
+            
+            if shared == false {
+                listRef?.observe(.value, with: { (snapshot) in
+                        let params = snapshot.value as! [String: Any]
+                        let region = params["region"] as! String
+                        let length = params["length"] as! String
+                        let seasons = params["seasons"] as! String
+                        let sex = params["sex"] as! String
+                    
+                        let listValues = ["region": region,
+                                      "length": length,
+                                      "seasons": seasons,
+                                      "sex": sex,
+                                      "ref": "\(String(describing:(newlistRef)))",
+                            "key": "\(String(describing:(key)))"] as [String: Any]
+                        newlistRef.child(key).setValue(listValues)
+                    
+                    let itemRef = newlistRef.child(key).child("items")
+                    listRef?.child("items").observe(.value, with: { (snapshot) in
+                        for items in snapshot.children {
+                            let item = DatabasePackingListItem(snapshot: items as! DataSnapshot)
+                            let itemValues = ["itemName": item.itemName,
+                                              "quantitiy": item.quantity] as [String: Any]
+                            
+                            itemRef.childByAutoId().setValue(itemValues)
+                        }
+                    })
+                })
+                listRef?.updateChildValues(["shared": true])
+            }
+        })
     }
     
     func loadListItems() {

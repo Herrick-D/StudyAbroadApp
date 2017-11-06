@@ -73,7 +73,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         let packingList = lists[indexPath.row]
-        print(packingList.key)
+        //print(packingList.key)
         performSegue(withIdentifier: "ShowPackingList", sender: packingList)
     }
     
@@ -125,7 +125,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
             if let indexpath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! PackingListViewController
                 controller.databaseRef = lists[indexpath.row].ref
-                print(controller.databaseRef!)
+                //print(controller.databaseRef!)
             }
         }
     }

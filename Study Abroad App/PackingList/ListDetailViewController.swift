@@ -70,6 +70,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
         makeBackBarButton()
         makeDoneBarButton()
         initPickers()
+        self.navigationController?.isToolbarHidden = true
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
