@@ -123,6 +123,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
                 let controller = segue.destination as! PackingListViewController
                 controller.databaseRef = lists[indexpath.row].ref
                 controller.packingList = lists[indexpath.row]
+
             }
         }
     }
