@@ -195,7 +195,6 @@ class PackingListViewController: UITableViewController {
         let newlistRef = rootRef.child("SharedPackingLists")
         let key = newlistRef.childByAutoId().key
         let listRef = databaseRef
-        let listkey = listRef?.key
         
         listRef?.observe(.value, with: {(snapshot) in
             let value = snapshot.value as! [String: Any]
@@ -218,19 +217,18 @@ class PackingListViewController: UITableViewController {
                         newlistRef.child(key).setValue(listValues)
                     
                     let itemRef = newlistRef.child(key).child("items")
-                    listRef?.child("items").observe(.value, with: { (snapshot) in
+                    listRef?.child("items").queryOrdered(byChild: "itemName").observe(.value, with: { (snapshot) in
                         for items in snapshot.children {
                             let item = DatabasePackingListItem(snapshot: items as! DataSnapshot)
                             let itemValues = ["itemName": item.itemName,
-                                              "quantitiy": item.quantity] as [String: Any]
-                            
+                                              "quantity": item.quantity] as [String: Any]
                             itemRef.childByAutoId().setValue(itemValues)
                         }
                     })
                 })
-                listRef?.updateChildValues(["shared": true])
             }
         })
+        listRef?.updateChildValues(["shared": true])
     }
     
     func loadListItems() {
