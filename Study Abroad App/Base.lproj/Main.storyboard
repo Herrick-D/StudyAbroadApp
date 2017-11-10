@@ -505,7 +505,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CGX-A3-bOS"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Search Lists" id="bJN-Nd-jHv"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="bJN-Nd-jHv">
+                        <color key="badgeColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" title="Search for Lists" leftItemsSupplementBackButton="YES" id="GMQ-AD-gE4">
                         <barButtonItem key="rightBarButtonItem" title="Search" id="Eh0-Qa-TRc">
                             <connections>
@@ -628,11 +630,13 @@
             </objects>
             <point key="canvasLocation" x="6376.8000000000002" y="776.76161919040487"/>
         </scene>
-        <!--Search Lists-->
+        <!--Navigation Controller-->
         <scene sceneID="z6W-GL-6yJ">
             <objects>
                 <navigationController storyboardIdentifier="SearchListsNavigationController" id="JaU-Wh-3Cn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search Lists" id="JER-y8-d5j"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="JER-y8-d5j">
+                        <color key="badgeColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5pY-0E-vQ7">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -667,7 +671,9 @@
         <scene sceneID="r2Q-2W-hhE">
             <objects>
                 <navigationController storyboardIdentifier="ListsNavController" id="GUz-Sz-mCY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Lists" id="AtX-OH-SIG"/>
+                    <tabBarItem key="tabBarItem" title="My Lists" image="TabBarList" id="AtX-OH-SIG">
+                        <color key="badgeColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QLw-LN-nRP">
@@ -684,6 +690,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="TabBarList" width="25" height="25"/>
         <image name="for-features.jpeg" width="6000" height="4000"/>
         <image name="for-login.jpeg" width="5184" height="3456"/>
         <image name="for-search.jpeg" width="4608" height="3456"/>
