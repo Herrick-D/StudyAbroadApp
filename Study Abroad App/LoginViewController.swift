@@ -56,7 +56,7 @@ class LoginViewController: UIViewController {
             print("Password must not be empty")
             return
         }
-        if (password != nil && email != nil) {
+        if (password != "" && email != "") {
             Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
                 if error != nil {
                     print("Authorization error")
@@ -81,7 +81,7 @@ class LoginViewController: UIViewController {
             print("Password required")
             return
         }
-        if (username != nil && password != nil && email != nil) {
+        if (username != "" && password != "" && email != "") {
             Auth.auth().createUser(withEmail: email, password: password) { user, error in
                 if error != nil {
                     print("Authentication Errror")

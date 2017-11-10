@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 class AllListsViewController: UITableViewController, UINavigationControllerDelegate {
+    
     //Properties
     
     var lists: [DatabasePackingList] = []
@@ -18,7 +19,6 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     let usersRef = Database.database().reference(withPath: "Users")
     var user: User!
     var backBarButtonItem: UIBarButtonItem!
-    
     
     //UIViewController Lifecycle
     
@@ -68,7 +68,6 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
         let packingList = lists[indexPath.row]
         performSegue(withIdentifier: "ShowPackingList", sender: packingList)
     }

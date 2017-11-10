@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		910A59CA1FB15EB70091FC6E /* SearchResultListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910A59C91FB15EB70091FC6E /* SearchResultListsViewController.swift */; };
 		9118222B1F98F580000DF22A /* for-features.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 911822251F98F28A000DF22A /* for-features.jpeg */; };
 		9118222C1F98F591000DF22A /* for-packing.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 911822261F98F292000DF22A /* for-packing.jpeg */; };
 		9118222D1F98F595000DF22A /* for-search.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 911822271F98F298000DF22A /* for-search.jpeg */; };
@@ -21,13 +22,15 @@
 		9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71D1F7AB83A0073CDAC /* PackingList.swift */; };
 		9149E0861F9F792E001FFCC4 /* PackingListDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9149E0851F9F792E001FFCC4 /* PackingListDAO.swift */; };
 		918CB0EB1F8BF8E300EC73AA /* SearchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */; };
-		918CB0F11F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0F01F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift */; };
 		918CB0F31F8C193000EC73AA /* DatabasePackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */; };
 		91A7C7861F8925E2009889F8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7851F8925E2009889F8 /* User.swift */; };
 		91A7C7881F892757009889F8 /* DatabasePackingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7871F892757009889F8 /* DatabasePackingList.swift */; };
 		91A7C78A1F89292D009889F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C7891F89292D009889F8 /* LoginViewController.swift */; };
 		91A7C78C1F893EA2009889F8 /* FeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */; };
 		91A7C78F1F8945B6009889F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */; };
+		91C1A34F1FB49DB7002C779E /* SearchPackingLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C1A34E1FB49DB7002C779E /* SearchPackingLists.swift */; };
+		91C1A3511FB4A942002C779E /* SearchResultItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C1A3501FB4A942002C779E /* SearchResultItemsViewController.swift */; };
+		91C1A3531FB4A970002C779E /* SearchPackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C1A3521FB4A970002C779E /* SearchPackingListItem.swift */; };
 		91EFD3801FA818F200A0EB1E /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 91EFD37F1FA818F100A0EB1E /* libc++abi.tbd */; };
 		91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6EC1B1F794C99000A7527 /* AppDelegate.swift */; };
 		91F6EC211F794C99000A7527 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F6EC1F1F794C99000A7527 /* Main.storyboard */; };
@@ -37,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		910A59C91FB15EB70091FC6E /* SearchResultListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultListsViewController.swift; sourceTree = "<group>"; };
 		911822251F98F28A000DF22A /* for-features.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "for-features.jpeg"; path = "../../../../../../../../Downloads/for-features.jpeg"; sourceTree = "<group>"; };
 		911822261F98F292000DF22A /* for-packing.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "for-packing.jpeg"; path = "../../../../../../../../Downloads/for-packing.jpeg"; sourceTree = "<group>"; };
 		911822271F98F298000DF22A /* for-search.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "for-search.jpeg"; path = "../../../../../../../../Downloads/for-search.jpeg"; sourceTree = "<group>"; };
@@ -52,13 +56,15 @@
 		9149E0851F9F792E001FFCC4 /* PackingListDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListDAO.swift; sourceTree = "<group>"; };
 		918CB0E71F8BCD3700EC73AA /* Study Abroad App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Study Abroad App.entitlements"; sourceTree = "<group>"; };
 		918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageViewController.swift; sourceTree = "<group>"; };
-		918CB0F01F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCollectionViewController.swift; sourceTree = "<group>"; };
 		918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePackingListItem.swift; sourceTree = "<group>"; };
 		91A7C7851F8925E2009889F8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		91A7C7871F892757009889F8 /* DatabasePackingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabasePackingList.swift; sourceTree = "<group>"; };
 		91A7C7891F89292D009889F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesViewController.swift; sourceTree = "<group>"; };
 		91A7C78E1F8944F1009889F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		91C1A34E1FB49DB7002C779E /* SearchPackingLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchPackingLists.swift; path = "Study Abroad App/Models/SearchPackingLists.swift"; sourceTree = SOURCE_ROOT; };
+		91C1A3501FB4A942002C779E /* SearchResultItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultItemsViewController.swift; sourceTree = "<group>"; };
+		91C1A3521FB4A970002C779E /* SearchPackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPackingListItem.swift; sourceTree = "<group>"; };
 		91EFD37F1FA818F100A0EB1E /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		91F6EC181F794C99000A7527 /* Study Abroad App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Study Abroad App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6EC1B1F794C99000A7527 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,8 +110,10 @@
 		918CB0E81F8BCEBF00EC73AA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				91C1A34E1FB49DB7002C779E /* SearchPackingLists.swift */,
 				91A7C7871F892757009889F8 /* DatabasePackingList.swift */,
 				918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */,
+				91C1A3521FB4A970002C779E /* SearchPackingListItem.swift */,
 				91A7C7851F8925E2009889F8 /* User.swift */,
 			);
 			path = Models;
@@ -114,7 +122,8 @@
 		918CB0E91F8BCEE700EC73AA /* PackingList */ = {
 			isa = PBXGroup;
 			children = (
-				918CB0F01F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift */,
+				910A59C91FB15EB70091FC6E /* SearchResultListsViewController.swift */,
+				91C1A3501FB4A942002C779E /* SearchResultItemsViewController.swift */,
 				918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */,
 				9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */,
 				9120D71D1F7AB83A0073CDAC /* PackingList.swift */,
@@ -329,15 +338,18 @@
 				9120D7161F7A9F890073CDAC /* PackingListViewController.swift in Sources */,
 				9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */,
 				9120D7141F7A98690073CDAC /* DataModel.swift in Sources */,
+				91C1A34F1FB49DB7002C779E /* SearchPackingLists.swift in Sources */,
+				91C1A3531FB4A970002C779E /* SearchPackingListItem.swift in Sources */,
 				91A7C7881F892757009889F8 /* DatabasePackingList.swift in Sources */,
 				91A7C7861F8925E2009889F8 /* User.swift in Sources */,
 				9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */,
+				91C1A3511FB4A942002C779E /* SearchResultItemsViewController.swift in Sources */,
 				918CB0EB1F8BF8E300EC73AA /* SearchPageViewController.swift in Sources */,
 				9149E0861F9F792E001FFCC4 /* PackingListDAO.swift in Sources */,
 				91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */,
 				91A7C78C1F893EA2009889F8 /* FeaturesViewController.swift in Sources */,
-				918CB0F11F8C00CA00EC73AA /* SearchResultsCollectionViewController.swift in Sources */,
 				9120D7121F7A95180073CDAC /* AllListsViewController.swift in Sources */,
+				910A59CA1FB15EB70091FC6E /* SearchResultListsViewController.swift in Sources */,
 				91A7C78A1F89292D009889F8 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

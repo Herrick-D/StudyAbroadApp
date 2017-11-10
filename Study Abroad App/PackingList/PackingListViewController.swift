@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 class PackingListViewController: UITableViewController {
+    
     //Properties:
     
     var rootRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
@@ -17,7 +18,6 @@ class PackingListViewController: UITableViewController {
     var items: [DatabasePackingListItem] = []
     var user: User!
     var packingList: DatabasePackingList!
-    
     
     //View Controller lifecyle
     
@@ -28,19 +28,16 @@ class PackingListViewController: UITableViewController {
             title = packingList.listName
         }
         loadListItems()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         backgroundImage()
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
     
     //UITableView Methods
     
@@ -78,7 +75,7 @@ class PackingListViewController: UITableViewController {
                                         let packingListItem = ["itemName": item.text!,
                                                                "quantity": quantity.text!,
                                                                "checked": false,
-                                                               "key": itemKey,
+                                                               "key": itemKey as Any,
                                                                "ref": "\(ref)"] as [String : Any]
                                         
                                         let packingListItemRef = ref.child(itemKey!)
@@ -100,7 +97,7 @@ class PackingListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath){
-            var packingListItem = items[indexPath.row]
+            let packingListItem = items[indexPath.row]
             let toggleChecked = !packingListItem.checked
             toggleCellCheckbox(cell, isCompleted: toggleChecked)
             packingListItem.ref.updateChildValues(["checked": toggleChecked])
@@ -151,33 +148,29 @@ class PackingListViewController: UITableViewController {
     
     @IBAction func addButtonDidTouch(_ sender: AnyObject) {
         if Auth.auth().currentUser != nil {
-            let currUser = Auth.auth().currentUser
-            if let currUser = currUser {
-                let uid = currUser.uid
-                
-                let ref = databaseRef!.child("items")
-                let key = ref.childByAutoId().key
-                
-                let alert = UIAlertController(title: "Packing List Item",
-                                              message: "Add an Item",
-                                              preferredStyle: .alert)
-        
-                let saveAction = UIAlertAction(title: "Save",
-                                               style: .default) { action in
-                                                let item = alert.textFields![0]
-                                                let quantity = alert.textFields![1]
-                                                let packingListItem = ["itemName": item.text!,
-                                                                       "quantity": quantity.text!,
-                                                                       "checked": false,
-                                                                       "key": "\(key)",
-                                                                       "ref": "\(ref)"] as [String : Any]
-                                                
-                                                let packingListItemRef = ref.child(key)
-                                                packingListItemRef.setValue(packingListItem)
-                                        
-                }
+            let ref = databaseRef!.child("items")
+            let key = ref.childByAutoId().key
+            
+            let alert = UIAlertController(title: "Packing List Item",
+                                          message: "Add an Item",
+                                          preferredStyle: .alert)
+            
+            let saveAction = UIAlertAction(title: "Save",
+                                           style: .default) { action in
+                                            let item = alert.textFields![0]
+                                            let quantity = alert.textFields![1]
+                                            let packingListItem = ["itemName": item.text!,
+                                                                   "quantity": quantity.text!,
+                                                                   "checked": false,
+                                                                   "key": "\(key)",
+                                                "ref": "\(ref)"] as [String : Any]
+                                            
+                                            let packingListItemRef = ref.child(key)
+                                            packingListItemRef.setValue(packingListItem)
+                                            
+            }
             let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .default)
+                                             style: .default)
             alert.addTextField { textItem in
                 textItem.placeholder = "Item"
             }
@@ -187,8 +180,8 @@ class PackingListViewController: UITableViewController {
             alert.addAction(saveAction)
             alert.addAction(cancelAction)
             present(alert, animated: true, completion: nil)
-            }
         }
+        
     }
     
     @IBAction func shareList(_ sender: UIBarButtonItem) {
@@ -214,9 +207,9 @@ class PackingListViewController: UITableViewController {
                                       "sex": sex,
                                       "ref": "\(String(describing:(newlistRef)))",
                             "key": "\(String(describing:(key)))"] as [String: Any]
-                        newlistRef.child(key).setValue(listValues)
+                        newlistRef.child(region).child(key).setValue(listValues)
                     
-                    let itemRef = newlistRef.child(key).child("items")
+                    let itemRef = newlistRef.child(region).child(key).child("items")
                     listRef?.child("items").queryOrdered(byChild: "itemName").observe(.value, with: { (snapshot) in
                         for items in snapshot.children {
                             let item = DatabasePackingListItem(snapshot: items as! DataSnapshot)

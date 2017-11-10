@@ -34,7 +34,6 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
     @IBOutlet weak var sexPickerText: UITextField!
     var sexPickerData = ["Make Selection", "Female", "Male", "Other"]
     var sexPicker = UIPickerView()
-
     
     @IBOutlet weak var listTextField: UITextField!
     var backBarButtonItem: UIBarButtonItem!
@@ -60,8 +59,6 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
             doneBarButtonItem.isEnabled = true
         }
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -204,7 +201,6 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
             if let currUser = currUser {
                 let uid = currUser.uid
                 if packingListToEdit != nil {
-                    let updateKey = packingListToEdit?.key
                     if listTextField.text != "" && regionPickerText.text != "" && lengthPickerText.text != "" && seasonsPickerText.text != "" && sexPickerText.text != "" {
                         let userReference = packingListToEdit?.ref
                         let values = ["listName": listTextField.text!,

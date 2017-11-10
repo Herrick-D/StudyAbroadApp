@@ -8,11 +8,8 @@
 
 import UIKit
 import Firebase
-//protocol SearchResultsCollectionViewControllerDelegate: class {
-//    func searchResultsCollectionViewController(_ controller: SearchResultsCollectionViewController, didFinishSelecting packingList: PackingList)
-//}
 
-class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UINavigationControllerDelegate {
     
     @IBOutlet weak var regionPickerText: UITextField!
     var regionPickerData = ["Make Selection", "Northern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Southern Europe", "Greenland & Iceland", "Russia", "Northern Asia", "Eastern Asia", "Western Asia", "Southern Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "Northern Africa", "Eastern Africa", "Western Africa", "Central Africa", "Southern Africa", "North America", "Central America", "South America"]
@@ -31,55 +28,35 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
     var sexPicker = UIPickerView()
     
     var backBarButtonItem: UIBarButtonItem!
+    var searchButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backBarButtonItem = UIBarButtonItem(title: "Back",
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(backButtonDidTouch))
-        navigationItem.leftBarButtonItem = backBarButtonItem
-        
-        regionPicker.delegate = self
-        regionPicker.dataSource = self
-        regionPickerText.inputView = regionPicker
-
-        lengthPicker.delegate = self
-        lengthPicker.dataSource = self
-        lengthPickerText.inputView = lengthPicker
-        
-        seasonsPicker.delegate = self
-        seasonsPicker.dataSource = self
-        seasonsPickerText.inputView = seasonsPicker
-        
-        sexPicker.delegate = self
-        sexPicker.dataSource = self
-        sexPickerText.inputView = sexPicker
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    @objc func backButtonDidTouch() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let features = storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController //UINavigationController
-        self.present(features, animated: true, completion: nil)
+        makeBackBarButton()
+        makeSearchBarButton()
+        initPickers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        backBarButtonItem = UIBarButtonItem(title: "Back",
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(backButtonDidTouch))
-        navigationItem.leftBarButtonItem = backBarButtonItem
+        makeBackBarButton()
+        makeSearchBarButton()
+        initPickers()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    //@IBAction func search()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchResultListsSegue" {
+            let controller = segue.destination as! SearchResultListsViewController
+            controller.regionText = regionPickerText.text
+            controller.lengthText = lengthPickerText.text
+            controller.seasonsText = seasonsPickerText.text
+            controller.sexText = sexPickerText.text
+        }
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -137,7 +114,6 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
             self.sexPicker.isHidden = false
         }
         self.view.endEditing(true)
-        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -155,15 +131,77 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func initPickers() {
+        regionPicker.delegate = self
+        regionPicker.dataSource = self
+        regionPickerText.inputView = regionPicker
+        
+        lengthPicker.delegate = self
+        lengthPicker.dataSource = self
+        lengthPickerText.inputView = lengthPicker
+        
+        seasonsPicker.delegate = self
+        seasonsPicker.dataSource = self
+        seasonsPickerText.inputView = seasonsPicker
+        
+        sexPicker.delegate = self
+        sexPicker.dataSource = self
+        sexPickerText.inputView = sexPicker
     }
-    */
-
+    
+    func makeBackBarButton() {
+        backBarButtonItem = UIBarButtonItem(title: "Back",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(backButtonDidTouch))
+        navigationItem.leftBarButtonItem = backBarButtonItem
+    }
+    
+    @objc func backButtonDidTouch() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let features = storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController //UINavigationController
+        self.present(features, animated: true, completion: nil)
+    }
+    
+    func makeSearchBarButton() {
+        searchButtonItem = UIBarButtonItem(title: "Search",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(searchButtonDidTouch))
+        navigationItem.rightBarButtonItem = searchButtonItem
+    }
+    
+    @IBAction func searchButtonDidTouch() {
+        if(regionPickerText.text == ""){
+            let alert = UIAlertController(title: "Search Parameters Needed",
+                                          message: "Region and Sex are required to continue",
+                                          preferredStyle: .alert)
+            
+            let okayAction = UIAlertAction(title: "OK",
+                                           style: .default)
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .default)
+            alert.addAction(okayAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+            
+        }
+        if(sexPickerText.text == ""){
+            let alert = UIAlertController(title: "Search Parameters Needed",
+                                          message: "Region and Sex are required to continue",
+                                          preferredStyle: .alert)
+            
+            let okayAction = UIAlertAction(title: "OK",
+                                           style: .default)
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .default)
+            alert.addAction(okayAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+        }
+        else if (regionPickerText.text != "" && sexPickerText.text != ""){
+            performSegue(withIdentifier: "SearchResultListsSegue", sender: self)           
+        }
+        
+    }
 }
