@@ -20,6 +20,11 @@
 		9120D71A1F7AA6890073CDAC /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */; };
 		9120D71C1F7AB68A0073CDAC /* PackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */; };
 		9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9120D71D1F7AB83A0073CDAC /* PackingList.swift */; };
+		912811701FB9F4EA0055F259 /* BLAllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9128116F1FB9F4EA0055F259 /* BLAllListsViewController.swift */; };
+		912811721FB9F5240055F259 /* BLCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912811711FB9F5240055F259 /* BLCategoriesViewController.swift */; };
+		912811741FB9F54C0055F259 /* BLItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912811731FB9F54C0055F259 /* BLItemsViewController.swift */; };
+		912811761FB9F5950055F259 /* BudgetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912811751FB9F5950055F259 /* BudgetList.swift */; };
+		912811781FB9F5B00055F259 /* BudgetListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912811771FB9F5B00055F259 /* BudgetListItem.swift */; };
 		9149E0861F9F792E001FFCC4 /* PackingListDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9149E0851F9F792E001FFCC4 /* PackingListDAO.swift */; };
 		918CB0EB1F8BF8E300EC73AA /* SearchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */; };
 		918CB0F31F8C193000EC73AA /* DatabasePackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */; };
@@ -53,6 +58,11 @@
 		9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
 		9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListItem.swift; sourceTree = "<group>"; };
 		9120D71D1F7AB83A0073CDAC /* PackingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingList.swift; sourceTree = "<group>"; };
+		9128116F1FB9F4EA0055F259 /* BLAllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLAllListsViewController.swift; sourceTree = "<group>"; };
+		912811711FB9F5240055F259 /* BLCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLCategoriesViewController.swift; sourceTree = "<group>"; };
+		912811731FB9F54C0055F259 /* BLItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLItemsViewController.swift; sourceTree = "<group>"; };
+		912811751FB9F5950055F259 /* BudgetList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetList.swift; sourceTree = "<group>"; };
+		912811771FB9F5B00055F259 /* BudgetListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListItem.swift; sourceTree = "<group>"; };
 		9149E0851F9F792E001FFCC4 /* PackingListDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListDAO.swift; sourceTree = "<group>"; };
 		918CB0E71F8BCD3700EC73AA /* Study Abroad App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Study Abroad App.entitlements"; sourceTree = "<group>"; };
 		918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +109,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9128116E1FB9F48E0055F259 /* BudgetList */ = {
+			isa = PBXGroup;
+			children = (
+				9128116F1FB9F4EA0055F259 /* BLAllListsViewController.swift */,
+				912811711FB9F5240055F259 /* BLCategoriesViewController.swift */,
+				912811731FB9F54C0055F259 /* BLItemsViewController.swift */,
+			);
+			path = BudgetList;
+			sourceTree = "<group>";
+		};
 		9149E0871F9F793A001FFCC4 /* DAOs */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +135,8 @@
 				918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */,
 				91C1A3521FB4A970002C779E /* SearchPackingListItem.swift */,
 				91A7C7851F8925E2009889F8 /* User.swift */,
+				912811751FB9F5950055F259 /* BudgetList.swift */,
+				912811771FB9F5B00055F259 /* BudgetListItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -174,6 +196,7 @@
 				91B5BD031F92978D0072D985 /* Images */,
 				91F6EC1F1F794C99000A7527 /* Main.storyboard */,
 				9149E0871F9F793A001FFCC4 /* DAOs */,
+				9128116E1FB9F48E0055F259 /* BudgetList */,
 				918CB0E91F8BCEE700EC73AA /* PackingList */,
 				91A7C7891F89292D009889F8 /* LoginViewController.swift */,
 				91A7C78B1F893EA2009889F8 /* FeaturesViewController.swift */,
@@ -341,14 +364,19 @@
 				91C1A34F1FB49DB7002C779E /* SearchPackingLists.swift in Sources */,
 				91C1A3531FB4A970002C779E /* SearchPackingListItem.swift in Sources */,
 				91A7C7881F892757009889F8 /* DatabasePackingList.swift in Sources */,
+				912811721FB9F5240055F259 /* BLCategoriesViewController.swift in Sources */,
 				91A7C7861F8925E2009889F8 /* User.swift in Sources */,
 				9120D71E1F7AB83A0073CDAC /* PackingList.swift in Sources */,
 				91C1A3511FB4A942002C779E /* SearchResultItemsViewController.swift in Sources */,
+				912811781FB9F5B00055F259 /* BudgetListItem.swift in Sources */,
+				912811761FB9F5950055F259 /* BudgetList.swift in Sources */,
 				918CB0EB1F8BF8E300EC73AA /* SearchPageViewController.swift in Sources */,
 				9149E0861F9F792E001FFCC4 /* PackingListDAO.swift in Sources */,
 				91F6EC1C1F794C99000A7527 /* AppDelegate.swift in Sources */,
 				91A7C78C1F893EA2009889F8 /* FeaturesViewController.swift in Sources */,
 				9120D7121F7A95180073CDAC /* AllListsViewController.swift in Sources */,
+				912811701FB9F4EA0055F259 /* BLAllListsViewController.swift in Sources */,
+				912811741FB9F54C0055F259 /* BLItemsViewController.swift in Sources */,
 				910A59CA1FB15EB70091FC6E /* SearchResultListsViewController.swift in Sources */,
 				91A7C78A1F89292D009889F8 /* LoginViewController.swift in Sources */,
 			);

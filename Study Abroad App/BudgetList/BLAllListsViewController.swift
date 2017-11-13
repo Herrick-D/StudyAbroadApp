@@ -1,23 +1,20 @@
 //
-//  AllListsViewController.swift
+//  BLAllListsViewController.swift
 //  Study Abroad App
 //
-//  Created by Dan Herrick on 9/26/17.
+//  Created by Dan Herrick on 11/13/17.
 //  Copyright © 2017 Dan Herrick. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class AllListsViewController: UITableViewController, UINavigationControllerDelegate {
-    
-    //Properties
-    
-    var lists: [DatabasePackingList] = []
+class BLAllListsViewController: UITableViewController {
+
+    var lists: [BudgetList] = []
     var databaseRef: DatabaseReference!
-    let ref = Database.database().reference(withPath: "Packing Lists")
-    let usersRef = Database.database().reference(withPath: "Users")
-    var user: User!
+    let ref = Database.database().reference()
+    //var user: User!
     var backBarButtonItem: UIBarButtonItem!
     
     //UIViewController Lifecycle
@@ -44,10 +41,10 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let packingList: DatabasePackingList
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BLCell", for: indexPath)
+        let packingList: BudgetList
         packingList = lists[indexPath.row]
-        cell.textLabel?.text = packingList.listName
+        cell.textLabel?.text = packingList.category
         return cell
     }
     
@@ -59,17 +56,12 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let navigationController = storyboard!.instantiateViewController(withIdentifier: "ListDetailNavigationController") as! UINavigationController
-        
-        let controller = navigationController.topViewController as! ListDetailViewController
-        controller.packingListToEdit = lists[indexPath.row]
-        controller.databaseRef = lists[indexPath.row].ref
-        present(navigationController, animated: true, completion: nil)
+        //alert to edit
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let packingList = lists[indexPath.row]
-        performSegue(withIdentifier: "ShowPackingList", sender: packingList)
+        let budgetList = lists[indexPath.row]
+        performSegue(withIdentifier: "ShowBudgetList", sender: budgetList)
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -82,7 +74,7 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     //Functions
     
     func backgroundImage() {
-        let backgroundImage = UIImage(named: "for-packing.jpeg")
+        let backgroundImage = UIImage(named: "for-login.jpeg")
         let imageView = UIImageView(image: backgroundImage)
         self.tableView.backgroundView = imageView
         imageView.contentMode = .scaleAspectFill
@@ -103,26 +95,13 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
         self.present(features, animated: true, completion: nil)
     }
     
-    func presentPackingListViewController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let packingList = storyboard.instantiateViewController(withIdentifier: "PackingListViewController") as! PackingListViewController
-        self.present(packingList, animated: true, completion: nil)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddPackingList" {
-            let navigationController = segue.destination as! UINavigationController
-            let listDetailVC = navigationController.topViewController as! ListDetailViewController
-            listDetailVC.packingListToEdit = nil
-            listDetailVC.databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
-            listDetailVC.user = user
-        }
-        else if segue.identifier == "ShowPackingList" {
+        if segue.identifier == "ShowBudgetList" {
             if let indexpath = tableView.indexPathForSelectedRow {
-                let controller = segue.destination as! PackingListViewController
+                let controller = segue.destination as! BLCategoriesViewController
                 controller.databaseRef = lists[indexpath.row].ref
-                controller.packingList = lists[indexpath.row]
-
+                controller.budgetList = lists[indexpath.row]
+                
             }
         }
     }
@@ -132,12 +111,11 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
             let currUser = Auth.auth().currentUser
             if let currUser = currUser {
                 let uid = currUser.uid
-                databaseRef.child(uid).child("PackingList").observe(.value, with: { (snapshot) in
-                    var newLists = [DatabasePackingList]()
+                databaseRef.child(uid).child("BudgetList").observe(.value, with: { (snapshot) in
+                    var newLists = [BudgetList]()
                     for packingList in snapshot.children {
-                        let packList = DatabasePackingList(snapshot: packingList as! DataSnapshot)
-//                        newLists.append(packList)
-                        newLists.insert(packList, at: 0)
+                        let packList = BudgetList(snapshot: packingList as! DataSnapshot)
+                        newLists.append(packList)
                     }
                     self.lists = newLists
                     DispatchQueue.main.async {
@@ -148,4 +126,33 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
