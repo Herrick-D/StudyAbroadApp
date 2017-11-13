@@ -205,6 +205,7 @@ class PackingListViewController: UITableViewController {
                                       "length": length,
                                       "seasons": seasons,
                                       "sex": sex,
+                                      "weight": 0,
                                       "ref": "\(String(describing:(newlistRef)))",
                             "key": "\(String(describing:(key)))"] as [String: Any]
                         newlistRef.child(region).child(key).setValue(listValues)
@@ -222,6 +223,21 @@ class PackingListViewController: UITableViewController {
             }
         })
         listRef?.updateChildValues(["shared": true])
+        
+        shareThankYou()
+    }
+    
+    func shareThankYou(){
+        let alert = UIAlertController(title: "Shared!",
+                                      message: "Thank you for sharing your list for other users to use in the future!",
+                                      preferredStyle: .alert)
+        
+        let closeAction = UIAlertAction(title: "Close",
+                                       style: .default)
+        
+        alert.addAction(closeAction)
+        present(alert, animated: true, completion: nil)
+    
     }
     
     func loadListItems() {

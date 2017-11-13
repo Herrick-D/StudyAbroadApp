@@ -193,10 +193,7 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
             
             let okayAction = UIAlertAction(title: "OK",
                                            style: .default)
-            let cancelAction = UIAlertAction(title: "Cancel",
-                                             style: .default)
             alert.addAction(okayAction)
-            alert.addAction(cancelAction)
             present(alert, animated: true, completion: nil)
         }
         else if (regionPickerText.text != "" && sexPickerText.text != ""){

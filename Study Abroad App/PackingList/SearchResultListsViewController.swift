@@ -109,35 +109,52 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
                 let length = lists.length
                 let seasons = lists.seasons
                 let sex = lists.sex
+                var weight = lists.weight
 
+                //Need to sort as appending, region > seasons > length
                 if (sex == self.sexText && (sex == "Male" || sex == "Female")) {
-                    if (region == self.regionText && length == self.lengthText && seasons == self.seasonsText) {
+                    if (region == self.regionText && seasons == self.seasonsText && length == self.lengthText) {
+                        lists.weight = 1
                         packingListArray.append(lists)
                     }
                     else if (region == self.regionText && seasons == self.seasonsText) {
+                        lists.weight = 2
                         packingListArray.append(lists)
                     }
                     else if (region == self.regionText && length == self.lengthText) {
+                        lists.weight = 3
                         packingListArray.append(lists)
                     }
                     else if (region == self.regionText) {
+                        lists.weight = 4
                         packingListArray.append(lists)
                     }
+                    packingListArray = self.insertionSort(a: packingListArray)
+//                    if packingListArray.count < 1 { packingListArray.append(lists)}
+                    
+                    
+                    
                 }
                 if self.sexText == "Other" {
                     if (region == self.regionText && length == self.lengthText && seasons == self.seasonsText) {
+                        lists.weight = 1
                         packingListArray.append(lists)
                     }
                     else if (region == self.regionText && seasons == self.seasonsText) {
+                        lists.weight = 2
                         packingListArray.append(lists)
                     }
                     else if (region == self.regionText && length == self.lengthText) {
+                        lists.weight = 3
                         packingListArray.append(lists)
                     }
                     else if (region == self.regionText) {
+                        lists.weight = 4
                         packingListArray.append(lists)
                     }
+                    packingListArray = self.insertionSort(a: packingListArray)
                 }
+                
             }
             self.lists = packingListArray
             DispatchQueue.main.async {
@@ -171,6 +188,21 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
     
     @objc func doneButtonDidTouch() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func insertionSort(a: [SearchPackingLists]) -> [SearchPackingLists] {
+        guard a.count > 1 else {return a}
+        var b = a
+        for i in 1..<b.count {
+            var y = i
+            let temp = b[y]
+            while y > 0 && temp.weight < b[y-1].weight {
+                b[y] = b[y-1]
+                y -= 1
+            }
+            b[y] = temp
+        }
+        return b
     }
 
 }

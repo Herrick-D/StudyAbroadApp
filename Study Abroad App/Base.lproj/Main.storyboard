@@ -375,7 +375,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8TZ-pK-wOT">
+                            <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8TZ-pK-wOT">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -629,11 +629,11 @@
             </objects>
             <point key="canvasLocation" x="6376.8000000000002" y="776.76161919040487"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Search Lists-->
         <scene sceneID="z6W-GL-6yJ">
             <objects>
                 <navigationController storyboardIdentifier="SearchListsNavigationController" id="JaU-Wh-3Cn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="JER-y8-d5j">
+                    <tabBarItem key="tabBarItem" title="Search Lists" image="TabBarImages" id="JER-y8-d5j">
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5pY-0E-vQ7">
@@ -689,6 +689,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="TabBarImages" width="25" height="25"/>
         <image name="TabBarList" width="25" height="25"/>
         <image name="for-login.jpeg" width="5184" height="3456"/>
         <image name="for-search.jpeg" width="4608" height="3456"/>

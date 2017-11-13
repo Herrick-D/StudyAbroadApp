@@ -17,8 +17,9 @@ class SearchPackingLists {
     var sex: String!
     var ref: DatabaseReference!
     var key: String!
+    var weight: Int!
     
-    init(region: String, length: String, seasons: String, sex: String, key: String = "") {
+    init(region: String, length: String, seasons: String, sex: String, weight: String, key: String = "") {
         self.key = key
         self.region = region
         self.length = length
@@ -32,6 +33,7 @@ class SearchPackingLists {
         self.length = (snapshot.value as! NSDictionary)["length"] as! String
         self.seasons = (snapshot.value as! NSDictionary)["seasons"] as! String
         self.sex = (snapshot.value as! NSDictionary)["sex"] as! String
+        self.weight = (snapshot.value as! NSDictionary)["weight"] as! Int
         self.key = snapshot.key
         self.ref = snapshot.ref
     }
