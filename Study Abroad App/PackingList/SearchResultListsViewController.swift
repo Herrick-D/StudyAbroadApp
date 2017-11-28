@@ -109,7 +109,7 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
                 let length = lists.length
                 let seasons = lists.seasons
                 let sex = lists.sex
-                var weight = lists.weight
+               // var weight = lists.weight
 
                 //Need to sort as appending, region > seasons > length
                 if (sex == self.sexText && (sex == "Male" || sex == "Female")) {

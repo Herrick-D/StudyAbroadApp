@@ -136,7 +136,6 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
                     var newLists = [DatabasePackingList]()
                     for packingList in snapshot.children {
                         let packList = DatabasePackingList(snapshot: packingList as! DataSnapshot)
-                        //newLists.append(packList)
                         newLists.insert(packList, at: 0)
                     }
                     self.lists = newLists
