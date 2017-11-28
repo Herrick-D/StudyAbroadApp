@@ -194,7 +194,7 @@ class PackingListViewController: UITableViewController {
             let value = snapshot.value as! [String: Any]
             let shared = value["shared"] as! Bool
             
-            if shared == false {
+            
                 let alert = UIAlertController(title: "Share List?",
                                               message: "Sharing your list helps future users create their packing lists easier.",
                                               preferredStyle: .alert)
@@ -232,7 +232,11 @@ class PackingListViewController: UITableViewController {
                 }
                 let cancelAction = UIAlertAction(title: "Cancel",
                                                  style: .default)
+            if shared == false {
                 alert.addAction(shareAction)
+                listRef?.updateChildValues(["shared": true])
+                listShared = true
+            }
                 alert.addAction(cancelAction)
                 self.present(alert, animated: true, completion: nil)
                 
@@ -262,14 +266,15 @@ class PackingListViewController: UITableViewController {
 //                        }
 //                    })
 //                })
-            }
+            //}
             //print(listShared)
             
             
         })
         //print(listShared)
-        
+        if listShared {
         listRef?.updateChildValues(["shared": true])
+        }
     }
     
     func shareThankYou(){

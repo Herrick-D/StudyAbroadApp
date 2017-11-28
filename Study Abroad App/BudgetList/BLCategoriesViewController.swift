@@ -11,21 +11,21 @@ import Firebase
 
 class BLCategoriesViewController: UITableViewController {
 
-    var lists: [BudgetList] = []
+    var lists: [BudgetListCategory] = []
     var databaseRef: DatabaseReference!
     let ref = Database.database().reference()
     //var user: User!
     var backBarButtonItem: UIBarButtonItem!
-    var budgetList: BudgetList!
+    var budgetList: BudgetListCategory!
     
     //UIViewController Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundImage()
-        if let budgetList = budgetList {
-            title = budgetList.listName
-        }
+//        if let budgetList = budgetList {
+//            title = budgetList.listName
+//        }
         displayLists()
     }
     
@@ -41,7 +41,7 @@ class BLCategoriesViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BudgetListCategory", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BLCategory", for: indexPath)
         let budgetListCat = lists[indexPath.row]
         configureText(for: cell, with: budgetListCat)
         configureQuantity(for: cell, with: budgetListCat)
@@ -50,8 +50,8 @@ class BLCategoriesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let packingList = lists[indexPath.row]
-            packingList.ref.removeValue()
+            let budgetListCat = lists[indexPath.row]
+            budgetListCat.ref.removeValue()
         }
     }
     
@@ -81,14 +81,18 @@ class BLCategoriesViewController: UITableViewController {
         tableView.backgroundColor = .lightGray
     }
     
-    func configureText(for cell: UITableViewCell, with item: BudgetList){
-        let label = cell.viewWithTag(1000) as! UILabel
+    func configureText(for cell: UITableViewCell, with item: BudgetListCategory){
+        let label = cell.viewWithTag(2000) as! UILabel
         label.text = item.category
     }
     
-    func configureQuantity(for cell: UITableViewCell, with item: BudgetList){
-        let label = cell.viewWithTag(1500) as! UILabel
+    func configureQuantity(for cell: UITableViewCell, with item: BudgetListCategory){
+        let label = cell.viewWithTag(2001) as! UILabel
         label.text = String(item.total)
+    }
+    
+    
+    @IBAction func addBLCat(_ sender: Any) {
     }
     
 //    func makeBackButton() {
@@ -123,9 +127,9 @@ class BLCategoriesViewController: UITableViewController {
                 let uid = currUser.uid
                 let BLKey = databaseRef.child(uid).child("BudgetList").key
                 databaseRef.child(uid).child("BudgetList").child(BLKey).observe(.value, with: { (snapshot) in
-                    var newLists = [BudgetList]()
+                    var newLists = [BudgetListCategory]()
                     for list in snapshot.children {
-                        let budgetList = BudgetList(snapshot: list as! DataSnapshot)
+                        let budgetList = BudgetListCategory(snapshot: list as! DataSnapshot)
                         newLists.append(budgetList)
                     }
                     self.lists = newLists

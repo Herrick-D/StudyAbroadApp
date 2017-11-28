@@ -9,15 +9,13 @@
 import Foundation
 import Firebase
 
-class BudgetList {
-    var listName: String!
+class BudgetListCategory{
     var category: String!
     var total: Int!
     var ref: DatabaseReference!
     var key: String!
     
-    init(listName: String, category: String, total: Int, key: String = "") {
-        self.listName = listName
+    init(category: String, total: Int, key: String = "") {
         self.category = category
         self.total = total
         self.key = key
@@ -25,7 +23,6 @@ class BudgetList {
     }
     
     init(snapshot: DataSnapshot) {
-        self.listName = (snapshot.value as! NSDictionary)["listName"] as! String
         self.category = (snapshot.value as! NSDictionary)["category"] as! String
         self.total = (snapshot.value as! NSDictionary)["total"] as! Int
         self.key = snapshot.key

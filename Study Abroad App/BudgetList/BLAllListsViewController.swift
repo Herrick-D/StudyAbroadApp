@@ -10,58 +10,29 @@ import UIKit
 import Firebase
 
 class BLAllListsViewController: UITableViewController {
-
-    var lists: [BudgetList] = []
-    var databaseRef: DatabaseReference!
-    let ref = Database.database().reference()
-    //var user: User!
+    //Properties:
+    var databaseRef: DatabaseReference?
+    var ref = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
+    var lists: [BudgetListName] = []
+    var uid: String?
     var backBarButtonItem: UIBarButtonItem!
     
-    //UIViewController Lifecycle
+    //View Controller Lifecycle
     
     override func viewDidLoad() {
-        databaseRef = Database.database().reference().child("Users")
         super.viewDidLoad()
-        backgroundImage()
-        makeBackButton()
-        displayLists()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         databaseRef = Database.database().reference().child("Users")
-        super.viewWillAppear(animated)
-        backgroundImage()
-        makeBackButton()
-    }
-    
-    //UITableView Delegate Methods
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BLCell", for: indexPath)
-        let packingList: BudgetList
-        packingList = lists[indexPath.row]
-        cell.textLabel?.text = packingList.category
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let packingList = lists[indexPath.row]
-            packingList.ref.removeValue()
+        if Auth.auth().currentUser != nil {
+            let currUser = Auth.auth().currentUser
+            uid = currUser?.uid
         }
     }
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        //alert to edit
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let budgetList = lists[indexPath.row]
-        performSegue(withIdentifier: "ShowBudgetList", sender: budgetList)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        backgroundImage()
+        displayLists()
+        makeBackButton()
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -69,6 +40,59 @@ class BLAllListsViewController: UITableViewController {
         cell.textLabel?.textColor = UIColor.black
         cell.contentView.layer.borderColor = UIColor.gray.cgColor
         cell.contentView.layer.borderWidth = 0.5
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return lists.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BLCell", for: indexPath)
+        let budgetList = lists[indexPath.row]
+        cell.textLabel?.text = budgetList.listName
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let key = lists[indexPath.row].key
+        let ref = databaseRef!.child(uid!).child("BudgetLists")
+        let alert = UIAlertController(title: "Budget List",
+                                      message: "Add Budget List",
+                                      preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Save",
+                                       style: .default) { action in
+                                        let listName = alert.textFields![0]
+                                        let values = ["listName": listName.text!,
+                                                      "key": key as Any,
+                                            "ref": "\(String(describing: ref))"] as [String : Any]
+                                        
+                                        let budgetListRef = ref.child(key!)
+                                        budgetListRef.setValue(values)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .default)
+        alert.addTextField { textName in
+            textName.placeholder = "Budget List Name"
+        }
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let budgetList = lists[indexPath.row]
+        performSegue(withIdentifier: "ShowBudgetListCategories", sender: budgetList)
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let budgetList = lists[indexPath.row]
+            budgetList.ref?.removeValue()
+        }
     }
     
     //Functions
@@ -95,47 +119,59 @@ class BLAllListsViewController: UITableViewController {
         self.present(features, animated: true, completion: nil)
     }
     
+    @IBAction func addButtonDidTouch(_ sender: AnyObject) {
+        if Auth.auth().currentUser != nil {
+            let ref = databaseRef!.child(uid!).child("BudgetLists")
+            let key = ref.childByAutoId().key
+            
+            let alert = UIAlertController(title: "Budget List",
+                                          message: "Add Budget List",
+                                          preferredStyle: .alert)
+            let saveAction = UIAlertAction(title: "Save",
+                                           style: .default) { action in
+                                            let listName = alert.textFields![0]
+                                            let values = ["listName": listName.text!,
+                                                          "key": "\(String(describing: key))",
+                                                "ref": "\(String(describing: ref))"] as [String : Any]
+                                            
+                                            let budgetListRef = ref.child(key)
+                                            budgetListRef.setValue(values)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .default)
+            alert.addTextField { textName in
+                textName.placeholder = "Budget List Name"
+            }
+            alert.addAction(saveAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowBudgetList" {
+        if segue.identifier == "ShowBudgetListCategories" {
             if let indexpath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! BLCategoriesViewController
                 controller.databaseRef = lists[indexpath.row].ref
-                controller.budgetList = lists[indexpath.row]
+                //controller.budgetList = listNames[indexpath.row]
                 
             }
         }
     }
+
     
     func displayLists() {
-        if Auth.auth().currentUser != nil {
-            let currUser = Auth.auth().currentUser
-            if let currUser = currUser {
-                let uid = currUser.uid
-                databaseRef.child(uid).child("BudgetList").observe(.value, with: { (snapshot) in
-                    var newLists = [BudgetList]()
-                    for packingList in snapshot.children {
-                        let packList = BudgetList(snapshot: packingList as! DataSnapshot)
-                        newLists.append(packList)
-                    }
-                    self.lists = newLists
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                })
+        databaseRef!.child(uid!).child("BudgetLists").observe(.value, with: { snapshot in
+            var newLists: [BudgetListName] = []
+            for list in snapshot.children {
+                let budgetList = BudgetListName(snapshot: list as! DataSnapshot)
+                newLists.insert(budgetList, at: 0)
             }
-        }
+            self.lists = newLists
+            self.tableView.reloadData()
+        })
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
