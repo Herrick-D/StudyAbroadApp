@@ -14,11 +14,10 @@ class BLCategoriesViewController: UITableViewController {
     //Properties
     
     var databaseRef: DatabaseReference?
-    //var budgetListKey: String?
     var ref = Database.database().reference()
     var categories: [BudgetListCategory] = []
     var uid: String?
-    var backBarButtonItem: UIBarButtonItem!
+    //var backBarButtonItem: UIBarButtonItem!
     
     
     //UIViewController Lifecycle
@@ -63,7 +62,6 @@ class BLCategoriesViewController: UITableViewController {
         let key = categories[indexPath.row].key
         let ref = databaseRef!
         let categoryRef = ref.child("Categories")
-        //let categoryKey = categoryRef.childByAutoId().key
         
         let alert = UIAlertController(title: "Categories",
                                       message: "Edit Category",
@@ -101,7 +99,7 @@ class BLCategoriesViewController: UITableViewController {
     //Functions
     
     func backgroundImage() {
-        let backgroundImage = UIImage(named: "for-login.jpeg")
+        let backgroundImage = UIImage(named: "for-budget.jpeg")
         let imageView = UIImageView(image: backgroundImage)
         self.tableView.backgroundView = imageView
         imageView.contentMode = .scaleAspectFill
@@ -115,7 +113,7 @@ class BLCategoriesViewController: UITableViewController {
     
     func configureQuantity(for cell: UITableViewCell, with item: BudgetListCategory){
         let label = cell.viewWithTag(2001) as! UILabel
-        label.text = String(describing: item.total)
+        label.text = item.total
     }
     
     
@@ -155,22 +153,18 @@ class BLCategoriesViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowBudgetListItems" {
             if let indexpath = tableView.indexPathForSelectedRow {
-                let controller = segue.destination as! BLItemsViewController //change to BLItemsViewController
-                //controller.databaseRef = categories[indexpath.row].ref
-                //controller.budgetList = categories[indexpath.row]
-                
+                let controller = segue.destination as! BLItemsViewController
+                controller.databaseRef = categories[indexpath.row].ref
             }
         }
     }
     
     func displayLists() {
         if let databaseRef = databaseRef?.child("Categories") {
-            print(databaseRef)
             databaseRef.queryOrdered(byChild: "category").observe(.value, with: { snapshot in
                 var newLists: [BudgetListCategory] = []
                 for category in snapshot.children {
                     let budgetCategories = BudgetListCategory(snapshot: category as! DataSnapshot)
-                    //print(budgetCategories)
                     newLists.append(budgetCategories)
                 }
                 self.categories = newLists

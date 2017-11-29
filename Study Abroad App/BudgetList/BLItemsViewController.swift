@@ -7,93 +7,181 @@
 //
 
 import UIKit
+import Firebase
 
 class BLItemsViewController: UITableViewController {
 
+    //Properties
     
-    @IBAction func addBLItems(_ sender: Any) {
-    }
+    var databaseRef: DatabaseReference?
+    var ref = Database.database().reference()
+    var items: [BudgetListItem] = []
+    var uid: String?
+    
+    //UIViewController Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        backgroundImage()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if Auth.auth().currentUser != nil {
+            let currUser = Auth.auth().currentUser
+            uid = currUser?.uid
+        }
+        backgroundImage()
+        displayLists()
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
+    
+    //UITableView Delegate Methods
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return items.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BLItems", for: indexPath)
+        let budgetListItems = items[indexPath.row]
+        configureText(for: cell, with: budgetListItems)
+        configureQuantity(for: cell, with: budgetListItems)
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            let budgetListItem = items[indexPath.row]
+            budgetListItem.ref.removeValue()
+        }
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let key = items[indexPath.row].key
+        let ref = databaseRef!
+        let itemRef = ref.child("Items")
+        
+        let alert = UIAlertController(title: "Budget Items",
+                                      message: "Edit Item",
+                                      preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Save",
+                                       style: .default) { action in
+                                        let itemName = alert.textFields![0]
+                                        let cost = alert.textFields![1]
+                                        let value = ["item": itemName.text!,
+                                                     "cost": cost.text!] as [String : Any]
+                                        
+                                        let budgetListRef = itemRef.child(key!)
+                                        budgetListRef.updateChildValues(value)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .default)
+        alert.addTextField { textItem in
+            textItem.placeholder = "Item"
+        }
+        alert.addTextField { textCost in
+            textCost.placeholder = "Cost"
+        }
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
+        cell.textLabel?.textColor = UIColor.black
+        cell.contentView.layer.borderColor = UIColor.gray.cgColor
+        cell.contentView.layer.borderWidth = 0.5
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    //Functions
+    
+    func backgroundImage() {
+        let backgroundImage = UIImage(named: "for-budget.jpeg")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+        imageView.contentMode = .scaleAspectFill
+        tableView.backgroundColor = .lightGray
     }
-    */
-
+    
+    func configureText(for cell: UITableViewCell, with item: BudgetListItem){
+        let label = cell.viewWithTag(2100) as! UILabel
+        label.text = item.item
+    }
+    
+    func configureQuantity(for cell: UITableViewCell, with item: BudgetListItem){
+        let label = cell.viewWithTag(2101) as! UILabel
+        label.text = item.cost
+    }
+    
+    @IBAction func addBLItems(_ sender: Any) {
+        if Auth.auth().currentUser != nil {
+            let ref = databaseRef!
+            let key = ref.key
+            let itemRef = ref.child("Items")
+            let itemKey = itemRef.childByAutoId().key
+            
+            
+            let alert = UIAlertController(title: "Budget Items",
+                                          message: "Add Items",
+                                          preferredStyle: .alert)
+            let saveAction = UIAlertAction(title: "Save",
+                                           style: .default) { action in
+                                            let itemName = alert.textFields![0]
+                                            let cost = alert.textFields![1]
+                                            let values = ["item": itemName.text!,
+                                                          "cost": cost.text!,
+                                                "key": "\(String(describing: itemKey))",
+                                                "ref": "\(String(describing: itemRef))"] as [String : Any]
+                                            
+                                            let budgetListRef = itemRef.child(itemKey)
+                                            budgetListRef.setValue(values)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .default)
+            alert.addTextField { textItem in
+                textItem.placeholder = "Item"
+            }
+            alert.addTextField { textCost in
+                textCost.placeholder = "Cost"
+            }
+            alert.addAction(saveAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func displayLists() {
+        if let databaseRef = databaseRef?.child("Items") {
+            databaseRef.queryOrdered(byChild: "item").observe(.value, with: { snapshot in
+                var newLists: [BudgetListItem] = []
+                for item in snapshot.children {
+                    let budgetItems = BudgetListItem(snapshot: item as! DataSnapshot)
+                    newLists.append(budgetItems)
+                }
+                self.items = newLists
+                self.tableView.reloadData()
+            })
+        }
+        
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

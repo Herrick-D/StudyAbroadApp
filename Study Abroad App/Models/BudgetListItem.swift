@@ -10,21 +10,21 @@ import Foundation
 import Firebase
 
 class BudgetListItem {
-    var itemName: String!
-    var cost: Int!
+    var item: String!
+    var cost: String!
     var ref: DatabaseReference!
     var key: String!
     
-    init(itemName: String, cost: Int, key: String = "") {
-        self.itemName = itemName
+    init(item: String, cost: String, key: String = "") {
+        self.item = item
         self.cost = cost
         self.key = key
         self.ref = Database.database().reference()
     }
     
     init(snapshot: DataSnapshot) {
-        self.itemName = (snapshot.value as! NSDictionary)["itemName"] as! String
-        self.cost = (snapshot.value as! NSDictionary)["cost"] as! Int
+        self.item = (snapshot.value as! NSDictionary)["item"] as! String
+        self.cost = (snapshot.value as! NSDictionary)["cost"] as! String
         self.key = snapshot.key
         self.ref = snapshot.ref
     }

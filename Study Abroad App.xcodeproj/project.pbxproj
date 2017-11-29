@@ -25,6 +25,7 @@
 		912811741FB9F54C0055F259 /* BLItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912811731FB9F54C0055F259 /* BLItemsViewController.swift */; };
 		912811761FB9F5950055F259 /* BudgetListCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912811751FB9F5950055F259 /* BudgetListCategory.swift */; };
 		912811781FB9F5B00055F259 /* BudgetListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912811771FB9F5B00055F259 /* BudgetListItem.swift */; };
+		9147469B1FCF0F6B007F1F96 /* for-budget.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 9147469A1FCF0F6A007F1F96 /* for-budget.jpeg */; };
 		9149E0861F9F792E001FFCC4 /* PackingListDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9149E0851F9F792E001FFCC4 /* PackingListDAO.swift */; };
 		918CB0EB1F8BF8E300EC73AA /* SearchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */; };
 		918CB0F31F8C193000EC73AA /* DatabasePackingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918CB0F21F8C193000EC73AA /* DatabasePackingListItem.swift */; };
@@ -64,6 +65,7 @@
 		912811731FB9F54C0055F259 /* BLItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLItemsViewController.swift; sourceTree = "<group>"; };
 		912811751FB9F5950055F259 /* BudgetListCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListCategory.swift; sourceTree = "<group>"; };
 		912811771FB9F5B00055F259 /* BudgetListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListItem.swift; sourceTree = "<group>"; };
+		9147469A1FCF0F6A007F1F96 /* for-budget.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "for-budget.jpeg"; sourceTree = "<group>"; };
 		9149E0851F9F792E001FFCC4 /* PackingListDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListDAO.swift; sourceTree = "<group>"; };
 		918CB0E71F8BCD3700EC73AA /* Study Abroad App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Study Abroad App.entitlements"; sourceTree = "<group>"; };
 		918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				911822271F98F298000DF22A /* for-search.jpeg */,
 				911822281F98F29D000DF22A /* for-places.jpeg */,
 				911822291F98F2A6000DF22A /* for-login.jpeg */,
+				9147469A1FCF0F6A007F1F96 /* for-budget.jpeg */,
 				9118222A1F98F2AB000DF22A /* pexels-photo-297642.jpeg */,
 			);
 			path = Images;
@@ -291,6 +294,7 @@
 				9118222F1F98F59B000DF22A /* for-login.jpeg in Resources */,
 				91F6EC261F794C99000A7527 /* LaunchScreen.storyboard in Resources */,
 				9118222B1F98F580000DF22A /* for-features.jpeg in Resources */,
+				9147469B1FCF0F6B007F1F96 /* for-budget.jpeg in Resources */,
 				91A7C78F1F8945B6009889F8 /* GoogleService-Info.plist in Resources */,
 				9118222D1F98F595000DF22A /* for-search.jpeg in Resources */,
 				911822301F98F59E000DF22A /* pexels-photo-297642.jpeg in Resources */,

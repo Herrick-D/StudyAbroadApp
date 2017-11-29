@@ -98,7 +98,7 @@ class BLAllListsViewController: UITableViewController {
     //Functions
     
     func backgroundImage() {
-        let backgroundImage = UIImage(named: "for-login.jpeg")
+        let backgroundImage = UIImage(named: "for-budget.jpeg")
         let imageView = UIImageView(image: backgroundImage)
         self.tableView.backgroundView = imageView
         imageView.contentMode = .scaleAspectFill
@@ -153,9 +153,6 @@ class BLAllListsViewController: UITableViewController {
             if let indexpath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! BLCategoriesViewController
                 controller.databaseRef = lists[indexpath.row].ref
-                //print("\(controller.databaseRef)")
-                //controller.budgetListKey = lists[indexpath.row].key
-                
             }
         }
     }
