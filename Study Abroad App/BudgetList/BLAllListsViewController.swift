@@ -153,7 +153,8 @@ class BLAllListsViewController: UITableViewController {
             if let indexpath = tableView.indexPathForSelectedRow {
                 let controller = segue.destination as! BLCategoriesViewController
                 controller.databaseRef = lists[indexpath.row].ref
-                //controller.budgetList = listNames[indexpath.row]
+                //print("\(controller.databaseRef)")
+                //controller.budgetListKey = lists[indexpath.row].key
                 
             }
         }

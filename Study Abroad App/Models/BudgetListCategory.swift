@@ -11,7 +11,7 @@ import Firebase
 
 class BudgetListCategory{
     var category: String!
-    var total: Int!
+    var total: Int?
     var ref: DatabaseReference!
     var key: String!
     
@@ -24,7 +24,7 @@ class BudgetListCategory{
     
     init(snapshot: DataSnapshot) {
         self.category = (snapshot.value as! NSDictionary)["category"] as! String
-        self.total = (snapshot.value as! NSDictionary)["total"] as! Int
+        self.total = (snapshot.value as! NSDictionary)["total"] as? Int
         self.key = snapshot.key
         self.ref = snapshot.ref
     }
