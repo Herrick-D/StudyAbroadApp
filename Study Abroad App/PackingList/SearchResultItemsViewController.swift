@@ -28,7 +28,6 @@ class SearchResultItemsViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //makeBackBarButton()
         makeSaveBarButton()
         backgroundImage()
         if let packingList = packingList {
@@ -44,38 +43,32 @@ class SearchResultItemsViewController: UITableViewController {
     
     //UITableView Methods
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
         cell.textLabel?.textColor = UIColor.black
         cell.contentView.layer.borderColor = UIColor.gray.cgColor
         cell.contentView.layer.borderWidth = 0.5
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView,
+                            numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchPackingListItemCell", for: indexPath)
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchPackingListItemCell",
+                                                 for: indexPath)
         let packingListItem = items[indexPath.row]
         configureText(for: cell, with: packingListItem)
         configureQuantity(for: cell, with: packingListItem)
-        //toggleCellCheckbox(cell, isCompleted: packingListItem.checked)
         return cell
     }
     
-    
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if let cell = tableView.cellForRow(at: indexPath){
-//            var packingListItem = items[indexPath.row]
-//            //let toggleChecked = !packingListItem.checked
-//            //toggleCellCheckbox(cell, isCompleted: toggleChecked)
-//        }
-//        tableView.deselectRow(at: indexPath, animated: true)
-//    }
-    
-    
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView,
+                            canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
@@ -111,15 +104,6 @@ class SearchResultItemsViewController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-//    func toggleCellCheckbox(_ cell: UITableViewCell, isCompleted: Bool) {
-//        let label = cell.viewWithTag(1001) as! UILabel
-//        if !isCompleted {
-//            label.text = ""
-//        } else {
-//            label.text = "✓"
-//        }
-//    }
-    
     func configureText(for cell: UITableViewCell, with item: SearchPackingListItem){
         let label = cell.viewWithTag(1700) as! UILabel
         label.text = item.itemName
@@ -145,41 +129,40 @@ class SearchResultItemsViewController: UITableViewController {
                 
                 let saveAction = UIAlertAction(title: "Save",
                                                style: .default) { action in
-                                                let listName = alert.textFields![0]
-                                                self.databaseRef?.observe(.value, with: {(snapshot) in
-                                                        let params = snapshot.value as! [String: Any]
-                                                    let region = params["region"] as! String
-                                                        let length = params["length"] as! String
-                                                        let seasons = params["seasons"] as! String
-                                                        let sex = params["sex"] as! String
-                                                    
-                                                    let listValues = ["listName": listName.text!,
-                                                            "region": region,
-                                                                          "length": length,
-                                                                          "seasons": seasons,
-                                                                          "sex": sex,
-                                                                          "shared": false,
-                                                                          "ref": "\(String(describing:(userListRef)))",
-                                                            "key": "\(String(describing:(userListKey)))"] as [String: Any]
-                                                        userListRef.child(userListKey).setValue(listValues)
-                                                            
-                                                        let itemRef = userListRef.child(userListKey).child("items")
-                                                        let itemKey = itemRef.childByAutoId().key
-                                                        self.databaseRef?.child("items").queryOrdered(byChild: "itemName").observe(.value, with: { (snapshot) in
-                                                            for items in snapshot.children {
-                                                                let key = userListRef.childByAutoId().key
-                                                                let item = SearchPackingListItem(snapshot: items as! DataSnapshot)
-                                                                let itemValues = ["itemName": item.itemName,
-                                                                                  "quantity": item.quantity,
-                                                                                  "checked": false,
-                                                                                  "key": "\(String(describing:(key)))", //wrong key
-                                                                    "ref": "\(String(describing:(itemRef)))"] as [String: Any]
-                                                                itemRef.child("\(key)").setValue(itemValues)
-                                                            }
-                                                        })
-                                                    })
-                                                    
-                                                
+                    let listName = alert.textFields![0]
+                    self.databaseRef?.observe(.value, with: {(snapshot) in
+                        let params = snapshot.value as! [String: Any]
+                        let region = params["region"] as! String
+                        let length = params["length"] as! String
+                        let seasons = params["seasons"] as! String
+                        let sex = params["sex"] as! String
+                        
+                        let listValues = ["listName": listName.text!,
+                                "region": region,
+                                "length": length,
+                                "seasons": seasons,
+                                "sex": sex,
+                                "shared": false,
+                                "ref": "\(String(describing:(userListRef)))",
+                                "key": "\(String(describing:(userListKey)))"] as [String: Any]
+                        userListRef.child(userListKey).setValue(listValues)
+                        
+                        let itemRef = userListRef.child(userListKey).child("items")
+                        
+                        self.databaseRef?.child("items").queryOrdered(byChild:
+                                    "itemName").observe(.value, with: { (snapshot) in
+                            for items in snapshot.children {
+                                let key = userListRef.childByAutoId().key
+                                let item = SearchPackingListItem(snapshot: items as! DataSnapshot)
+                                let itemValues = ["itemName": item.itemName,
+                                                  "quantity": item.quantity,
+                                                  "checked": false,
+                                                  "key": "\(String(describing:(key)))", //wrong key
+                                    "ref": "\(String(describing:(itemRef)))"] as [String: Any]
+                                itemRef.child("\(key)").setValue(itemValues)
+                            }
+                        })
+                    })
                 }
                 let cancelAction = UIAlertAction(title: "Cancel",
                                                  style: .default)

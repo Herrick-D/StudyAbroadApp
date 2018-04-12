@@ -19,7 +19,8 @@ class SearchPackingLists {
     var key: String!
     var weight: Int!
     
-    init(region: String, length: String, seasons: String, sex: String, weight: String, key: String = "") {
+    init(region: String, length: String, seasons: String, sex: String,
+         weight: String, key: String = "") {
         self.key = key
         self.region = region
         self.length = length

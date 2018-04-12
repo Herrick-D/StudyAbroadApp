@@ -19,8 +19,6 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
     var sexText: String?
     let databaseRef = Database.database().reference(withPath: "SharedPackingLists")
     var lists: [SearchPackingLists] = []
-    
-    //var backBarButtonItem: UIBarButtonItem!
     var doneBarButtonItem: UIBarButtonItem!
     
     //View Controller Lifecycle
@@ -34,7 +32,6 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
         title = "Search Results"
         backgroundImage()
         loadResultLists()
-        //makeBackBarButton()
         makeDoneBarButton()
         tableView.reloadData()
     }
@@ -49,9 +46,10 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
         return lists.count
     }
 
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultListsCell", for: indexPath)
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultListsCell",
+                                                 for: indexPath)
         cell.selectionStyle = .none
         let packingList: SearchPackingLists
         packingList = lists[indexPath.row]
@@ -67,7 +65,8 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
         performSegue(withIdentifier: "SearchListItemSegue", sender: packingList)
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
         cell.detailTextLabel?.backgroundColor = UIColor.clear
         cell.textLabel?.backgroundColor = UIColor.clear
         cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
@@ -109,11 +108,10 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
                 let length = lists.length
                 let seasons = lists.seasons
                 let sex = lists.sex
-               // var weight = lists.weight
 
-                //Need to sort as appending, region > seasons > length
                 if (sex == self.sexText && (sex == "Male" || sex == "Female")) {
-                    if (region == self.regionText && seasons == self.seasonsText && length == self.lengthText) {
+                    if (region == self.regionText && seasons == self.seasonsText &&
+                        length == self.lengthText) {
                         lists.weight = 1
                         packingListArray.append(lists)
                     }
@@ -130,13 +128,11 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
                         packingListArray.append(lists)
                     }
                     packingListArray = self.insertionSort(a: packingListArray)
-//                    if packingListArray.count < 1 { packingListArray.append(lists)}
-                    
-                    
-                    
                 }
+                
                 if self.sexText == "Other" {
-                    if (region == self.regionText && length == self.lengthText && seasons == self.seasonsText) {
+                    if (region == self.regionText && length == self.lengthText &&
+                        seasons == self.seasonsText) {
                         lists.weight = 1
                         packingListArray.append(lists)
                     }
@@ -164,18 +160,6 @@ class SearchResultListsViewController: UITableViewController, UINavigationContro
         })
         
     }
-    
-//    func makeBackBarButton() {
-//        backBarButtonItem = UIBarButtonItem(title: "Back",
-//                                            style: .plain,
-//                                            target: self,
-//                                            action: #selector(backButtonDidTouch))
-//        navigationItem.leftBarButtonItem = backBarButtonItem
-//    }
-    
-//    @objc func backButtonDidTouch() {
-//        self.dismiss(animated: true, completion: nil)
-//    }
     
     func makeDoneBarButton() {
         doneBarButtonItem = UIBarButtonItem(title: "Done",

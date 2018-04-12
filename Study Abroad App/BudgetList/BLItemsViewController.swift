@@ -17,6 +17,7 @@ class BLItemsViewController: UITableViewController {
     var ref = Database.database().reference()
     var items: [BudgetListItem] = []
     var uid: String?
+    var itemsTotal: Int?
     
     //UIViewController Lifecycle
     
@@ -37,26 +38,32 @@ class BLItemsViewController: UITableViewController {
     
     //UITableView Delegate Methods
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section:
+                Int) -> Int {
         return items.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BLItems", for: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath:
+                IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BLItems", for:
+                indexPath)
         let budgetListItems = items[indexPath.row]
         configureText(for: cell, with: budgetListItems)
         configureQuantity(for: cell, with: budgetListItems)
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCellEditingStyle,
+                            forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let budgetListItem = items[indexPath.row]
             budgetListItem.ref.removeValue()
         }
     }
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let key = items[indexPath.row].key
         let ref = databaseRef!
         let itemRef = ref.child("Items")
@@ -87,7 +94,8 @@ class BLItemsViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
         cell.textLabel?.textColor = UIColor.black
         cell.contentView.layer.borderColor = UIColor.gray.cgColor
@@ -111,13 +119,12 @@ class BLItemsViewController: UITableViewController {
     
     func configureQuantity(for cell: UITableViewCell, with item: BudgetListItem){
         let label = cell.viewWithTag(2101) as! UILabel
-        label.text = item.cost
+        label.text = "$\(item.cost!)"
     }
     
     @IBAction func addBLItems(_ sender: Any) {
         if Auth.auth().currentUser != nil {
             let ref = databaseRef!
-            let key = ref.key
             let itemRef = ref.child("Items")
             let itemKey = itemRef.childByAutoId().key
             
@@ -152,14 +159,22 @@ class BLItemsViewController: UITableViewController {
     }
     
     func displayLists() {
-        if let databaseRef = databaseRef?.child("Items") {
-            databaseRef.queryOrdered(byChild: "item").observe(.value, with: { snapshot in
+        if let itemsDatabaseRef = databaseRef?.child("Items") {
+            itemsDatabaseRef.queryOrdered(byChild: "item").observe(.value, with: { snapshot in
                 var newLists: [BudgetListItem] = []
+                var total = 0
                 for item in snapshot.children {
                     let budgetItems = BudgetListItem(snapshot: item as! DataSnapshot)
                     newLists.append(budgetItems)
+                    let costString = budgetItems.cost!
+                    let cost = (costString as NSString).integerValue
+                    total = total + cost
                 }
                 self.items = newLists
+                self.itemsTotal = total
+                let value = ["total": self.itemsTotal] as [String:Any]
+                let categoryDatabaseRef = self.databaseRef
+                categoryDatabaseRef?.updateChildValues(value)
                 self.tableView.reloadData()
             })
         }

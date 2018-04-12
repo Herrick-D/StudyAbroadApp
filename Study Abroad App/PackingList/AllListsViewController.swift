@@ -39,11 +39,13 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     
     //UITableView Delegate Methods
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView,
+                            numberOfRowsInSection section: Int) -> Int {
         return lists.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let packingList: DatabasePackingList
         packingList = lists[indexPath.row]
@@ -51,15 +53,19 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCellEditingStyle,
+                            forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let packingList = lists[indexPath.row]
             packingList.ref.removeValue()
         }
     }
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let navigationController = storyboard!.instantiateViewController(withIdentifier: "ListDetailNavigationController") as! UINavigationController
+    override func tableView(_ tableView: UITableView,
+                            accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let navigationController = storyboard!.instantiateViewController(withIdentifier:
+                    "ListDetailNavigationController") as! UINavigationController
         
         let controller = navigationController.topViewController as! ListDetailViewController
         controller.packingListToEdit = lists[indexPath.row]
@@ -67,12 +73,14 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
         present(navigationController, animated: true, completion: nil)
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            didSelectRowAt indexPath: IndexPath) {
         let packingList = lists[indexPath.row]
         performSegue(withIdentifier: "ShowPackingList", sender: packingList)
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
         cell.textLabel?.textColor = UIColor.black
         cell.contentView.layer.borderColor = UIColor.gray.cgColor
@@ -99,13 +107,15 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
     
     @objc func backButtonDidTouch() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let features = storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController //UINavigationController
+        let features = storyboard.instantiateViewController(withIdentifier:
+                    "FeaturesViewController") as! FeaturesViewController
         self.present(features, animated: true, completion: nil)
     }
     
     func presentPackingListViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let packingList = storyboard.instantiateViewController(withIdentifier: "PackingListViewController") as! PackingListViewController
+        let packingList = storyboard.instantiateViewController(withIdentifier:
+                    "PackingListViewController") as! PackingListViewController
         self.present(packingList, animated: true, completion: nil)
     }
     
@@ -114,7 +124,8 @@ class AllListsViewController: UITableViewController, UINavigationControllerDeleg
             let navigationController = segue.destination as! UINavigationController
             let listDetailVC = navigationController.topViewController as! ListDetailViewController
             listDetailVC.packingListToEdit = nil
-            listDetailVC.databaseRef = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
+            listDetailVC.databaseRef = Database.database().reference(fromURL:
+                        "https://studyabroad-42803.firebaseio.com/")
             listDetailVC.user = user
         }
         else if segue.identifier == "ShowPackingList" {

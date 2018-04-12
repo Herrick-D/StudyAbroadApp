@@ -57,7 +57,8 @@ class LoginViewController: UIViewController {
             return
         }
         if (password != "" && email != "") {
-            Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
+            Auth.auth().signIn(withEmail: email, password: password,
+                               completion: { (user, error) in
                 if error != nil {
                     print("Authorization error")
                     return
@@ -106,7 +107,8 @@ class LoginViewController: UIViewController {
     
     func presentFeaturesScreen() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let features: FeaturesViewController = storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController
+        let features: FeaturesViewController = storyboard.instantiateViewController(withIdentifier:
+                    "FeaturesViewController") as! FeaturesViewController
         self.present(features, animated: true, completion: nil)
     }
 }

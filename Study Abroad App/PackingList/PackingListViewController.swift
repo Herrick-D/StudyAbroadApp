@@ -41,7 +41,8 @@ class PackingListViewController: UITableViewController {
     
     //UITableView Methods
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
         cell.textLabel?.textColor = UIColor.black
         cell.contentView.layer.borderColor = UIColor.gray.cgColor
@@ -52,7 +53,8 @@ class PackingListViewController: UITableViewController {
         return items.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PackingListItem", for: indexPath)
         let packingListItem = items[indexPath.row]
         configureText(for: cell, with: packingListItem)
@@ -61,7 +63,8 @@ class PackingListViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let itemKey = items[indexPath.row].key
         let ref = databaseRef!.child("items")
         let alert = UIAlertController(title: "Packing List Item",
@@ -95,7 +98,8 @@ class PackingListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath){
             let packingListItem = items[indexPath.row]
             let toggleChecked = !packingListItem.checked
@@ -110,7 +114,9 @@ class PackingListViewController: UITableViewController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCellEditingStyle,
+                            forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let packingListItem = items[indexPath.row]
             packingListItem.ref?.removeValue()
@@ -196,39 +202,40 @@ class PackingListViewController: UITableViewController {
             
             
                 let alert = UIAlertController(title: "Share List?",
-                                              message: "Sharing your list helps future users create their packing lists easier.",
-                                              preferredStyle: .alert)
+                            message: "Sharing your list helps future users create their packing lists easier.",
+                            preferredStyle: .alert)
                 
                 
                 let shareAction = UIAlertAction(title: "Share",
                                                 style: .default) { action in
                                                     listRef?.observe(.value, with: { (snapshot) in
-                                                        let params = snapshot.value as! [String: Any]
-                                                        let region = params["region"] as! String
-                                                        let length = params["length"] as! String
-                                                        let seasons = params["seasons"] as! String
-                                                        let sex = params["sex"] as! String
-                                                        
-                                                        let listValues = ["region": region,
-                                                                          "length": length,
-                                                                          "seasons": seasons,
-                                                                          "sex": sex,
-                                                                          "weight": 0,
-                                                                          "ref": "\(String(describing:(newlistRef)))",
-                                                            "key": "\(String(describing:(key)))"] as [String: Any]
-                                                        newlistRef.child(region).child(key).setValue(listValues)
-                                                        
-                                                        let itemRef = newlistRef.child(region).child(key).child("items")
-                                                        listRef?.child("items").queryOrdered(byChild: "itemName").observe(.value, with: { (snapshot) in
-                                                            for items in snapshot.children {
-                                                                let item = DatabasePackingListItem(snapshot: items as! DataSnapshot)
-                                                                let itemValues = ["itemName": item.itemName,
-                                                                                  "quantity": item.quantity] as [String: Any]
-                                                                itemRef.childByAutoId().setValue(itemValues)
-                                                            }
-                                                        })
-                                                    })
-                                                    self.shareThankYou()
+                        let params = snapshot.value as! [String: Any]
+                        let region = params["region"] as! String
+                        let length = params["length"] as! String
+                        let seasons = params["seasons"] as! String
+                        let sex = params["sex"] as! String
+                        
+                        let listValues = ["region": region,
+                                          "length": length,
+                                          "seasons": seasons,
+                                          "sex": sex,
+                                          "weight": 0,
+                                          "ref": "\(String(describing:(newlistRef)))",
+                            "key": "\(String(describing:(key)))"] as [String: Any]
+                        newlistRef.child(region).child(key).setValue(listValues)
+                        
+                        let itemRef = newlistRef.child(region).child(key).child("items")
+                        listRef?.child("items").queryOrdered(byChild: "itemName").observe(.value, with: {
+                                    (snapshot) in
+                            for items in snapshot.children {
+                                let item = DatabasePackingListItem(snapshot: items as! DataSnapshot)
+                                let itemValues = ["itemName": item.itemName,
+                                                  "quantity": item.quantity] as [String: Any]
+                                itemRef.childByAutoId().setValue(itemValues)
+                            }
+                        })
+                    })
+                    self.shareThankYou()
                 }
                 let cancelAction = UIAlertAction(title: "Cancel",
                                                  style: .default)
@@ -239,39 +246,8 @@ class PackingListViewController: UITableViewController {
             }
                 alert.addAction(cancelAction)
                 self.present(alert, animated: true, completion: nil)
-                
-//                listRef?.observe(.value, with: { (snapshot) in
-//                        let params = snapshot.value as! [String: Any]
-//                        let region = params["region"] as! String
-//                        let length = params["length"] as! String
-//                        let seasons = params["seasons"] as! String
-//                        let sex = params["sex"] as! String
-//
-//                        let listValues = ["region": region,
-//                                      "length": length,
-//                                      "seasons": seasons,
-//                                      "sex": sex,
-//                                      "weight": 0,
-//                                      "ref": "\(String(describing:(newlistRef)))",
-//                            "key": "\(String(describing:(key)))"] as [String: Any]
-//                        newlistRef.child(region).child(key).setValue(listValues)
-//
-//                    let itemRef = newlistRef.child(region).child(key).child("items")
-//                    listRef?.child("items").queryOrdered(byChild: "itemName").observe(.value, with: { (snapshot) in
-//                        for items in snapshot.children {
-//                            let item = DatabasePackingListItem(snapshot: items as! DataSnapshot)
-//                            let itemValues = ["itemName": item.itemName,
-//                                              "quantity": item.quantity] as [String: Any]
-//                            itemRef.childByAutoId().setValue(itemValues)
-//                        }
-//                    })
-//                })
-            //}
-            //print(listShared)
-            
-            
         })
-        //print(listShared)
+
         if listShared {
         listRef?.updateChildValues(["shared": true])
         }

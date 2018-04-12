@@ -14,6 +14,7 @@ class BLAllListsViewController: UITableViewController {
     var databaseRef: DatabaseReference?
     var ref = Database.database().reference(fromURL: "https://studyabroad-42803.firebaseio.com/")
     var lists: [BudgetListName] = []
+    var budgetTotal: Int?
     var uid: String?
     var backBarButtonItem: UIBarButtonItem!
     
@@ -21,16 +22,16 @@ class BLAllListsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backgroundImage()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         databaseRef = Database.database().reference().child("Users")
         if Auth.auth().currentUser != nil {
             let currUser = Auth.auth().currentUser
             uid = currUser?.uid
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        backgroundImage()
         displayLists()
         makeBackButton()
     }
@@ -50,6 +51,7 @@ class BLAllListsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BLCell", for: indexPath)
         let budgetList = lists[indexPath.row]
         cell.textLabel?.text = budgetList.listName
+        configureQuantity(for: cell, with: budgetList)
         return cell
     }
     
@@ -115,7 +117,8 @@ class BLAllListsViewController: UITableViewController {
     
     @objc func backButtonDidTouch() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let features = storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController //UINavigationController
+        let features = storyboard.instantiateViewController(withIdentifier:
+            "FeaturesViewController") as! FeaturesViewController
         self.present(features, animated: true, completion: nil)
     }
     
@@ -131,6 +134,7 @@ class BLAllListsViewController: UITableViewController {
                                            style: .default) { action in
                                             let listName = alert.textFields![0]
                                             let values = ["listName": listName.text!,
+                                                          "total": 0,
                                                           "key": "\(String(describing: key))",
                                                 "ref": "\(String(describing: ref))"] as [String : Any]
                                             
@@ -156,18 +160,42 @@ class BLAllListsViewController: UITableViewController {
             }
         }
     }
+    
+    func configureQuantity(for cell: UITableViewCell, with item: BudgetListName){
+        let label1 = cell.viewWithTag(105) as! UILabel
+        label1.text = "$\(item.total!)"
+    }
 
     
     func displayLists() {
-        databaseRef!.child(uid!).child("BudgetLists").observe(.value, with: { snapshot in
-            var newLists: [BudgetListName] = []
-            for list in snapshot.children {
-                let budgetList = BudgetListName(snapshot: list as! DataSnapshot)
-                newLists.insert(budgetList, at: 0)
-            }
-            self.lists = newLists
-            self.tableView.reloadData()
-        })
+        if let databaseRef = databaseRef?.child(uid!).child("BudgetLists") {
+            databaseRef.queryOrdered(byChild: "listName").observe(.value, with: { snapshot in
+                var newLists: [BudgetListName] = []
+                var total = 0;
+                for list in snapshot.children {
+                    let budgetList = BudgetListName(snapshot: list as! DataSnapshot)
+                    newLists.insert(budgetList, at: 0)
+                    total = total + budgetList.total!
+                }
+                self.lists = newLists
+                self.budgetTotal = total
+                self.tableView.reloadData()
+            })
+        }
+        
+//
+//        databaseRef!.child(uid!).child("BudgetLists").observe(.value, with: { snapshot in
+//            var newLists: [BudgetListName] = []
+//            var total = 0;
+//            for list in snapshot.children {
+//                let budgetList = BudgetListName(snapshot: list as! DataSnapshot)
+//                newLists.insert(budgetList, at: 0)
+//                total = total + budgetList.total!
+//            }
+//            self.lists = newLists
+//            self.budgetTotal = total
+//            self.tableView.reloadData()
+//        })
     }
 }
 

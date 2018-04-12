@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 
-class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class ListDetailViewController: UITableViewController, UITextFieldDelegate,
+                                UIPickerViewDataSource, UIPickerViewDelegate {
     
     //Properties
     
@@ -20,15 +21,26 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
     //Initialize UIPickerView
     
     @IBOutlet weak var regionPickerText: UITextField!
-    var regionPickerData = ["Make Selection", "Northern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Southern Europe", "Greenland & Iceland", "Russia", "Northern Asia", "Eastern Asia", "Western Asia", "Southern Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "Northern Africa", "Eastern Africa", "Western Africa", "Central Africa", "Southern Africa", "North America", "Central America", "South America"]
+    var regionPickerData = ["Make Selection", "Northern Europe", "Eastern Europe",
+                            "Western Europe, UK, & Ireland", "Southern Europe", "Greenland & Iceland",
+                            "Russia", "Northern Asia", "Eastern Asia", "Western Asia",
+                            "Southern Asia", "Southeast Asia & Pacific Islands", "Australia",
+                            "New Zealand", "Northern Africa", "Eastern Africa", "Western Africa",
+                            "Central Africa", "Southern Africa", "North America", "Central America",
+                            "South America"]
     var regionPicker = UIPickerView()
     
     @IBOutlet weak var lengthPickerText: UITextField!
-    var lengthPickerData = ["Make Selection", "1-3 weeks", "1-3 months", "4-6 months", "7-12 months", "over 1 year"]
+    var lengthPickerData = ["Make Selection", "1-3 weeks", "1-3 months", "4-6 months",
+                            "7-12 months", "over 1 year"]
     var lengthPicker = UIPickerView()
     
     @IBOutlet weak var seasonsPickerText: UITextField!
-    var seasonsPickerData = ["Make Selection", "Autumn", "Winter", "Spring", "Summer", "Autumn + Winter", "Winter + Spring", "Spring + Summer", "Summer + Autumn", "Autumn + Winter + Spring", "Winter + Spring + Summer", "Spring + Summer + Autumn", "Summer + Autumn + Winter", "Autumn + Winter + Spring + Summer" ]
+    var seasonsPickerData = ["Make Selection", "Autumn", "Winter", "Spring", "Summer", "Autumn + Winter",
+                             "Winter + Spring", "Spring + Summer", "Summer + Autumn",
+                             "Autumn + Winter + Spring", "Winter + Spring + Summer",
+                             "Spring + Summer + Autumn", "Summer + Autumn + Winter",
+                             "Autumn + Winter + Spring + Summer" ]
     var seasonsPicker = UIPickerView()
     
     @IBOutlet weak var sexPickerText: UITextField!
@@ -201,7 +213,9 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
             if let currUser = currUser {
                 let uid = currUser.uid
                 if packingListToEdit != nil {
-                    if listTextField.text != "" && regionPickerText.text != "" && lengthPickerText.text != "" && seasonsPickerText.text != "" && sexPickerText.text != "" {
+                    if listTextField.text != "" && regionPickerText.text != "" &&
+                            lengthPickerText.text != "" && seasonsPickerText.text != "" &&
+                            sexPickerText.text != "" {
                         let userReference = packingListToEdit?.ref
                         let values = ["listName": listTextField.text!,
                                       "region": regionPickerText.text!,
@@ -215,7 +229,9 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, UIPi
                 else {
                     let listRef = databaseRef.root.child("Users").child(uid).child("PackingList").childByAutoId()
                     let key = listRef.key
-                    if listTextField.text != "" && regionPickerText.text != "" && lengthPickerText.text != "" && seasonsPickerText.text != "" && sexPickerText.text != "" {
+                    if listTextField.text != "" && regionPickerText.text != "" &&
+                            lengthPickerText.text != "" && seasonsPickerText.text != "" &&
+                            sexPickerText.text != "" {
                         let packingListReference = listRef.ref
                         let values = ["listName": listTextField.text!,
                                       "region": regionPickerText.text!,

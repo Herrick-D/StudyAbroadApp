@@ -20,7 +20,8 @@ class DatabasePackingList {
     var ref: DatabaseReference!
     var key: String!
     
-    init(listName: String, region: String, length: String, seasons: String, sex: String, shared: Bool, key: String = "") {
+    init(listName: String, region: String, length: String, seasons: String,
+         sex: String, shared: Bool, key: String = "") {
         self.key = key
         self.listName = listName
         self.region = region
@@ -42,7 +43,8 @@ class DatabasePackingList {
         self.ref = snapshot.ref
     }
     
-    init(region: String, length: String, seasons: String, sex: String, ref: DatabaseReference, key: String = "") {
+    init(region: String, length: String, seasons: String, sex: String,
+         ref: DatabaseReference, key: String = "") {
         self.region = region
         self.length = length
         self.seasons = seasons

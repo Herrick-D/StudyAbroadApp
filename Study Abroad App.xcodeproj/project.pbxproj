@@ -149,14 +149,14 @@
 		918CB0E91F8BCEE700EC73AA /* PackingList */ = {
 			isa = PBXGroup;
 			children = (
-				910A59C91FB15EB70091FC6E /* SearchResultListsViewController.swift */,
-				91C1A3501FB4A942002C779E /* SearchResultItemsViewController.swift */,
-				918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */,
-				9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */,
-				9120D71D1F7AB83A0073CDAC /* PackingList.swift */,
+				9120D7111F7A95180073CDAC /* AllListsViewController.swift */,
 				9120D7191F7AA6890073CDAC /* ListDetailViewController.swift */,
 				9120D7151F7A9F890073CDAC /* PackingListViewController.swift */,
-				9120D7111F7A95180073CDAC /* AllListsViewController.swift */,
+				918CB0EA1F8BF8E300EC73AA /* SearchPageViewController.swift */,
+				910A59C91FB15EB70091FC6E /* SearchResultListsViewController.swift */,
+				91C1A3501FB4A942002C779E /* SearchResultItemsViewController.swift */,
+				9120D71B1F7AB68A0073CDAC /* PackingListItem.swift */,
+				9120D71D1F7AB83A0073CDAC /* PackingList.swift */,
 				9120D7131F7A98690073CDAC /* DataModel.swift */,
 			);
 			path = PackingList;

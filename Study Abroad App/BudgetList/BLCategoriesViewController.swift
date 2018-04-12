@@ -17,8 +17,7 @@ class BLCategoriesViewController: UITableViewController {
     var ref = Database.database().reference()
     var categories: [BudgetListCategory] = []
     var uid: String?
-    //var backBarButtonItem: UIBarButtonItem!
-    
+    var budgetTotal: Int?
     
     //UIViewController Lifecycle
     
@@ -39,11 +38,13 @@ class BLCategoriesViewController: UITableViewController {
     
     //UITableView Delegate Methods
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section:
+                Int) -> Int {
         return categories.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath:
+                IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BLCategory", for: indexPath)
         let budgetListCat = categories[indexPath.row]
         configureText(for: cell, with: budgetListCat)
@@ -51,14 +52,16 @@ class BLCategoriesViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle:
+                UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let budgetListCat = categories[indexPath.row]
             budgetListCat.ref.removeValue()
         }
     }
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath:
+                IndexPath) {
         let key = categories[indexPath.row].key
         let ref = databaseRef!
         let categoryRef = ref.child("Categories")
@@ -69,7 +72,8 @@ class BLCategoriesViewController: UITableViewController {
         let saveAction = UIAlertAction(title: "Save",
                                        style: .default) { action in
                                         let categoryName = alert.textFields![0]
-                                        let value = ["category": categoryName.text!] as [String : Any]
+                                        let value = ["category": categoryName.text!] as
+                                            [String : Any]
                                         
                                         let budgetListRef = categoryRef.child(key!)
                                         budgetListRef.updateChildValues(value)
@@ -89,7 +93,8 @@ class BLCategoriesViewController: UITableViewController {
         performSegue(withIdentifier: "ShowBudgetListItems", sender: budgetList)
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(white: 1, alpha: 0.75)
         cell.textLabel?.textColor = UIColor.black
         cell.contentView.layer.borderColor = UIColor.gray.cgColor
@@ -112,15 +117,14 @@ class BLCategoriesViewController: UITableViewController {
     }
     
     func configureQuantity(for cell: UITableViewCell, with item: BudgetListCategory){
-        let label = cell.viewWithTag(2001) as! UILabel
-        label.text = item.total
+        let label1 = cell.viewWithTag(2001) as! UILabel
+        label1.text = "$\(item.total!)"
     }
     
     
     @IBAction func addBLCat(_ sender: AnyObject) {
         if Auth.auth().currentUser != nil {
             let ref = databaseRef!
-            let key = ref.key
             let categoryRef = ref.child("Categories")
             let categoryKey = categoryRef.childByAutoId().key
            
@@ -132,9 +136,10 @@ class BLCategoriesViewController: UITableViewController {
                                            style: .default) { action in
                                             let categoryName = alert.textFields![0]
                                             let values = ["category": categoryName.text!,
-                                                          "total": "\(0)",
+                                                          "total": 0,
                                                           "key": "\(String(describing: categoryKey))",
-                                                "ref": "\(String(describing: categoryRef))"] as [String : Any]
+                                                "ref": "\(String(describing: categoryRef))"]
+                                                as [String : Any]
                                             
                                             let budgetListRef = categoryRef.child(categoryKey)
                                             budgetListRef.setValue(values)
@@ -163,11 +168,17 @@ class BLCategoriesViewController: UITableViewController {
         if let databaseRef = databaseRef?.child("Categories") {
             databaseRef.queryOrdered(byChild: "category").observe(.value, with: { snapshot in
                 var newLists: [BudgetListCategory] = []
+                var total = 0
                 for category in snapshot.children {
                     let budgetCategories = BudgetListCategory(snapshot: category as! DataSnapshot)
                     newLists.append(budgetCategories)
+                    total = total + budgetCategories.total!
                 }
                 self.categories = newLists
+                self.budgetTotal = total
+                let value = ["total": self.budgetTotal!] as [String:Any]
+                let budgetDatabaseRef = self.databaseRef
+                budgetDatabaseRef?.updateChildValues(value)
                 self.tableView.reloadData()
             })
         }

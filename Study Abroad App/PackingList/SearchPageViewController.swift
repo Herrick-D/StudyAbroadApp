@@ -9,18 +9,31 @@
 import UIKit
 import Firebase
 
-class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UINavigationControllerDelegate {
+class SearchPageViewController: UIViewController, UITextFieldDelegate,
+                                UIPickerViewDelegate, UIPickerViewDataSource,
+                                UINavigationControllerDelegate {
     
     @IBOutlet weak var regionPickerText: UITextField!
-    var regionPickerData = ["Make Selection", "Northern Europe", "Eastern Europe", "Western Europe, UK, & Ireland", "Southern Europe", "Greenland & Iceland", "Russia", "Northern Asia", "Eastern Asia", "Western Asia", "Southern Asia", "Southeast Asia & Pacific Islands", "Australia", "New Zealand", "Northern Africa", "Eastern Africa", "Western Africa", "Central Africa", "Southern Africa", "North America", "Central America", "South America"]
+    var regionPickerData = ["Make Selection", "Northern Europe", "Eastern Europe",
+                            "Western Europe, UK, & Ireland", "Southern Europe", "Greenland & Iceland",
+                            "Russia", "Northern Asia", "Eastern Asia", "Western Asia",
+                            "Southern Asia", "Southeast Asia & Pacific Islands", "Australia",
+                            "New Zealand", "Northern Africa", "Eastern Africa", "Western Africa",
+                            "Central Africa", "Southern Africa", "North America", "Central America",
+                            "South America"]
     var regionPicker = UIPickerView()
     
     @IBOutlet weak var lengthPickerText: UITextField!
-    var lengthPickerData = ["Make Selection", "1-3 weeks", "1-3 months", "4-6 months", "7-12 months", "over 1 year"]
+    var lengthPickerData = ["Make Selection", "1-3 weeks", "1-3 months", "4-6 months",
+                            "7-12 months", "over 1 year"]
     var lengthPicker = UIPickerView()
     
     @IBOutlet weak var seasonsPickerText: UITextField!
-    var seasonsPickerData = ["Make Selection", "Autumn", "Winter", "Spring", "Summer", "Autumn + Winter", "Winter + Spring", "Spring + Summer", "Summer + Autumn", "Autumn + Winter + Spring", "Winter + Spring + Summer", "Spring + Summer + Autumn", "Summer + Autumn + Winter", "Autumn + Winter + Spring + Summer" ]
+    var seasonsPickerData = ["Make Selection", "Autumn", "Winter", "Spring", "Summer",
+                             "Autumn + Winter", "Winter + Spring", "Spring + Summer",
+                             "Summer + Autumn", "Autumn + Winter + Spring", "Winter + Spring + Summer",
+                             "Spring + Summer + Autumn", "Summer + Autumn + Winter",
+                             "Autumn + Winter + Spring + Summer" ]
     var seasonsPicker = UIPickerView()
     
     @IBOutlet weak var sexPickerText: UITextField!
@@ -62,7 +75,8 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
         return 1
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView,
+                    numberOfRowsInComponent component: Int) -> Int {
         var countrows : Int = regionPickerData.count
         if pickerView == lengthPicker {
             countrows = self.lengthPickerData.count
@@ -76,7 +90,8 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
         return countrows
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
+                    forComponent component: Int) -> String? {
         if pickerView == regionPicker {
             let titleRow = regionPickerData[row]
             return titleRow
@@ -96,7 +111,8 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
         return ""
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
+                    inComponent component: Int) {
         if pickerView == regionPicker {
             self.regionPickerText.text = self.regionPickerData[row]
             self.regionPicker.isHidden = false
@@ -159,7 +175,8 @@ class SearchPageViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     @objc func backButtonDidTouch() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let features = storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController //UINavigationController
+        let features = storyboard.instantiateViewController(withIdentifier:
+                        "FeaturesViewController") as! FeaturesViewController
         self.present(features, animated: true, completion: nil)
     }
     
