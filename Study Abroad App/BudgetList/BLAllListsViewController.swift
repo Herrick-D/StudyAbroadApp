@@ -183,19 +183,6 @@ class BLAllListsViewController: UITableViewController {
             })
         }
         
-//
-//        databaseRef!.child(uid!).child("BudgetLists").observe(.value, with: { snapshot in
-//            var newLists: [BudgetListName] = []
-//            var total = 0;
-//            for list in snapshot.children {
-//                let budgetList = BudgetListName(snapshot: list as! DataSnapshot)
-//                newLists.insert(budgetList, at: 0)
-//                total = total + budgetList.total!
-//            }
-//            self.lists = newLists
-//            self.budgetTotal = total
-//            self.tableView.reloadData()
-//        })
     }
 }
 
